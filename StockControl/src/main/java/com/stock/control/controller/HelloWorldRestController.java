@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.stock.control.configuration.properties.StockProperties;
 import com.stock.control.model.User;
 import com.stock.control.service.UserService;
 
@@ -23,6 +24,9 @@ import com.stock.control.service.UserService;
 public class HelloWorldRestController {
 
 	private static final Logger log = LoggerFactory.getLogger(HelloWorldRestController.class);
+
+	@Autowired
+	private StockProperties sp;
 
 	@Autowired
 	UserService userService; // Service which will do all data
@@ -106,7 +110,7 @@ public class HelloWorldRestController {
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
 		log.debug("Fetching & Deleting User with id " + id);
-
+		log.debug(">>>>>>>>>>EXAMPLE " + sp.getExample());
 		User user = userService.findById(id);
 		if (user == null) {
 			log.debug("Unable to delete. User with id " + id + " not found");
