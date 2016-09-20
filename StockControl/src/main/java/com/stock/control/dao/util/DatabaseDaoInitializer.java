@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.stock.control.configuration.properties.JdbcProperties;
@@ -18,7 +18,7 @@ public class DatabaseDaoInitializer implements InitializingBean {
 	@Autowired
 	private JdbcProperties jdbcProperties;
 
-	private JdbcTemplate jdbcTemplate;
+	private NamedParameterJdbcTemplate namedParameterjdbcTemplate;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -45,12 +45,11 @@ public class DatabaseDaoInitializer implements InitializingBean {
 		dataSource.setTimeBetweenEvictionRunsMillis(Integer.parseInt(jdbcProperties.getJdbcBetweenEvictionRunsMillis()));
 		dataSource.setNumTestsPerEvictionRun(Integer.parseInt(jdbcProperties.getJdbcTestsPerEvictionRun()));
 
-		jdbcTemplate = new JdbcTemplate(dataSource);
+		namedParameterjdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		log.debug("##End create datasource ");
 	}
 
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
+	public NamedParameterJdbcTemplate getNamedParameterjdbcTemplate() {
+		return namedParameterjdbcTemplate;
 	}
-
 }

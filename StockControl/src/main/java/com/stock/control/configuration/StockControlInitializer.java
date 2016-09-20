@@ -8,7 +8,7 @@ public class StockControlInitializer extends AbstractAnnotationConfigDispatcherS
  
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { MvcConfiguration.class };
+        return new Class[] { StockConfiguration.class };
     }
   
     @Override
@@ -23,7 +23,7 @@ public class StockControlInitializer extends AbstractAnnotationConfigDispatcherS
     
     @Override
     protected Filter[] getServletFilters() {
-    	Filter [] singleton = { new CORSFilter() };
+    	Filter [] singleton = { new StockFilter() };
     	return singleton;
 	}
  

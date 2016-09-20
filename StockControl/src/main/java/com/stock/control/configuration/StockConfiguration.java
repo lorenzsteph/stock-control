@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan(basePackages = "com.stock.control")
 @EnableWebMvc
 @PropertySources({ @PropertySource(value = "classpath:jdbc.properties", ignoreResourceNotFound = false), @PropertySource(value = "classpath:stock.properties", ignoreResourceNotFound = false) })
-public class MvcConfiguration extends WebMvcConfigurerAdapter {
+public class StockConfiguration extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public ViewResolver getViewResolver() {
