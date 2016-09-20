@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,11 +19,13 @@ import com.stock.control.model.Cliente;
 @Service
 public class ClienteDaoBean extends AbstractDaoBean implements ClienteDao {
 
+	private static final Logger log = LoggerFactory.getLogger(ClienteDaoBean.class);
+	
 	public int delete(int id) {
 		String sql = "DELETE FROM CLIENTE WHERE ID_CLIENTE=:ID_CLIENTE";
 		Map<String, Object> maps = new HashMap<String, Object>();
 		maps.put("ID_CLIENTE", id);
-
+		log.debug("delete sql : " + sql + " - masp : " + maps);
 		return getNamedParameterJdbcTemplate().update(sql, maps);
 	}
 
@@ -35,10 +39,12 @@ public class ClienteDaoBean extends AbstractDaoBean implements ClienteDao {
 		if (cliente.getIdCliente() > 0) {
 			// update
 			String sql = "UPDATE CLIENTE SET DESCRIZIONE = :DESCRIZIONE WHERE ID_CLIENTE = :ID_CLIENTE";
+			log.debug("saveOrUpdate sql : " + sql);
 			result = getNamedParameterJdbcTemplate().update(sql, maps);
 		} else {
 			// insert
 			String sql = "INSERT INTO CLIENTE (DESCRIZIONE)" + " VALUES (:DESCRIZIONE)";
+			log.debug("saveOrUpdate sql : " + sql);
 			result = getNamedParameterJdbcTemplate().update(sql, maps);
 		}
 

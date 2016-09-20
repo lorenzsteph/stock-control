@@ -7,7 +7,7 @@ import com.stock.control.model.Fornitore;
 
 public interface DomainService {
 
-	public Cliente populateDummyCliente(boolean exception) throws Exception;
+	public Cliente testRollbackCliente(boolean exception) throws Exception;
 
 	public int saveOrUpdateFornitore(Fornitore fornitore);
 
@@ -16,5 +16,13 @@ public interface DomainService {
 	public int deleteFornitore(int idFornitore);
 
 	public List<Fornitore> getAllFornitore();
+
+	public int saveOrUpdateCliente(Cliente cliente);
+
+	public int deleteCliente(int idCliente);
+
+	public Cliente getCliente(int idCliente);
+
+	public List<Cliente> getAllCliente();
 
 }

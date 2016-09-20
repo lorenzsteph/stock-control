@@ -45,7 +45,7 @@ public class ClienteDaoTest {
 		log.debug("cliente size : " + listCliente.size());
 		boolean exception = false;
 		try {
-			domainService.populateDummyCliente(true);
+			domainService.testRollbackCliente(true);
 		} catch (Exception e) {
 			exception = true;
 		}

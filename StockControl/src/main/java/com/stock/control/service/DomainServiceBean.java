@@ -46,24 +46,28 @@ public class DomainServiceBean implements DomainService {
 		return fornitoreDao.getAllFornitore();
 	}
 
+	@Override
 	public int saveOrUpdateCliente(Cliente cliente) {
 		return clienteDao.saveOrUpdate(cliente);
 	}
 
+	@Override
 	public int deleteCliente(int idCliente) {
 		return clienteDao.delete(idCliente);
 	}
 
+	@Override
 	public Cliente getCliente(int idCliente) {
 		return clienteDao.getCliente(idCliente);
 	}
 
+	@Override
 	public List<Cliente> getAllCliente() {
 		return clienteDao.getAllCliente();
 	}
 
 	@Override
-	public Cliente populateDummyCliente(boolean exception) throws Exception {
+	public Cliente testRollbackCliente(boolean exception) throws Exception {
 		log.debug("populateDummyCliente start");
 		Cliente c = new Cliente();
 		c.setDescrizione("testRollback");
