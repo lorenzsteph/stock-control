@@ -6,27 +6,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import com.stock.control.dao.util.DatabaseDaoInitializer;
+import com.stock.control.dao.util.AbstractDaoBean;
 import com.stock.control.model.Cliente;
 
 @Service
-public class ClienteDaoBean implements ClienteDao {
-
-	@Autowired
-	private DatabaseDaoInitializer databaseDao;
+public class ClienteDaoBean extends AbstractDaoBean implements ClienteDao {
 
 	public int delete(int id) {
 		String sql = "DELETE FROM CLIENTE WHERE ID_CLIENTE=:ID_CLIENTE";
 		Map<String, Object> maps = new HashMap<String, Object>();
 		maps.put("ID_CLIENTE", id);
 
-		return databaseDao.getNamedParameterjdbcTemplate().update(sql, maps);
+		return getNamedParameterJdbcTemplate().update(sql, maps);
 	}
 
 	@Override
@@ -39,11 +35,11 @@ public class ClienteDaoBean implements ClienteDao {
 		if (cliente.getIdCliente() > 0) {
 			// update
 			String sql = "UPDATE CLIENTE SET DESCRIZIONE = :DESCRIZIONE WHERE ID_CLIENTE = :ID_CLIENTE";
-			result = databaseDao.getNamedParameterjdbcTemplate().update(sql, maps);
+			result = getNamedParameterJdbcTemplate().update(sql, maps);
 		} else {
 			// insert
 			String sql = "INSERT INTO CLIENTE (DESCRIZIONE)" + " VALUES (:DESCRIZIONE)";
-			result = databaseDao.getNamedParameterjdbcTemplate().update(sql, maps);
+			result = getNamedParameterJdbcTemplate().update(sql, maps);
 		}
 
 		return result;
@@ -56,7 +52,7 @@ public class ClienteDaoBean implements ClienteDao {
 		Map<String, Object> maps = new HashMap<String, Object>();
 		maps.put("ID_CLIENTE", idCliente);
 
-		return databaseDao.getNamedParameterjdbcTemplate().query(sql, maps, new ResultSetExtractor<Cliente>() {
+		return getNamedParameterJdbcTemplate().query(sql, maps, new ResultSetExtractor<Cliente>() {
 
 			@Override
 			public Cliente extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -77,7 +73,7 @@ public class ClienteDaoBean implements ClienteDao {
 	@Override
 	public List<Cliente> getAllCliente() {
 		String sql = "SELECT * FROM CLIENTE ";
-		List<Cliente> listContact = databaseDao.getNamedParameterjdbcTemplate().query(sql, new RowMapper<Cliente>() {
+		List<Cliente> listContact = getNamedParameterJdbcTemplate().query(sql, new RowMapper<Cliente>() {
 
 			@Override
 			public Cliente mapRow(ResultSet rs, int rowNum) throws SQLException {
