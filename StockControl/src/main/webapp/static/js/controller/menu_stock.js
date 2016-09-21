@@ -1,64 +1,37 @@
-var app = angular.module("switchableGrid", [ 'ngResource' ]);
+// create the module and name it stockApp
+var stockApp = angular.module('stockApp', [ 'ngRoute' ]);
 
-app
-		.factory(
-				'instagram',
-				function($resource) {
+// configure our routes
+stockApp.config(function($routeProvider) {
+	$routeProvider
 
-					return {
-						fetchPopular : function(callback) {
+	// route for the home page
+	.when('/', {
+		templateUrl : 'pages/home.html',
+		controller : 'mainController'
+	})
 
-							// The ngResource module gives us the $resource
-							// service. It makes working with
-							// AJAX easy. Here I am using the client_id of a
-							// test app. Replace it with yours.
+	// route for the about page
+	.when('/domain', {
+		templateUrl : 'pages/domain.html',
+		controller : 'UserController'
+	})
 
-							var api = $resource(
-									'https://api.instagram.com/v1/media/popular?client_id=:client_id&callback=JSON_CALLBACK',
-									{
-										client_id : '642176ece1e7445e99244cec26f4de1f'
-									}, {
-										// This creates an action which we've
-										// chosen to name "fetch". It issues
-										// an JSONP request to the URL of the
-										// resource. JSONP requires that the
-										// callback=JSON_CALLBACK part is added
-										// to the URL.
-
-										fetch : {
-											method : 'JSONP'
-										}
-									});
-
-							api.fetch(function(response) {
-
-								// Call the supplied callback function
-								callback(response.data);
-
-							});
-						}
-					}
-
-				});
-
-// The controller. Notice that I've included our instagram service which we
-// defined below. It will be available inside the function automatically.
-
-function SwitchableGridController($scope, instagram) {
-
-	// Default layout of the app. Clicking the buttons in the toolbar
-	// changes this value.
-
-	$scope.layout = 'grid';
-
-	$scope.pics = [];
-
-	// Use the instagram service and fetch a list of the popular pics
-	instagram.fetchPopular(function(data) {
-
-		// Assigning the pics array will cause the view
-		// to be automatically redrawn by Angular.
-		$scope.pics = data;
+	// route for the contact page
+	.when('/contact', {
+		templateUrl : 'pages/contact.html',
+		controller : 'contactController'
 	});
+});
 
-}
+// create the controller and inject Angular's $scope
+stockApp.controller('mainController', function($scope) {
+	// create a message to display in our view
+	$scope.message = 'Everyone come and see how good I look!';
+});
+
+stockApp.controller('contactController', function($scope) {
+	$scope.message = 'Contact us! JK. This is just a demo.';
+});
+
+stockApp.controller('UserController', [ '$scope', 'UserService' ]);

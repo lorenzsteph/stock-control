@@ -3,6 +3,7 @@ package com.stock.control;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public class ClienteDaoTest {
 		clienteDao.saveOrUpdate(cliente);
 	}
 
+	@Ignore
 	@Test
 	public void domainServiceRollback() throws Exception {
 		log.debug("start test domainServiceRollback");

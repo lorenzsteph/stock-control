@@ -27,17 +27,10 @@ public class StockConfiguration extends WebMvcConfigurerAdapter {
 	@Autowired
 	private JdbcProperties jdbcProperties;
 
-	@Bean
-	public ViewResolver getViewResolver() {
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".jsp");
-		return resolver;
-	}
-
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+		registry.addResourceHandler("/stock/**").addResourceLocations("/stock/");
 	}
 
 	@Bean
