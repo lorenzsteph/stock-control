@@ -1,93 +1,90 @@
 'use strict';
-
-angular.module('myApp').controller('DomainController', ['$scope', 'DomainService', function($scope, DomainService) {
+angular.module('stockApp').controller('domainController', ['$scope', 'domainService', function($scope, DomainService) {
     var self = this;
-    self.user={id:null,username:'',address:'',email:''};
-    self.users=[];
+    self.customer={idCustomer:null,descr:'',dateEndValidity:''};
+    self.customers=[];
 
     self.submit = submit;
     self.edit = edit;
     self.remove = remove;
     self.reset = reset;
+    
+    fetchAllCustomers();
 
-
-    fetchAllUsers();
-
-    function fetchAllUsers(){
-        UserService.fetchAllUsers()
+    function fetchAllCustomers(){
+    	DomainService.fetchAllCustomers()
             .then(
             function(d) {
-                self.users = d;
+                self.customers = d;
             },
             function(errResponse){
-                console.error('Error while fetching Users');
+                console.error('Error while fetching Customers');
             }
         );
     }
-
-    function createUser(user){
-        UserService.createUser(user)
-            .then(
-            fetchAllUsers,
-            function(errResponse){
-                console.error('Error while creating User');
-            }
-        );
-    }
-
-    function updateUser(user, id){
-        UserService.updateUser(user, id)
-            .then(
-            fetchAllUsers,
-            function(errResponse){
-                console.error('Error while updating User');
-            }
-        );
-    }
-
-    function deleteUser(id){
-        UserService.deleteUser(id)
-            .then(
-            fetchAllUsers,
-            function(errResponse){
-                console.error('Error while deleting User');
-            }
-        );
-    }
-
-    function submit() {
-        if(self.user.id===null){
-            console.log('Saving New User', self.user);
-            createUser(self.user);
-        }else{
-            updateUser(self.user, self.user.id);
-            console.log('User updated with id ', self.user.id);
-        }
-        reset();
-    }
-
-    function edit(id){
-        console.log('id to be edited', id);
-        for(var i = 0; i < self.users.length; i++){
-            if(self.users[i].id === id) {
-                self.user = angular.copy(self.users[i]);
+    
+    function edit(idCustomer){
+        console.log('id to be edited', idCustomer);
+        for(var i = 0; i < self.customers.length; i++){
+            if(self.customers[i].idCustomer === idCustomer) {
+                self.customer = angular.copy(self.customers[i]);
                 break;
             }
         }
     }
 
-    function remove(id){
-        console.log('id to be deleted', id);
-        if(self.user.id === id) {//clean form if the user to be deleted is shown there.
+    function remove(idCustomer){
+        console.log('id to be deleted', idCustomer);
+        if(self.customer.idCustomer === idCustomer) {
             reset();
         }
-        deleteUser(id);
+        deleteCustomer(idCustomer);
+    }
+    
+    function deleteCustomer(idCustomer){
+    	DomainService.deleteCustomer(idCustomer)
+            .then(
+            fetchAllCustomers,
+            function(errResponse){
+                console.error('Error while deleting Customer');
+            }
+        );
+    }
+    
+    function submit() {
+        if(self.customer.idCustomer===null){
+            console.log('Saving New customer', self.customer);
+            createCustomer(self.customer);
+        }else{
+            updateCustomer(self.customer, self.customer.idCustomer);
+            console.log('customer updated with id ', self.customer.idCustomer);
+        }
+        reset();
+    }
+    
+    function reset(){
+        self.customer={idCustomer:null,descr:'',dateEndValidity:''};
+        $scope.myForm.$setPristine(); //reset Form
     }
 
-
-    function reset(){
-        self.user={id:null,username:'',address:'',email:''};
-        $scope.myForm.$setPristine(); //reset Form
+    function createCustomer(customer){
+    	DomainService.createCustomer(customer)
+            .then(
+            fetchAllCustomers,
+            function(errResponse){
+                console.error('Error while creating Customer');
+            }
+        );
+    }
+    
+    function updateCustomer(customer, idCustomer){
+    	DomainService.updateCustomer(customer, idCustomer)
+            .then(
+            fetchAllCustomers,
+            function(errResponse){
+                console.error('Error while updating Customer');
+            }
+        );
     }
 
 }]);

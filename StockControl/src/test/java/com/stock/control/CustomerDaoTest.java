@@ -10,25 +10,25 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.stock.control.configuration.StockConfiguration;
-import com.stock.control.dao.FornitoreDao;
-import com.stock.control.model.Fornitore;
+import com.stock.control.dao.CustomerDao;
+import com.stock.control.model.Customer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = StockConfiguration.class)
 @WebAppConfiguration
-public class FornitoreDaoTest {
+public class CustomerDaoTest {
 
-	private static final Logger log = LoggerFactory.getLogger(FornitoreDaoTest.class);
+	private static final Logger log = LoggerFactory.getLogger(CustomerDaoTest.class);
 
 	@Autowired
-	private FornitoreDao fornitoreDao;
+	private CustomerDao clienteDao;
 
 	@Test
 	public void saveOrUpdateTest() throws Exception {
 		log.debug("start test saveOrUpdateTest");
-		Fornitore fornitore = new Fornitore();
-		fornitore.setDescrizione("aaaaaaa");
-		fornitoreDao.saveOrUpdate(fornitore);
+		Customer c = new Customer();
+		c.setDescr("aaaaaaa");
+		clienteDao.saveOrUpdate(c);
 	}
 
 }
