@@ -49,7 +49,7 @@ public class CustomerController {
 		}
 
 		domainService.deleteCustomer(id);
-		return new ResponseEntity<Customer>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/customer/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

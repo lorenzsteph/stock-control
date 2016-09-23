@@ -11,6 +11,10 @@ angular.module('stockApp').controller('domainController', ['$scope', 'domainServ
     
     fetchAllCustomers();
 
+    $scope.switchBool = function(value) {
+       $scope[value] = !$scope[value];
+    };
+    
     function fetchAllCustomers(){
     	DomainService.fetchAllCustomers()
             .then(
@@ -19,6 +23,7 @@ angular.module('stockApp').controller('domainController', ['$scope', 'domainServ
             },
             function(errResponse){
                 console.error('Error while fetching Customers');
+                operationOnCustomerKo(errResponse);
             }
         );
     }
@@ -44,9 +49,10 @@ angular.module('stockApp').controller('domainController', ['$scope', 'domainServ
     function deleteCustomer(idCustomer){
     	DomainService.deleteCustomer(idCustomer)
             .then(
-            fetchAllCustomers,
+            operationOnCustomerOk,
             function(errResponse){
                 console.error('Error while deleting Customer');
+                operationOnCustomerKo(errResponse);
             }
         );
     }
@@ -70,9 +76,9 @@ angular.module('stockApp').controller('domainController', ['$scope', 'domainServ
     function createCustomer(customer){
     	DomainService.createCustomer(customer)
             .then(
-            fetchAllCustomers,
+         		operationOnCustomerOk,
             function(errResponse){
-                console.error('Error while creating Customer');
+         		 operationOnCustomerKo(errResponse);
             }
         );
     }
@@ -80,11 +86,26 @@ angular.module('stockApp').controller('domainController', ['$scope', 'domainServ
     function updateCustomer(customer, idCustomer){
     	DomainService.updateCustomer(customer, idCustomer)
             .then(
-            fetchAllCustomers,
+            operationOnCustomerOk,
             function(errResponse){
                 console.error('Error while updating Customer');
+                operationOnCustomerKo(errResponse);
             }
         );
+    }
+    
+    function operationOnCustomerOk(customer){
+    	$scope.textAlert = "operazione terminata con successo. id  : " + customer.idCustomer + " - descrizione : " + customer.descr;
+        $scope.showInfoAlert = true;
+        $scope.showErrorAlert = false;
+        fetchAllCustomers();
+    }
+    
+    function operationOnCustomerKo(){
+    	$scope.textAlert = "Operazione terminata con ERRORE. " ;
+    	$scope.showInfoAlert = false;
+    	$scope.showErrorAlert = true;
+        fetchAllCustomers();
     }
 
 }]);
