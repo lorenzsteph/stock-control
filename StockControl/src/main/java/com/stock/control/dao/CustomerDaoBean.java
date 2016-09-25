@@ -72,7 +72,7 @@ public class CustomerDaoBean extends AbstractDaoBean implements CustomerDao {
 			public Customer extractData(ResultSet rs) throws SQLException, DataAccessException {
 				if (rs.next()) {
 					Customer customer = new Customer();
-					customer.setIdCustomer(rs.getInt("ID_CUSTOMER"));
+					customer.setIdCustomer(rs.getLong("ID_CUSTOMER"));
 					customer.setDescr(rs.getString("DESCR"));
 					customer.setDateEndValidity(rs.getDate("DATE_END_VALIDITY"));
 					return customer;
@@ -94,7 +94,7 @@ public class CustomerDaoBean extends AbstractDaoBean implements CustomerDao {
 			public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Customer customer = new Customer();
 
-				customer.setIdCustomer(rs.getInt("ID_CUSTOMER"));
+				customer.setIdCustomer(rs.getLong("ID_CUSTOMER"));
 				customer.setDescr(rs.getString("DESCR"));
 				customer.setDateEndValidity(rs.getDate("DATE_END_VALIDITY"));
 				return customer;

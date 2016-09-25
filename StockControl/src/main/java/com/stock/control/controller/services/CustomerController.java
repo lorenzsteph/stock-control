@@ -1,4 +1,4 @@
-package com.stock.control.controller;
+package com.stock.control.controller.services;
 
 import java.util.List;
 

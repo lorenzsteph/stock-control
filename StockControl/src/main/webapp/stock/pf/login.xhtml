@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"  >
+
+<h:head>
+	<!-- <link href="${request.contextPath}/static/css/stock-pf.css" rel="stylesheet" /> -->
+	<title>Stock</title>
+</h:head>
+<h:body>
+	<p:ajaxStatus styleClass="progressIndicator" id="ajaxStatusPanel">
+		<f:facet name="start">
+			<h:graphicImage value="/static/img/ajax-loader.gif" />
+		</f:facet>
+
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+	<h:form>
+		<p:growl id="growl" showDetail="true" />
+
+		<p:panel >
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{testBean.test}"/>
+				<p:inputText value="#{testBean.test}" />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

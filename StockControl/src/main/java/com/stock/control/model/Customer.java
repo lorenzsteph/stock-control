@@ -2,19 +2,30 @@ package com.stock.control.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table (name ="customer")
 public class Customer {
 
-	private long idCustomer;
+	@Id
+    @Column (name="id_customer")
+	private Long idCustomer;
 
+	@Column (name="descr")
 	private String descr;
 
+	@Column (name="date_end_validity")
 	private Date dateEndValidity;
 
-	public long getIdCustomer() {
+	public Long getIdCustomer() {
 		return idCustomer;
 	}
 
-	public void setIdCustomer(long idCustomer) {
+	public void setIdCustomer(Long idCustomer) {
 		this.idCustomer = idCustomer;
 	}
 

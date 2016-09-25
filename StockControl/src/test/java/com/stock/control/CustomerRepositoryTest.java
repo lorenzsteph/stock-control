@@ -8,25 +8,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.stock.control.dao.CustomerDao;
+import com.stock.control.dao.repository.CustomerRepository;
 import com.stock.control.model.Customer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 // @ContextConfiguration(classes = StockConfiguration.class)
 @WebAppConfiguration
-public class CustomerDaoTest {
+public class CustomerRepositoryTest {
 
-	private static final Logger log = LoggerFactory.getLogger(CustomerDaoTest.class);
+	private static final Logger log = LoggerFactory.getLogger(CustomerRepositoryTest.class);
 
 	@Autowired
-	private CustomerDao clienteDao;
+	private CustomerRepository customerRepository;
 
 	@Test
 	public void saveOrUpdateTest() throws Exception {
 		log.debug("start test saveOrUpdateTest");
-		Customer c = new Customer();
-		c.setDescr("aaaaaaa");
-		clienteDao.saveOrUpdate(c);
+		Customer customer = new Customer();
+		customer.setDescr("test");
+		customer.setIdCustomer(0L);
+		customerRepository.save(customer);
 	}
 
 }
