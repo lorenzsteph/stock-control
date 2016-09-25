@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -23,7 +22,7 @@ import com.stock.control.configuration.properties.JdbcProperties;
 @Configuration
 @ComponentScan(basePackages = "com.stock.control")
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.stock.control.dao.repository")
+@EnableJpaRepositories(basePackages = "com.stock.control.dao")
 @PropertySources({ @PropertySource(value = "classpath:jdbc.properties", ignoreResourceNotFound = false), @PropertySource(value = "classpath:stock.properties", ignoreResourceNotFound = false) })
 public class JPAConfiguration {
 
@@ -48,11 +47,6 @@ public class JPAConfiguration {
 		JpaTransactionManager txManager = new JpaTransactionManager();
 		txManager.setEntityManagerFactory(entityManagerFactory());
 		return txManager;
-	}
-
-	@Bean
-	public DataSourceTransactionManager stockTransactionManager() {
-		return new DataSourceTransactionManager(dataSourceStock());
 	}
 
 	@Bean

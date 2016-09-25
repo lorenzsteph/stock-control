@@ -5,14 +5,17 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.stock.control.dao.repository.CustomerRepository;
+import com.stock.control.configuration.JPAConfiguration;
+import com.stock.control.configuration.MvcConfiguration;
+import com.stock.control.dao.CustomerRepository;
 import com.stock.control.model.Customer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-// @ContextConfiguration(classes = StockConfiguration.class)
+@ContextConfiguration(classes = { JPAConfiguration.class, MvcConfiguration.class })
 @WebAppConfiguration
 public class CustomerRepositoryTest {
 

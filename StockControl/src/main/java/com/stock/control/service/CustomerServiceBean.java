@@ -7,34 +7,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stock.control.dao.CustomerDao;
+import com.stock.control.dao.CustomerRepository;
 import com.stock.control.model.Customer;
 
 @Service
-@Transactional(value = "stockTransactionManager", propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = java.lang.Exception.class)
+@Transactional(value = "transactionManager", propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = java.lang.Exception.class)
 public class CustomerServiceBean implements CustomerService {
 
 	@Autowired
-	private CustomerDao customerDao;
+	private CustomerRepository customerRepository;
 
 	@Override
-	public int saveOrUpdateCustomer(Customer customer) {
-		return customerDao.saveOrUpdate(customer);
+	public Customer saveOrUpdateCustomer(Customer customer) {
+		return customerRepository.save(customer);
 	}
 
 	@Override
-	public int deleteCustomer(int idCustomer) {
-		return customerDao.delete(idCustomer);
+	public void deleteCustomer(int idCustomer) {
+		customerRepository.delete(Long.valueOf(idCustomer));
 	}
 
 	@Override
 	public Customer getCustomer(int idCustomer) {
-		return customerDao.getCustomer(idCustomer);
+		return customerRepository.findOne(Long.valueOf(idCustomer));
 	}
 
 	@Override
 	public List<Customer> getAllCustomer() {
-		return customerDao.getAllCustomer();
+		return (List<Customer>) customerRepository.findAll();
 	}
 
 }
