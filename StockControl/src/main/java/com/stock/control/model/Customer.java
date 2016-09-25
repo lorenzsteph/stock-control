@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Table (name ="customer")
 public class Customer {
 
+	
 	@Id
     @Column (name="id_customer")
 	private Long idCustomer;
