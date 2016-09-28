@@ -36,8 +36,8 @@ public class StockControlInitializer implements WebApplicationInitializer {
 		container.setInitParameter("javax.faces.FACELETS_DEVELOPMENT", "true");
 		container.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
 		container.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "0");
-		container.setInitParameter("primefaces.THEME", "glass-x");
-
+		container.setInitParameter("primefaces.THEME", "adamantium");
+		container.setInitParameter("javax.faces.FACELETS_LIBRARIES", "/WEB-INF/primefaces-adamantium.taglib.xml");
 	}
 
 }

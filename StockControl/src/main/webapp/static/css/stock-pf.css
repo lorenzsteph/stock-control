@@ -1,0 +1,117 @@
+.progressIndicator {
+	width: 64px;
+	height: 64px;
+	position: fixed;
+	right: 50%;
+	bottom: 50%;
+	z-index: 3000;
+}
+
+.header-panel {
+	border: none;
+}
+
+.main .ui-layout-pane-north .ui-layout-unit-content {
+	height: 70px !important;
+}
+
+.layout-header {
+	height: 70px !important;
+	width: 97% !important;
+	border: none;
+	top: 0px !important;
+	margin-left: 15px !important;
+}
+
+.main .ui-layout-unit {
+	visibility: hidden !important;
+}
+
+.separator-head {
+	border: none !important;
+	height: 2px;
+	background-color: #2e92cf !important;
+	margin-left: 15px;
+	margin-right: 15px
+}
+
+.ui-container-west {
+	border: none;
+	top: 90px !important;
+	left: 0px !important;
+	height: 520px !important;
+	margin: 0px;
+	margin-left: 15px !important;
+	padding: 0px;
+}
+
+.class-container {
+	margin-right: 3px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.menu-icon-panel {
+	border: none;
+	width: 160px;
+	height: 50px;
+	background-color: #2e92cf;
+	margin: 1px;
+	margin-right: 2px;
+	margin-bottom: 1px;
+	position: relative;
+	display: block;
+	border-radius: 0px;
+}
+
+.menu-icon-panel .ui-panel-content {
+	margin: auto;
+	width: 45%;
+	padding: 10px;
+}
+
+.class-container-west {
+	border: 0px !important;
+}
+
+.class-container-west .ui-panelgrid-cell a {
+	text-decoration: none;
+}
+
+.class-container-west .ui-panelgrid-cell, .class-container-west .ui-widget-content {
+	border-width: 0px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+
+.menu-icon-panel>div {
+	padding-top: 12px !important;
+}
+
+.icon-template {
+	width: 54px;
+	height: 58px;
+	right: 2px;
+	position: relative;
+	border: 0px;
+}
+
+.menu-icon-label {
+	border: none;
+	color: white;
+	font-size: 1em;
+	position: relative;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+.layout-center>div {
+	width: 90%;
+}
+
+.ui-tooltip {
+	background-color : transparent;
+}

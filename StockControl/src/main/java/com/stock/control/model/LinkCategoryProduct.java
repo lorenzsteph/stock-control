@@ -1,5 +1,6 @@
 package com.stock.control.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,34 +9,35 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table (name ="link_category_product")
-public class LinkCategoryProduct {
+@Table(name = "link_category_product")
+public class LinkCategoryProduct implements Serializable {
 
-	
+	private static final long serialVersionUID = 3881807203256643373L;
+
 	@Id
-    @Column (name="id_customer")
-	private Long idCustomer;
+	@Column(name = "id_category")
+	private Long idCategory;
 
-	@Column (name="descr")
-	private String descr;
+	@Column(name = "id_product")
+	private Long idProduct;
 
-	@Column (name="date_end_validity")
+	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
-	public Long getIdCustomer() {
-		return idCustomer;
+	public Long getIdCategory() {
+		return idCategory;
 	}
 
-	public void setIdCustomer(Long idCustomer) {
-		this.idCustomer = idCustomer;
+	public void setIdCategory(Long idCategory) {
+		this.idCategory = idCategory;
 	}
 
-	public String getDescr() {
-		return descr;
+	public Long getIdProduct() {
+		return idProduct;
 	}
 
-	public void setDescr(String descr) {
-		this.descr = descr;
+	public void setIdProduct(Long idProduct) {
+		this.idProduct = idProduct;
 	}
 
 	public Date getDateEndValidity() {

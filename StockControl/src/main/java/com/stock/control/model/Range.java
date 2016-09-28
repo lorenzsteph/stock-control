@@ -1,33 +1,61 @@
 package com.stock.control.model;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table (name ="range")
-public class Range {
+@Table(name = "range")
+public class Range implements Serializable {
 
-	
+	private static final long serialVersionUID = -8598214084832322863L;
+
 	@Id
-    @Column (name="id_customer")
-	private Long idCustomer;
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	@Column(name = "id_range")
+	private Long idRange;
 
-	@Column (name="descr")
+	@Column(name = "color")
+	private String color;
+
+	@Column(name = "selling_price")
+	private BigDecimal sellingPrice;
+
+	@Column(name = "descr")
 	private String descr;
 
-	@Column (name="date_end_validity")
+	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
-	public Long getIdCustomer() {
-		return idCustomer;
+	public Long getIdRange() {
+		return idRange;
 	}
 
-	public void setIdCustomer(Long idCustomer) {
-		this.idCustomer = idCustomer;
+	public void setIdRange(Long idRange) {
+		this.idRange = idRange;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public BigDecimal getSellingPrice() {
+		return sellingPrice;
+	}
+
+	public void setSellingPrice(BigDecimal sellingPrice) {
+		this.sellingPrice = sellingPrice;
 	}
 
 	public String getDescr() {

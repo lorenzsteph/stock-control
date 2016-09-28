@@ -1,5 +1,7 @@
 package com.stock.control.model;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,34 +10,57 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table (name ="link_order")
-public class LinkOrder {
+@Table(name = "link_order")
+public class LinkOrder implements Serializable {
 
-	
+	private static final long serialVersionUID = 1666813845981148173L;
+
 	@Id
-    @Column (name="id_customer")
-	private Long idCustomer;
+	@Column(name = "id_link_order")
+	private Long idLinkOrder;
 
-	@Column (name="descr")
-	private String descr;
+	@Column(name = "id_customer_order")
+	private Long idCustomerOrder;
 
-	@Column (name="date_end_validity")
+	@Column(name = "id_stockist_order_product")
+	private Long idStockistOrderProduct;
+
+	@Column(name = "real_selling_price")
+	private BigDecimal realSellingPrice;
+
+	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
-	public Long getIdCustomer() {
-		return idCustomer;
+	public Long getIdLinkOrder() {
+		return idLinkOrder;
 	}
 
-	public void setIdCustomer(Long idCustomer) {
-		this.idCustomer = idCustomer;
+	public void setIdLinkOrder(Long idLinkOrder) {
+		this.idLinkOrder = idLinkOrder;
 	}
 
-	public String getDescr() {
-		return descr;
+	public Long getIdCustomerOrder() {
+		return idCustomerOrder;
 	}
 
-	public void setDescr(String descr) {
-		this.descr = descr;
+	public void setIdCustomerOrder(Long idCustomerOrder) {
+		this.idCustomerOrder = idCustomerOrder;
+	}
+
+	public Long getIdStockistOrderProduct() {
+		return idStockistOrderProduct;
+	}
+
+	public void setIdStockistOrderProduct(Long idStockistOrderProduct) {
+		this.idStockistOrderProduct = idStockistOrderProduct;
+	}
+
+	public BigDecimal getRealSellingPrice() {
+		return realSellingPrice;
+	}
+
+	public void setRealSellingPrice(BigDecimal realSellingPrice) {
+		this.realSellingPrice = realSellingPrice;
 	}
 
 	public Date getDateEndValidity() {

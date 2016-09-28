@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/stock/pf/template-stock.xhtml">
+	<ui:define name="title">title</ui:define>
+	<ui:define name="body">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" />
+			<p:dataTable var="customer" value="#{customerCtrl.customerDataModel}" paginator="true" rows="10" paginatorPosition="bottom"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{customerCtrl.selectedCustomer}" id="customerTable"
+				lazy="true">
+				<p:ajax event="rowSelect" listener="#{customerCtrl.onRowSelect}" />
+				<f:facet name="header">
+		            Customer
+		        </f:facet>
+				<p:column headerText="Cliente" sortBy="#{customer.idCustomer}" filterBy="#{customer.idCustomer}">
+					<h:outputText value="#{customer.idCustomer}" />
+				</p:column>
+				<p:column headerText="Descrizione" sortBy="#{customer.descr}" filterBy="#{customer.descr}">
+					<h:outputText value="#{customer.descr}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -14,10 +14,8 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<postgresql.version>9.1-901.jdbc4</postgresql.version>
 		<hibernate.version>5.0.0.Final</hibernate.version>
-
 		<hibernate-jpa-2.1-api.version>1.0.0.Final</hibernate-jpa-2.1-api.version>
 		<spring-data-jpa.version>1.8.2.RELEASE</spring-data-jpa.version>
-
 		<junit.version>4.12</junit.version>
 	</properties>
 
@@ -164,6 +162,16 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.2</version>
 				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Environment>${env}</Implementation-Environment>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+						</manifestEntries>
+					</archive>
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
