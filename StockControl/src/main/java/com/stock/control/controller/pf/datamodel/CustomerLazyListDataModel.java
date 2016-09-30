@@ -40,7 +40,7 @@ public class CustomerLazyListDataModel extends LazyDataModel<Customer> {
 	@Override
 	public Customer getRowData(String rowKey) {
 		for (Customer c : dataModel) {
-			if (c.getIdCustomer().equals(rowKey)) {
+			if (c.getIdCustomer() == Long.parseLong(rowKey)) {
 				return c;
 			}
 		}

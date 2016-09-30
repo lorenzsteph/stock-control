@@ -7,36 +7,6 @@
 
 	<title>Stock Control<ui:insert name="title" />
 	</title>
-	<script type="text/Javascript">
-		$(document).ready(
-				function() {
-					var valMenuSelected = $("[id='form:menuSelected']").val();
-					$("[id='form-menu:" + valMenuSelected + "']").addClass(
-							"menu-selected");
-
-				});
-
-		function headerPosition() {
-			if ($(window).scrollTop() > 0) {
-				$('[id=panelNorth]').addClass("shadow");
-			} else {
-				$('[id=panelNorth]').removeClass("shadow");
-			}
-		}
-
-		$(window).scroll(function() {
-			headerPosition();
-		});
-
-		function expOneRow() {
-			var i = $('.ui-row-toggler.ui-icon-circle-triangle-s').length;
-			if (i == 1) {
-				return;
-			}
-			$('.ui-row-toggler.ui-icon-circle-triangle-s').trigger('click');
-		}
-	</script>
-
 </h:head>
 <h:body styleClass="main">
 	<p:ajaxStatus styleClass="progressIndicator" id="ajaxStatusPanel">
@@ -53,7 +23,7 @@
 
 		<p:layoutUnit position="west" size="200" resizable="true" closable="true" collapsible="true">
 			<ui:insert name="header">
-				<ui:include src="/stock/pf/west.xhtml" />
+				<ui:include src="/stock/pf/west-menu.xhtml" />
 			</ui:insert>
 		</p:layoutUnit>
 

@@ -39,6 +39,7 @@ CREATE TABLE range (
 );
 
 CREATE TABLE link_stockist_brand (
+		id_link_stockist_brand serial PRIMARY KEY,
         id_stockist INTEGER REFERENCES stockist (id_stockist),
         id_brand INTEGER REFERENCES brand (id_brand),
         date_end_validity date,

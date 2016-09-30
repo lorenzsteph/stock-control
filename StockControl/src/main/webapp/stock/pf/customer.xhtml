@@ -12,10 +12,10 @@
 				<f:facet name="header">
 		            Customer
 		        </f:facet>
-				<p:column headerText="Cliente" sortBy="#{customer.idCustomer}" filterBy="#{customer.idCustomer}">
+				<p:column headerText="Cliente" sortBy="#{customer.idCustomer}">
 					<h:outputText value="#{customer.idCustomer}" />
 				</p:column>
-				<p:column headerText="Descrizione" sortBy="#{customer.descr}" filterBy="#{customer.descr}">
+				<p:column headerText="Descrizione" sortBy="#{customer.descr}">
 					<h:outputText value="#{customer.descr}" />
 				</p:column>
 			</p:dataTable>

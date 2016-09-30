@@ -2,31 +2,37 @@ package com.stock.control.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table (name ="stockist")
+@Table(name = "stockist")
 public class Stockist implements Serializable {
 
-	
 	private static final long serialVersionUID = -5706970871079524197L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-    @Column (name="id_stockist")
+	@Column(name = "id_stockist")
 	private Long idStockist;
 
-	@Column (name="descr")
+	@Column(name = "descr")
 	private String descr;
 
-	@Column (name="date_end_validity")
+	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
+
+	@OneToMany(mappedBy = "stockist", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	private Set<LinkStockistBrand> linkStockistBrand;
 
 	public Long getIdStockist() {
 		return idStockist;
@@ -50,6 +56,14 @@ public class Stockist implements Serializable {
 
 	public void setDateEndValidity(Date dateEndValidity) {
 		this.dateEndValidity = dateEndValidity;
+	}
+
+	public Set<LinkStockistBrand> getLinkStockistBrand() {
+		return linkStockistBrand;
+	}
+
+	public void setLinkStockistBrand(Set<LinkStockistBrand> linkStockistBrand) {
+		this.linkStockistBrand = linkStockistBrand;
 	}
 
 }

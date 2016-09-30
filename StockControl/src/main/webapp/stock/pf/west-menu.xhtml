@@ -4,21 +4,21 @@
 	<ui:composition>
 		<h:form id="form-menu">
 			<p:panelGrid id="panelTemplate" columns="1" styleClass="class-container-west">
-				<p:commandLink action="#{navigationBean.goToPageSelected('/home.xhtml?faces-redirect=true')}" ajax="false">
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/home.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="home" styleClass="menu-icon-panel">
 						<h:outputLabel value="Home" styleClass="menu-icon-label" />
 					</p:panel>
 
 				</p:commandLink>
 
-				<p:commandLink action="#{navigationBean.goToPageSelected('/gestione-calcolo.xhtml?faces-redirect=true')}" ajax="false">
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="stockist" styleClass="menu-icon-panel">
 						<h:outputLabel value="Stockist" styleClass="menu-icon-label" />
 					</p:panel>
 
 				</p:commandLink>
 
-				<p:commandLink action="#{navigationBean.goToPageSelected('/gestione-calcolo.xhtml?faces-redirect=true')}" ajax="false">
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="customer" styleClass="menu-icon-panel">
 						<h:outputLabel value="Customer" styleClass="menu-icon-label" />
 					</p:panel>
