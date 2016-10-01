@@ -47,18 +47,21 @@ CREATE TABLE link_stockist_brand (
 );
 
 CREATE TABLE link_brand_category (
+		id_link_brand_category serial PRIMARY KEY,
         id_brand INTEGER REFERENCES brand (id_brand),
         id_category INTEGER REFERENCES category (id_category),      
         date_end_validity date,
         UNIQUE (id_category,id_brand)
 );
 CREATE TABLE link_category_product (
+		id_link_category_product serial PRIMARY KEY,
         id_category INTEGER REFERENCES category (id_category),    
         id_product INTEGER REFERENCES product (id_product),  
         date_end_validity date,
         UNIQUE (id_category,id_product)
 );
 CREATE TABLE link_product_range (
+		id_link_product_range serial PRIMARY KEY,
         id_range INTEGER REFERENCES range (id_range),    
         id_product INTEGER REFERENCES product (id_product),  
         date_end_validity date,
@@ -79,6 +82,7 @@ CREATE TABLE stockist_order (
         UNIQUE (descr)
 );
 CREATE TABLE link_order (
+		id_link_order serial PRIMARY KEY,
         id_customer_order INTEGER REFERENCES customer_order (id_customer_order),    
         id_stockist_order INTEGER REFERENCES stockist_order (id_stockist_order),  
         date_end_validity date,

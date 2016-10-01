@@ -48,7 +48,8 @@ public class StockistControllerBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		selectedRecordBean.setStockist((Stockist) event.getObject());
-
+		
+		
 	}
 
 	public StockistLazyListDataModel getStockistDataModel() {

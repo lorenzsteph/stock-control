@@ -24,12 +24,13 @@ public class LinkStockistBrand implements Serializable {
 	@Column(name = "id_link_stockist_brand")
 	private Long idLinkStockistBrand;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_stockist")
 	private Stockist stockist;
 
-	@Column(name = "id_brand")
-	private Long idBrand;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_brand")
+	private Brand brand;
 
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
@@ -40,14 +41,6 @@ public class LinkStockistBrand implements Serializable {
 
 	public void setStockist(Stockist stockist) {
 		this.stockist = stockist;
-	}
-
-	public Long getIdBrand() {
-		return idBrand;
-	}
-
-	public void setIdBrand(Long idBrand) {
-		this.idBrand = idBrand;
 	}
 
 	public Date getDateEndValidity() {
@@ -64,6 +57,14 @@ public class LinkStockistBrand implements Serializable {
 
 	public void setIdLinkStockistBrand(Long idLinkStockistBrand) {
 		this.idLinkStockistBrand = idLinkStockistBrand;
+	}
+
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
 	}
 
 }

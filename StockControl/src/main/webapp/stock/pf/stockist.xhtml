@@ -5,38 +5,80 @@
 	<ui:define name="body">
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
-			<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="10" paginatorPosition="bottom"
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{stockistCtrl.selectedStockist}" id="stockistTable"
-				lazy="true">
-				<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" update=":form:growl" />
-				<f:facet name="header">
-		            Stockist
-		        </f:facet>
-				<p:column style="width:16px">
-					<p:rowToggler />
-				</p:column>
-				<p:column headerText="Cliente" sortBy="#{stockist.idStockist}">
-					<h:outputText value="#{stockist.idStockist}" />
-				</p:column>
-				<p:column headerText="Descrizione" sortBy="#{stockist.descr}">
-					<h:outputText value="#{stockist.descr}" />
-				</p:column>
-				<p:rowExpansion>
-					<p:panelGrid columns="2" columnClasses="label,value" style="width:300px">
-						<p:dataTable var="linkStockistBrand" value="#{stockist.linkStockistBrand}" id="stockistBrandTable">
-							<f:facet name="header">
-		            			Stockist brand
-		        			</f:facet>
-							<p:column headerText="Cliente">
-								<h:outputText value="#{linkStockistBrand.idLinkStockistBrand}" />
-							</p:column>
-						</p:dataTable>
+			<p:panelGrid columns="1" styleClass="panel-top-stockist">
+				<p:panel >
+					<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{stockistCtrl.selectedStockist}" id="stockistTable">
+
+						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" update=":form:growl :form:brand  :form:category :form:product :form:range" />
+
+						<f:facet name="header">
+				            Stockist
+				        </f:facet>
+						<p:column headerText="Cliente" sortBy="#{stockist.idStockist}">
+							<h:outputText value="#{stockist.idStockist}" />
+						</p:column>
+						<p:column headerText="Descrizione" sortBy="#{stockist.descr}">
+							<h:outputText value="#{stockist.descr}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:spacer/>
+			</p:panelGrid>
+			<p:panelGrid columns="4" columnClasses="col-stockist-1,col-stockist-2,col-stockist-3,col-stockist-4" styleClass="panel-central-stockist">	
+				<p:panel id="brand" >
+					<p:dataTable id="brandTable" rendered="#{selectedRecordBean.stockist == null?'false':'true'}" var="linkStockistBrand" value="#{brandCtrl.brandDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{brandCtrl.selectedLinkStockistBrand}">
+
+						<p:ajax event="rowSelect" listener="#{brandCtrl.onRowSelect}" update=":form:growl :form:category :form:product  :form:range" />
+						<p:column headerText="Brand">
+							<h:outputText value="#{linkStockistBrand.brand.descr}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:panel id="category" >
+					<p:dataTable id="categoryTable" rendered="#{selectedRecordBean.brand == null?'false':'true'}" var="linkBrandCategory" value="#{categoryCtrl.categoryDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{categoryCtrl.selectedLinkBrandCategory}">
+
+						<p:ajax event="rowSelect" listener="#{categoryCtrl.onRowSelect}" update=":form:growl :form:product  :form:range" />
+						<p:column headerText="Brand">
+							<h:outputText value="#{linkBrandCategory.category.descr}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:panel id="product" >
+					<p:dataTable id="productTable" rendered="#{selectedRecordBean.category == null?'false':'true'}" var="linkCategoryProduct" value="#{productCtrl.productDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{productCtrl.selectedLinkCategoryProduct}">
+
+						<p:ajax event="rowSelect" listener="#{productCtrl.onRowSelect}" update=":form:growl :form:product :form:range" />
+						<p:column headerText="Code">
+							<h:outputText value="#{linkCategoryProduct.product.codProduct}" />
+						</p:column>
+						<p:column headerText="Product">
+							<h:outputText value="#{linkCategoryProduct.product.descr}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				
+				<p:panel id="range" >
+					<p:dataTable id="rangeTable" rendered="#{selectedRecordBean.product == null?'false':'true'}" var="linkProductRang" value="#{rangeCtrl.rangeDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{rangeCtrl.selectedLinkProductRange}">
+
+						<p:ajax event="rowSelect" listener="#{rangeCtrl.onRowSelect}" update=":form:growl :form:range" />
+						<p:column headerText="Color">
+							<h:outputText value="#{linkProductRang.range.color}" />
+						</p:column>
+						<p:column headerText="Description">
+							<h:outputText value="#{linkProductRang.range.descr}" />
+						</p:column>
+						<p:column headerText="Selling price">
+							<h:outputText value="#{linkProductRang.range.sellingPrice}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
 
 
-
-					</p:panelGrid>
-				</p:rowExpansion>
-			</p:dataTable>
+			</p:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -2,12 +2,16 @@ package com.stock.control.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +30,12 @@ public class Product implements Serializable {
 
 	@Column(name = "descr")
 	private String descr;
+
+	@OneToMany(mappedBy = "product", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	private Set<LinkProductRange> linkProductRange;
+
+	@OneToMany(mappedBy = "product", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	private Set<LinkCategoryProduct> linkCategoryProduct;
 
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
@@ -60,6 +70,22 @@ public class Product implements Serializable {
 
 	public void setDateEndValidity(Date dateEndValidity) {
 		this.dateEndValidity = dateEndValidity;
+	}
+
+	public Set<LinkCategoryProduct> getLinkCategoryProduct() {
+		return linkCategoryProduct;
+	}
+
+	public void setLinkCategoryProduct(Set<LinkCategoryProduct> linkCategoryProduct) {
+		this.linkCategoryProduct = linkCategoryProduct;
+	}
+
+	public Set<LinkProductRange> getLinkProductRange() {
+		return linkProductRange;
+	}
+
+	public void setLinkProductRange(Set<LinkProductRange> linkProductRange) {
+		this.linkProductRange = linkProductRange;
 	}
 
 }

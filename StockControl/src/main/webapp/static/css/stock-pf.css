@@ -104,7 +104,7 @@
 	font-weight: bold;
 	text-align: center;
 	text-decoration: none;
-	cursor: pointer;
+	cursor: pointer;*
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
@@ -113,5 +113,18 @@
 }
 
 .ui-tooltip {
-	background-color : transparent;
+	background-color: transparent;
+}
+
+.col-stockist-1, .col-stockist-2, .col-stockist-3, .col-stockist-4 {
+	width: 25%;
+	vertical-align: initial;
+}
+
+.panel-top-stockist, .panel-top-stockist .ui-panelgrid-cell,  .panel-top-stockist .ui-panel{
+	border: none;
+}
+
+.panel-central-stockist, .panel-central-stockist .ui-panelgrid-cell,  .panel-central-stockist .ui-panel{
+	border: none;
 }
