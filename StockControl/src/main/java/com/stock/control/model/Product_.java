@@ -6,5 +6,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Product.class)
 public class Product_ {
 	public static volatile SingularAttribute<Product, Long> idProduct;
+	public static volatile SingularAttribute<Product, String> codProduct;
 	public static volatile SingularAttribute<Product, Category> category;
 }

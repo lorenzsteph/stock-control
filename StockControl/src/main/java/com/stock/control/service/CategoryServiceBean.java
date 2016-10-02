@@ -22,4 +22,9 @@ public class CategoryServiceBean implements CategoryService {
 		return categoryRepository.findCategoryByIdBrand(idBrand);
 	}
 
+	@Override
+	public List<Category> findAllCategory() {
+		return (List<Category>) categoryRepository.findAll();
+	}
+
 }

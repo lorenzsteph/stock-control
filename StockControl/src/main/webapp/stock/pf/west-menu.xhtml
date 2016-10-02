@@ -8,23 +8,25 @@
 					<p:panel id="home" styleClass="menu-icon-panel">
 						<h:outputLabel value="Home" styleClass="menu-icon-label" />
 					</p:panel>
-
 				</p:commandLink>
 
 				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="stockist" styleClass="menu-icon-panel">
 						<h:outputLabel value="Stockist" styleClass="menu-icon-label" />
 					</p:panel>
-
 				</p:commandLink>
 
 				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="customer" styleClass="menu-icon-panel">
 						<h:outputLabel value="Customer" styleClass="menu-icon-label" />
 					</p:panel>
-
 				</p:commandLink>
 
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/storehouse.xhtml?faces-redirect=true')}" ajax="false">
+					<p:panel id="storehouse" styleClass="menu-icon-panel">
+						<h:outputLabel value="Storehouse" styleClass="menu-icon-label" />
+					</p:panel>
+				</p:commandLink>
 
 			</p:panelGrid>
 			<p:tooltip for="home" value="Home" />

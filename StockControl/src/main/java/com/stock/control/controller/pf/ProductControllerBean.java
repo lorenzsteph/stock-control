@@ -43,11 +43,21 @@ public class ProductControllerBean implements Serializable {
 		productDataModel = new ProductLazyListDataModel(productService, selectedRecordBean);
 		selectedProduct = null;
 	}
-	
-	public void deleteProduct(){
-			productService.deleteProduct(selectedProduct);
-			FacesMessage msg = new FacesMessage("Product deleted");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+
+	public void deleteProduct() {
+		productService.deleteProduct(selectedProduct);
+		FacesMessage msg = new FacesMessage("Product deleted");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void addProduct() {
+		Product newProduct = new Product();
+		newProduct.setCodProduct(" ");
+		newProduct.setBrand(selectedRecordBean.getBrand());
+		newProduct.setCategory(selectedRecordBean.getCategory());
+		newProduct = productService.saveProduct(newProduct);
+		FacesMessage msg = new FacesMessage("Product added id : " + newProduct.getIdProduct());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public void onRowSelect(SelectEvent event) {
@@ -59,11 +69,14 @@ public class ProductControllerBean implements Serializable {
 
 	public void onRowEdit(RowEditEvent event) {
 		Product productEdit = (Product) event.getObject();
+		if (productEdit.getCodProduct() != null) {
+			productEdit.setCodProduct(productEdit.getCodProduct().trim());
+		}
 		productEdit = productService.saveProduct(productEdit);
-		
+
 		FacesMessage msg = new FacesMessage("Product Edited", productEdit.getDescr());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-		
+
 	}
 
 	public void onRowCancel(RowEditEvent event) {

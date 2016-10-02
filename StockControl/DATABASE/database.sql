@@ -50,6 +50,7 @@ CREATE TABLE customer_order (
         date_end_validity date
 );
 
+
 CREATE TABLE stockist_order (
         id_stockist_order serial PRIMARY KEY,
 		date_order date,
@@ -65,7 +66,6 @@ CREATE TABLE stockist_order_product (
         id_stockist_order INTEGER,
 		id_stockist INTEGER REFERENCES stockist (id_stockist), 
 		id_brand INTEGER REFERENCES brand (id_brand),
-		id_category INTEGER REFERENCES category (id_category),
 		id_product INTEGER REFERENCES product (id_product), 
 		price numeric,
         descr CHARACTER VARYING(255),
@@ -83,5 +83,20 @@ CREATE TABLE link_order (
 );
 							
 
-
+CREATE or replace VIEW storehouse AS 
+SELECT s.descr as stockist, b.descr as brand, c.descr as category, p.cod_product, p.descr as product, p.range, p.selling_price,
+        asd.price as price_order, asd.tot as store_total, asd.price * asd.tot as store_price 
+FROM stockist s join brand b
+        on s.id_stockist = b.id_stockist
+     join product p
+        on b.id_brand = p.id_brand
+     join category c
+        on c.id_category = p.id_category   
+     left join (select  count(*) tot, price, id_product 
+         from stockist_order_product sop LEFT JOIN link_order lo
+                ON sop.id_stockist_order_product = lo.id_stockist_order_product 
+         WHERE lo.id_link_order is null
+         group by id_stockist, id_brand, id_product, price
+         ) as asd
+      on asd.id_product = p.id_product   
 						

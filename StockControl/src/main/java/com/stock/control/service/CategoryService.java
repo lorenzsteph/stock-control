@@ -8,4 +8,6 @@ public interface CategoryService {
 
 	List<Category> findCategoryByIdBrand(long idBrand);
 
+	List<Category> findAllCategory();
+
 }

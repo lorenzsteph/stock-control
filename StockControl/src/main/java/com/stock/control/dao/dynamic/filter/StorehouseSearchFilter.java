@@ -7,25 +7,23 @@ import java.util.List;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 
-import com.stock.control.model.Product_;
-
-public class ProductSearchFilter implements Serializable {
+public class StorehouseSearchFilter implements Serializable {
 
 	private static final long serialVersionUID = -1585612142057165754L;
 
-	private long idCategory;
+	private String category;
 
 	private List<Order> order;
 
-	public ProductSearchFilter() {
+	public StorehouseSearchFilter() {
 
 		initDefaultFilter();
 	}
 
-	private void initDefaultFilter() {
+	public void initDefaultFilter() {
 		List<Order> order = new ArrayList<Order>();
 
-		Order orderName = new Order(Direction.ASC, Product_.codProduct.getName());
+		Order orderName = new Order(Direction.ASC, "id");
 		order.add(orderName);
 
 		setOrder(order);
@@ -40,12 +38,12 @@ public class ProductSearchFilter implements Serializable {
 		this.order = order;
 	}
 
-	public long getIdCategory() {
-		return idCategory;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setIdCategory(long idCategory) {
-		this.idCategory = idCategory;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }

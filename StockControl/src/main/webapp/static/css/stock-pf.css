@@ -104,7 +104,7 @@
 	font-weight: bold;
 	text-align: center;
 	text-decoration: none;
-	cursor: pointer;*
+	cursor: pointer; *
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
@@ -125,10 +125,16 @@
 	width: 30%;
 	vertical-align: initial;
 }
-.panel-top-stockist, .panel-top-stockist .ui-panelgrid-cell,  .panel-top-stockist .ui-panel{
+
+.panel-top-stockist, .panel-top-stockist .ui-panelgrid-cell, .panel-top-stockist .ui-panel {
 	border: none;
 }
 
-.panel-central-stockist, .panel-central-stockist .ui-panelgrid-cell,  .panel-central-stockist .ui-panel{
+.panel-central-stockist, .panel-central-stockist .ui-panelgrid-cell, .panel-central-stockist .ui-panel {
 	border: none;
+}
+
+a.ui-state-hover {
+	color: white !important;
+	background-color: #26a69a !important;
 }
