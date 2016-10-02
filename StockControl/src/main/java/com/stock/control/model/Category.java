@@ -11,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,10 +27,6 @@ public class Category implements Serializable {
 
 	@Column(name = "descr")
 	private String descr;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_brand")
-	private Brand brand;
 
 	@OneToMany(mappedBy = "category", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
 	private Set<Product> product;
@@ -62,14 +56,6 @@ public class Category implements Serializable {
 
 	public void setDateEndValidity(Date dateEndValidity) {
 		this.dateEndValidity = dateEndValidity;
-	}
-
-	public Brand getBrand() {
-		return brand;
-	}
-
-	public void setBrand(Brand brand) {
-		this.brand = brand;
 	}
 
 	public Set<Product> getProduct() {

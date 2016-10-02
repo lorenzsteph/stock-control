@@ -6,11 +6,11 @@
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
 			<p:panelGrid columns="1" styleClass="panel-top-stockist">
-				<p:panel >
+				<p:panel>
 					<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{stockistCtrl.selectedStockist}" id="stockistTable">
 
-						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" update=":form:growl :form:brand  :form:category :form:product" />
+						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" update=":form:growl :form:brand :form:product" />
 
 						<f:facet name="header">
 				            Stockist
@@ -23,21 +23,20 @@
 						</p:column>
 					</p:dataTable>
 				</p:panel>
-				<p:spacer/>
+				<p:spacer />
 			</p:panelGrid>
-			<p:panelGrid columns="4" columnClasses="col-stockist-1,col-stockist-2,col-stockist-3" styleClass="panel-central-stockist">	
-				<p:panel id="brand" >
+			<p:panelGrid columns="2" columnClasses="col-stockist-1,col-stockist-2" styleClass="panel-central-stockist">
+				<p:panel id="brand">
 					<p:dataTable id="brandTable" rendered="#{selectedRecordBean.stockist == null?'false':'true'}" var="brand" value="#{brandCtrl.brandDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{brandCtrl.selectedBrand}">
 
-						<p:ajax event="rowSelect" listener="#{brandCtrl.onRowSelect}" update=":form:growl :form:category :form:product " />
+						<p:ajax event="rowSelect" listener="#{brandCtrl.onRowSelect}" update=":form:growl :form:product :form:category " />
 						<p:column headerText="Brand">
 							<h:outputText value="#{brand.descr}" />
 						</p:column>
 					</p:dataTable>
-				</p:panel>
-				<p:panel id="category" >
-					<p:dataTable id="categoryTable" rendered="#{selectedRecordBean.brand == null?'false':'true'}" var="category" value="#{categoryCtrl.categoryDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+					<p:spacer height="50"/>
+					<p:dataTable id="category" var="category" value="#{categoryCtrl.categoryDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{categoryCtrl.selectedCategory}">
 
 						<p:ajax event="rowSelect" listener="#{categoryCtrl.onRowSelect}" update=":form:growl :form:product " />
@@ -46,27 +45,28 @@
 						</p:column>
 					</p:dataTable>
 				</p:panel>
-				<p:panel id="product" >
+				<p:panel id="product">
 					<p:dataTable id="productTable" rendered="#{selectedRecordBean.category == null?'false':'true'}" var="product" value="#{productCtrl.productDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{productCtrl.selectedProduct}">
 
 						<p:ajax event="rowSelect" listener="#{productCtrl.onRowSelect}" update=":form:growl" />
-						<p:column headerText="Code">
+						<p:column width="15%">
 							<h:outputText value="#{product.codProduct}" />
 						</p:column>
 						<p:column headerText="Product">
 							<h:outputText value="#{product.descr}" />
 						</p:column>
-						<p:column headerText="Range">
+						<p:column headerText="Range" width="20%">
 							<h:outputText value="#{product.range}" />
 						</p:column>
-						<p:column headerText="Selling price">
+						<p:column headerText="Selling price"  width="15%">
 							<h:outputText value="#{product.sellingPrice}" />
 						</p:column>
-						
+
 					</p:dataTable>
 				</p:panel>
 				
+
 			</p:panelGrid>
 		</h:form>
 	</ui:define>

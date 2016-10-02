@@ -116,11 +116,15 @@
 	background-color: transparent;
 }
 
-.col-stockist-1, .col-stockist-2, .col-stockist-3, .col-stockist-4 {
-	width: 25%;
+.col-stockist-2 {
+	width: 70%;
 	vertical-align: initial;
 }
 
+.col-stockist-1 {
+	width: 30%;
+	vertical-align: initial;
+}
 .panel-top-stockist, .panel-top-stockist .ui-panelgrid-cell,  .panel-top-stockist .ui-panel{
 	border: none;
 }

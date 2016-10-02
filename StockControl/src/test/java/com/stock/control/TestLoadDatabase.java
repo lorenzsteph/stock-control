@@ -78,7 +78,6 @@ public class TestLoadDatabase {
 				if (c == null) {
 					c = new Category();
 					c.setDescr(record[2]);
-					c.setBrand(b);
 					c = categoryR.save(c);
 				}
 
@@ -90,6 +89,7 @@ public class TestLoadDatabase {
 					p.setSellingPrice(new BigDecimal(record[6].replace(",", ".")));
 					p.setRange(record[5]);
 					p.setCategory(c);
+					p.setBrand(b);
 					p = productR.save(p);
 
 				}

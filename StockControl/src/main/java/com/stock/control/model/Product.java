@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -38,6 +39,10 @@ public class Product implements Serializable {
 	private BigDecimal sellingPrice;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_brand")
+	private Brand brand;
+
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_category")
 	private Category category;
 
@@ -98,6 +103,14 @@ public class Product implements Serializable {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
 	}
 
 }

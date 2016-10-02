@@ -22,7 +22,6 @@ CREATE TABLE brand (
 
 CREATE TABLE category (
         id_category serial PRIMARY KEY,
-        id_brand INTEGER REFERENCES brand (id_brand),
         descr CHARACTER VARYING(255),
         date_end_validity date,
         UNIQUE (id_brand, descr)
@@ -30,6 +29,7 @@ CREATE TABLE category (
 
 CREATE TABLE product (
         id_product serial PRIMARY KEY,
+        id_brand INTEGER REFERENCES brand (id_brand),
         id_category INTEGER REFERENCES category (id_category), 
 		cod_product CHARACTER VARYING(255),
         descr CHARACTER VARYING(255),

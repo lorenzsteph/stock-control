@@ -13,7 +13,7 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
 	@Query("SELECT s FROM Category s WHERE s.descr = :descr")
 	public Category findByDescr(@Param("descr") String descr);
 
-	@Query("SELECT l FROM Category l JOIN FETCH l.brand s WHERE s.idBrand = :idBrand")
+	@Query("SELECT distinct l FROM Category l JOIN l.product p JOIN p.brand b WHERE b.idBrand = :idBrand")
 	public List<Category> findCategoryByIdBrand(@Param("idBrand") long idBrand);
 
 }

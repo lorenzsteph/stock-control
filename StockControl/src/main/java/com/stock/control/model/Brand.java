@@ -38,7 +38,7 @@ public class Brand implements Serializable {
 	private Stockist stockist;
 
 	@OneToMany(mappedBy = "brand", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	private Set<Category> category;
+	private Set<Product> product;
 
 	public Long getIdBrand() {
 		return idBrand;
@@ -72,12 +72,12 @@ public class Brand implements Serializable {
 		this.stockist = stockist;
 	}
 
-	public Set<Category> getCategory() {
-		return category;
+	public Set<Product> getProduct() {
+		return product;
 	}
 
-	public void setCategory(Set<Category> category) {
-		this.category = category;
+	public void setProduct(Set<Product> product) {
+		this.product = product;
 	}
 
 }
