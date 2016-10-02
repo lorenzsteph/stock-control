@@ -27,10 +27,12 @@ public class CategoryLazyListDataModel extends LazyDataModel<Category> {
 	@Override
 	public List<Category> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-		List<Category> page = categoryService.findCategoryByIdBrand(selectedRecordBean.getBrand().getIdBrand());
-		setRowCount(page.size());
+		if (selectedRecordBean.getBrand() != null) {
+			List<Category> page = categoryService.findCategoryByIdBrand(selectedRecordBean.getBrand().getIdBrand());
+			setRowCount(page.size());
 
-		dataModel = page;
+			dataModel = page;
+		}
 
 		return this.dataModel;
 	}

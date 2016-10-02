@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +27,7 @@ public class Category implements Serializable {
 	@Column(name = "descr")
 	private String descr;
 
-	@OneToMany(mappedBy = "category", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
 	private Set<Product> product;
 
 	@Column(name = "date_end_validity")

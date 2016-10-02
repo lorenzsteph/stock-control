@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +43,32 @@ public class ProductControllerBean implements Serializable {
 		productDataModel = new ProductLazyListDataModel(productService, selectedRecordBean);
 		selectedProduct = null;
 	}
+	
+	public void deleteProduct(){
+			productService.deleteProduct(selectedProduct);
+			FacesMessage msg = new FacesMessage("Product deleted");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
 
 	public void onRowSelect(SelectEvent event) {
 		FacesMessage msg = new FacesMessage("Product Selected", ((Product) event.getObject()).getDescr());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		selectedRecordBean.setProduct((Product) event.getObject());
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		Product productEdit = (Product) event.getObject();
+		productEdit = productService.saveProduct(productEdit);
+		
+		FacesMessage msg = new FacesMessage("Product Edited", productEdit.getDescr());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edit Cancelled", ((Product) event.getObject()).getDescr());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public SelectedRecordBean getSelectedRecordBean() {

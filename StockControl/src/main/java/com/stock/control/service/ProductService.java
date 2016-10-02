@@ -9,4 +9,8 @@ public interface ProductService {
 
 	public Page<Product> findProductByIdCategory(ProductSearchFilter filter, int pageNumber, int pageSize);
 
+	public Product saveProduct(Product product);
+
+	public void deleteProduct(Product product);
+
 }

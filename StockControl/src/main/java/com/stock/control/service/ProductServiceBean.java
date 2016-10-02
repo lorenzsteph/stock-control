@@ -29,4 +29,15 @@ public class ProductServiceBean implements ProductService {
 		return productRepository.findAll(command.where(filter), request);
 	}
 
+	@Override
+	public Product saveProduct(Product product) {
+		return productRepository.save(product);
+	}
+
+	@Override
+	public void deleteProduct(Product product) {
+		productRepository.delete(product);
+
+	}
+
 }

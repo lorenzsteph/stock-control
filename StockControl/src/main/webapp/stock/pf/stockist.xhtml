@@ -35,7 +35,7 @@
 							<h:outputText value="#{brand.descr}" />
 						</p:column>
 					</p:dataTable>
-					<p:spacer height="50"/>
+					<p:spacer height="50" />
 					<p:dataTable id="category" var="category" value="#{categoryCtrl.categoryDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{categoryCtrl.selectedCategory}">
 
@@ -46,26 +46,77 @@
 					</p:dataTable>
 				</p:panel>
 				<p:panel id="product">
-					<p:dataTable id="productTable" rendered="#{selectedRecordBean.category == null?'false':'true'}" var="product" value="#{productCtrl.productDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+					<p:dataTable id="productTable" editable="true" rendered="#{selectedRecordBean.category == null?'false':'true'}" var="product" value="#{productCtrl.productDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{productCtrl.selectedProduct}">
 
-						<p:ajax event="rowSelect" listener="#{productCtrl.onRowSelect}" update=":form:growl" />
+						<!-- <p:ajax event="rowSelect" listener="#{productCtrl.onRowSelect}" update=":form:growl" />
+ -->
+						<p:ajax event="rowEdit" listener="#{productCtrl.onRowEdit}" update=":form:growl" />
+						<p:ajax event="rowEditCancel" listener="#{productCtrl.onRowCancel}" update=":form:growl" />
+
 						<p:column width="15%">
-							<h:outputText value="#{product.codProduct}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{product.codProduct}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="codProduct" value="#{product.codProduct}" style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
 						<p:column headerText="Product">
-							<h:outputText value="#{product.descr}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{product.descr}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="descr" value="#{product.descr}" style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
+
 						</p:column>
 						<p:column headerText="Range" width="20%">
-							<h:outputText value="#{product.range}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{product.range}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="range" value="#{product.range}" style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Selling price"  width="15%">
-							<h:outputText value="#{product.sellingPrice}" />
+						<p:column headerText="Selling price" width="15%">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{product.sellingPrice}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="sellingPrice" value="#{product.sellingPrice}" style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
-
+						<p:column style="width:32px">
+							<p:rowEditor />
+						</p:column>
 					</p:dataTable>
+					<p:contextMenu for="productTable">
+						<p:menuitem value="New" update="productDialogId" icon="ui-icon-plus" oncomplete="PF('productDialog').show()" />
+						<p:menuitem value="Delete" icon="ui-icon-close" update=":form:growl :form:product" actionListener="#{productCtrl.deleteProduct}"/>
+					</p:contextMenu>
+
+					<p:dialog header="Add product" widgetVar="productDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+						<p:outputPanel id="productDialogId" style="text-align:center;">
+							<p:panelGrid columns="2" columnClasses="label,value">
+								<f:facet name="header">
+									<p:graphicImage name="demo/images/car/#{dtContextMenuView.selectedCar.brand}-big.gif" />
+								</f:facet>
+
+								add new
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
 				</p:panel>
-				
+
 
 			</p:panelGrid>
 		</h:form>
