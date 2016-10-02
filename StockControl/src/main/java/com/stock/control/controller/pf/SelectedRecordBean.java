@@ -9,7 +9,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.stock.control.model.Brand;
 import com.stock.control.model.Category;
 import com.stock.control.model.Product;
-import com.stock.control.model.Range;
 import com.stock.control.model.Stockist;
 
 @Component
@@ -26,8 +25,6 @@ public class SelectedRecordBean implements Serializable {
 
 	private Product product;
 
-	private Range range;
-
 	public Stockist getStockist() {
 		return stockist;
 	}
@@ -37,7 +34,6 @@ public class SelectedRecordBean implements Serializable {
 		this.brand = null;
 		this.category = null;
 		this.product = null;
-		this.range = null;
 	}
 
 	public Brand getBrand() {
@@ -48,7 +44,6 @@ public class SelectedRecordBean implements Serializable {
 		this.brand = brand;
 		this.category = null;
 		this.product = null;
-		this.range = null;
 	}
 
 	public Category getCategory() {
@@ -58,7 +53,6 @@ public class SelectedRecordBean implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 		this.product = null;
-		this.range = null;
 	}
 
 	public Product getProduct() {
@@ -67,15 +61,6 @@ public class SelectedRecordBean implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
-		this.range = null;
-	}
-
-	public Range getRange() {
-		return range;
-	}
-
-	public void setRange(Range range) {
-		this.range = range;
 	}
 
 }

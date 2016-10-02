@@ -8,17 +8,17 @@ import org.primefaces.model.SortOrder;
 import org.springframework.data.domain.Page;
 
 import com.stock.control.controller.pf.SelectedRecordBean;
-import com.stock.control.dao.dynamic.filter.LinkCategoryProductSearchFilter;
-import com.stock.control.model.LinkCategoryProduct;
+import com.stock.control.dao.dynamic.filter.ProductSearchFilter;
+import com.stock.control.model.Product;
 import com.stock.control.service.ProductService;
 import com.stock.control.utils.CommonUtils;
 
-public class ProductLazyListDataModel extends LazyDataModel<LinkCategoryProduct> {
+public class ProductLazyListDataModel extends LazyDataModel<Product> {
 
 	private static final long serialVersionUID = 1L;
 
 	private ProductService productService;
-	private List<LinkCategoryProduct> dataModel;
+	private List<Product> dataModel;
 
 	private SelectedRecordBean selectedRecordBean;
 
@@ -28,12 +28,12 @@ public class ProductLazyListDataModel extends LazyDataModel<LinkCategoryProduct>
 	}
 
 	@Override
-	public List<LinkCategoryProduct> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+	public List<Product> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-		LinkCategoryProductSearchFilter filter = new LinkCategoryProductSearchFilter();
+		ProductSearchFilter filter = new ProductSearchFilter();
 		filter.setIdCategory(selectedRecordBean.getCategory().getIdCategory());
 
-		Page<LinkCategoryProduct> page = productService.findProductByIdCategory(filter, CommonUtils.getPageNumber(first, pageSize), pageSize);
+		Page<Product> page = productService.findProductByIdCategory(filter, CommonUtils.getPageNumber(first, pageSize), pageSize);
 		setRowCount(new Long(page.getTotalElements()).intValue());
 
 		dataModel = page.getContent();
@@ -42,9 +42,9 @@ public class ProductLazyListDataModel extends LazyDataModel<LinkCategoryProduct>
 	}
 
 	@Override
-	public LinkCategoryProduct getRowData(String rowKey) {
-		for (LinkCategoryProduct s : dataModel) {
-			if (s.getIdLinkCategoryProduct() == Long.parseLong(rowKey)) {
+	public Product getRowData(String rowKey) {
+		for (Product s : dataModel) {
+			if (s.getIdProduct() == Long.parseLong(rowKey)) {
 				return s;
 			}
 		}
@@ -52,8 +52,8 @@ public class ProductLazyListDataModel extends LazyDataModel<LinkCategoryProduct>
 	}
 
 	@Override
-	public Object getRowKey(LinkCategoryProduct object) {
-		return object.getIdLinkCategoryProduct();
+	public Object getRowKey(Product object) {
+		return object.getIdProduct();
 	}
 
 }

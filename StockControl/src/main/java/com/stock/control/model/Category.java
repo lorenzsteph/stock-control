@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,11 +30,12 @@ public class Category implements Serializable {
 	@Column(name = "descr")
 	private String descr;
 
-	@OneToMany(mappedBy = "category", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	private Set<LinkBrandCategory> linkBrandCategory;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_brand")
+	private Brand brand;
 
 	@OneToMany(mappedBy = "category", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	private Set<LinkCategoryProduct> linkCategoryProduct;
+	private Set<Product> product;
 
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
@@ -61,20 +64,20 @@ public class Category implements Serializable {
 		this.dateEndValidity = dateEndValidity;
 	}
 
-	public Set<LinkBrandCategory> getLinkBrandCategory() {
-		return linkBrandCategory;
+	public Brand getBrand() {
+		return brand;
 	}
 
-	public void setLinkBrandCategory(Set<LinkBrandCategory> linkBrandCategory) {
-		this.linkBrandCategory = linkBrandCategory;
+	public void setBrand(Brand brand) {
+		this.brand = brand;
 	}
 
-	public Set<LinkCategoryProduct> getLinkCategoryProduct() {
-		return linkCategoryProduct;
+	public Set<Product> getProduct() {
+		return product;
 	}
 
-	public void setLinkCategoryProduct(Set<LinkCategoryProduct> linkCategoryProduct) {
-		this.linkCategoryProduct = linkCategoryProduct;
+	public void setProduct(Set<Product> product) {
+		this.product = product;
 	}
 
 }

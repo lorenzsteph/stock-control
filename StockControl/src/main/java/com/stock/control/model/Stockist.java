@@ -32,7 +32,7 @@ public class Stockist implements Serializable {
 	private Date dateEndValidity;
 
 	@OneToMany(mappedBy = "stockist", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	private Set<LinkStockistBrand> linkStockistBrand;
+	private Set<Brand> brand;
 
 	public Long getIdStockist() {
 		return idStockist;
@@ -58,12 +58,12 @@ public class Stockist implements Serializable {
 		this.dateEndValidity = dateEndValidity;
 	}
 
-	public Set<LinkStockistBrand> getLinkStockistBrand() {
-		return linkStockistBrand;
+	public Set<Brand> getBrand() {
+		return brand;
 	}
 
-	public void setLinkStockistBrand(Set<LinkStockistBrand> linkStockistBrand) {
-		this.linkStockistBrand = linkStockistBrand;
+	public void setBrand(Set<Brand> brand) {
+		this.brand = brand;
 	}
 
 }

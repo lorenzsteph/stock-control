@@ -10,7 +10,7 @@
 					<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{stockistCtrl.selectedStockist}" id="stockistTable">
 
-						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" update=":form:growl :form:brand  :form:category :form:product :form:range" />
+						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" update=":form:growl :form:brand  :form:category :form:product" />
 
 						<f:facet name="header">
 				            Stockist
@@ -25,59 +25,48 @@
 				</p:panel>
 				<p:spacer/>
 			</p:panelGrid>
-			<p:panelGrid columns="4" columnClasses="col-stockist-1,col-stockist-2,col-stockist-3,col-stockist-4" styleClass="panel-central-stockist">	
+			<p:panelGrid columns="4" columnClasses="col-stockist-1,col-stockist-2,col-stockist-3" styleClass="panel-central-stockist">	
 				<p:panel id="brand" >
-					<p:dataTable id="brandTable" rendered="#{selectedRecordBean.stockist == null?'false':'true'}" var="linkStockistBrand" value="#{brandCtrl.brandDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{brandCtrl.selectedLinkStockistBrand}">
+					<p:dataTable id="brandTable" rendered="#{selectedRecordBean.stockist == null?'false':'true'}" var="brand" value="#{brandCtrl.brandDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{brandCtrl.selectedBrand}">
 
-						<p:ajax event="rowSelect" listener="#{brandCtrl.onRowSelect}" update=":form:growl :form:category :form:product  :form:range" />
+						<p:ajax event="rowSelect" listener="#{brandCtrl.onRowSelect}" update=":form:growl :form:category :form:product " />
 						<p:column headerText="Brand">
-							<h:outputText value="#{linkStockistBrand.brand.descr}" />
+							<h:outputText value="#{brand.descr}" />
 						</p:column>
 					</p:dataTable>
 				</p:panel>
 				<p:panel id="category" >
-					<p:dataTable id="categoryTable" rendered="#{selectedRecordBean.brand == null?'false':'true'}" var="linkBrandCategory" value="#{categoryCtrl.categoryDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{categoryCtrl.selectedLinkBrandCategory}">
+					<p:dataTable id="categoryTable" rendered="#{selectedRecordBean.brand == null?'false':'true'}" var="category" value="#{categoryCtrl.categoryDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{categoryCtrl.selectedCategory}">
 
-						<p:ajax event="rowSelect" listener="#{categoryCtrl.onRowSelect}" update=":form:growl :form:product  :form:range" />
-						<p:column headerText="Brand">
-							<h:outputText value="#{linkBrandCategory.category.descr}" />
+						<p:ajax event="rowSelect" listener="#{categoryCtrl.onRowSelect}" update=":form:growl :form:product " />
+						<p:column headerText="Category">
+							<h:outputText value="#{category.descr}" />
 						</p:column>
 					</p:dataTable>
 				</p:panel>
 				<p:panel id="product" >
-					<p:dataTable id="productTable" rendered="#{selectedRecordBean.category == null?'false':'true'}" var="linkCategoryProduct" value="#{productCtrl.productDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{productCtrl.selectedLinkCategoryProduct}">
+					<p:dataTable id="productTable" rendered="#{selectedRecordBean.category == null?'false':'true'}" var="product" value="#{productCtrl.productDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{productCtrl.selectedProduct}">
 
-						<p:ajax event="rowSelect" listener="#{productCtrl.onRowSelect}" update=":form:growl :form:product :form:range" />
+						<p:ajax event="rowSelect" listener="#{productCtrl.onRowSelect}" update=":form:growl" />
 						<p:column headerText="Code">
-							<h:outputText value="#{linkCategoryProduct.product.codProduct}" />
+							<h:outputText value="#{product.codProduct}" />
 						</p:column>
 						<p:column headerText="Product">
-							<h:outputText value="#{linkCategoryProduct.product.descr}" />
+							<h:outputText value="#{product.descr}" />
 						</p:column>
+						<p:column headerText="Range">
+							<h:outputText value="#{product.range}" />
+						</p:column>
+						<p:column headerText="Selling price">
+							<h:outputText value="#{product.sellingPrice}" />
+						</p:column>
+						
 					</p:dataTable>
 				</p:panel>
 				
-				<p:panel id="range" >
-					<p:dataTable id="rangeTable" rendered="#{selectedRecordBean.product == null?'false':'true'}" var="linkProductRang" value="#{rangeCtrl.rangeDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{rangeCtrl.selectedLinkProductRange}">
-
-						<p:ajax event="rowSelect" listener="#{rangeCtrl.onRowSelect}" update=":form:growl :form:range" />
-						<p:column headerText="Color">
-							<h:outputText value="#{linkProductRang.range.color}" />
-						</p:column>
-						<p:column headerText="Description">
-							<h:outputText value="#{linkProductRang.range.descr}" />
-						</p:column>
-						<p:column headerText="Selling price">
-							<h:outputText value="#{linkProductRang.range.sellingPrice}" />
-						</p:column>
-					</p:dataTable>
-				</p:panel>
-
-
 			</p:panelGrid>
 		</h:form>
 	</ui:define>

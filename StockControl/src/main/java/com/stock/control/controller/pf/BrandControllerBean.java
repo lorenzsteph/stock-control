@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.stock.control.controller.pf.datamodel.BrandLazyListDataModel;
-import com.stock.control.model.LinkStockistBrand;
+import com.stock.control.model.Brand;
 import com.stock.control.service.BrandService;
 
 @Component(value = "brandCtrl")
@@ -35,19 +35,19 @@ public class BrandControllerBean implements Serializable {
 
 	private BrandLazyListDataModel brandDataModel;
 
-	private LinkStockistBrand selectedLinkStockistBrand;
+	private Brand selectedBrand;
 
 	@PostConstruct
 	public void initBean() {
 		brandDataModel = new BrandLazyListDataModel(brandService, selectedRecordBean);
-		selectedLinkStockistBrand = null;
+		selectedBrand = null;
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesMessage msg = new FacesMessage("Brand Selected", (((LinkStockistBrand) event.getObject()).getBrand()).getDescr());
+		FacesMessage msg = new FacesMessage("Brand Selected", ((Brand) event.getObject()).getDescr());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		selectedRecordBean.setBrand(((LinkStockistBrand) event.getObject()).getBrand());
+		selectedRecordBean.setBrand((Brand) event.getObject());
 	}
 
 	public SelectedRecordBean getSelectedRecordBean() {
@@ -74,12 +74,12 @@ public class BrandControllerBean implements Serializable {
 		this.brandDataModel = brandDataModel;
 	}
 
-	public LinkStockistBrand getSelectedLinkStockistBrand() {
-		return selectedLinkStockistBrand;
+	public Brand getSelectedBrand() {
+		return selectedBrand;
 	}
 
-	public void setSelectedLinkStockistBrand(LinkStockistBrand selectedLinkStockistBrand) {
-		this.selectedLinkStockistBrand = selectedLinkStockistBrand;
+	public void setSelectedBrand(Brand selectedBrand) {
+		this.selectedBrand = selectedBrand;
 	}
 
 }

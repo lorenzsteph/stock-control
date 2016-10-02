@@ -1,17 +1,17 @@
 package com.stock.control.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,11 +31,15 @@ public class Product implements Serializable {
 	@Column(name = "descr")
 	private String descr;
 
-	@OneToMany(mappedBy = "product", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	private Set<LinkProductRange> linkProductRange;
+	@Column(name = "range")
+	private String range;
 
-	@OneToMany(mappedBy = "product", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	private Set<LinkCategoryProduct> linkCategoryProduct;
+	@Column(name = "selling_price")
+	private BigDecimal sellingPrice;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_category")
+	private Category category;
 
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
@@ -72,20 +76,28 @@ public class Product implements Serializable {
 		this.dateEndValidity = dateEndValidity;
 	}
 
-	public Set<LinkCategoryProduct> getLinkCategoryProduct() {
-		return linkCategoryProduct;
+	public String getRange() {
+		return range;
 	}
 
-	public void setLinkCategoryProduct(Set<LinkCategoryProduct> linkCategoryProduct) {
-		this.linkCategoryProduct = linkCategoryProduct;
+	public void setRange(String range) {
+		this.range = range;
 	}
 
-	public Set<LinkProductRange> getLinkProductRange() {
-		return linkProductRange;
+	public BigDecimal getSellingPrice() {
+		return sellingPrice;
 	}
 
-	public void setLinkProductRange(Set<LinkProductRange> linkProductRange) {
-		this.linkProductRange = linkProductRange;
+	public void setSellingPrice(BigDecimal sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }

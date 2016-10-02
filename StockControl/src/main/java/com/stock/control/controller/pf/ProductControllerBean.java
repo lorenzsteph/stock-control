@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.stock.control.controller.pf.datamodel.ProductLazyListDataModel;
-import com.stock.control.model.LinkCategoryProduct;
+import com.stock.control.model.Product;
 import com.stock.control.service.ProductService;
 
 @Component(value = "productCtrl")
@@ -35,19 +35,19 @@ public class ProductControllerBean implements Serializable {
 
 	private ProductLazyListDataModel productDataModel;
 
-	private LinkCategoryProduct selectedLinkCategoryProduct;
+	private Product selectedProduct;
 
 	@PostConstruct
 	public void initBean() {
 		productDataModel = new ProductLazyListDataModel(productService, selectedRecordBean);
-		selectedLinkCategoryProduct = null;
+		selectedProduct = null;
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesMessage msg = new FacesMessage("Product Selected", (((LinkCategoryProduct) event.getObject()).getProduct()).getDescr());
+		FacesMessage msg = new FacesMessage("Product Selected", ((Product) event.getObject()).getDescr());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		selectedRecordBean.setProduct(((LinkCategoryProduct) event.getObject()).getProduct());
+		selectedRecordBean.setProduct((Product) event.getObject());
 	}
 
 	public SelectedRecordBean getSelectedRecordBean() {
@@ -74,12 +74,12 @@ public class ProductControllerBean implements Serializable {
 		this.productDataModel = productDataModel;
 	}
 
-	public LinkCategoryProduct getSelectedLinkCategoryProduct() {
-		return selectedLinkCategoryProduct;
+	public Product getSelectedProduct() {
+		return selectedProduct;
 	}
 
-	public void setSelectedLinkCategoryProduct(LinkCategoryProduct selectedLinkCategoryProduct) {
-		this.selectedLinkCategoryProduct = selectedLinkCategoryProduct;
+	public void setSelectedProduct(Product selectedProduct) {
+		this.selectedProduct = selectedProduct;
 	}
 
 }

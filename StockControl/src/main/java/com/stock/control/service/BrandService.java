@@ -2,10 +2,10 @@ package com.stock.control.service;
 
 import java.util.List;
 
-import com.stock.control.model.LinkStockistBrand;
+import com.stock.control.model.Brand;
 
 public interface BrandService {
 
-	List<LinkStockistBrand> findBrandByIdStockist(long idStockist);
+	List<Brand> findBrandByIdStockist(long idStockist);
 
 }

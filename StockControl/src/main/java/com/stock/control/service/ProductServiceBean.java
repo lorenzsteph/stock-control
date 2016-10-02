@@ -9,24 +9,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stock.control.dao.LinkCategoryProductRepository;
-import com.stock.control.dao.dynamic.command.LinkCategoryProductQueryCommand;
-import com.stock.control.dao.dynamic.filter.LinkCategoryProductSearchFilter;
-import com.stock.control.model.LinkCategoryProduct;
+import com.stock.control.dao.ProductRepository;
+import com.stock.control.dao.dynamic.command.ProductQueryCommand;
+import com.stock.control.dao.dynamic.filter.ProductSearchFilter;
+import com.stock.control.model.Product;
 
 @Service
 @Transactional(value = "transactionManager", propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = java.lang.Exception.class)
 public class ProductServiceBean implements ProductService {
 
 	@Autowired
-	private LinkCategoryProductRepository linkCategoryProductRepository;
+	private ProductRepository productRepository;
 
 	@Override
-	public Page<LinkCategoryProduct> findProductByIdCategory(LinkCategoryProductSearchFilter filter, int pageNumber, int pageSize) {
+	public Page<Product> findProductByIdCategory(ProductSearchFilter filter, int pageNumber, int pageSize) {
 		Pageable request = new PageRequest(pageNumber, pageSize, new Sort(filter.getOrder()));
-		LinkCategoryProductQueryCommand command = new LinkCategoryProductQueryCommand();
+		ProductQueryCommand command = new ProductQueryCommand();
 
-		return linkCategoryProductRepository.findAll(command.where(filter), request);
+		return productRepository.findAll(command.where(filter), request);
 	}
 
 }

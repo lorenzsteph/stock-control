@@ -7,15 +7,15 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import com.stock.control.controller.pf.SelectedRecordBean;
-import com.stock.control.model.LinkBrandCategory;
+import com.stock.control.model.Category;
 import com.stock.control.service.CategoryService;
 
-public class CategoryLazyListDataModel extends LazyDataModel<LinkBrandCategory> {
+public class CategoryLazyListDataModel extends LazyDataModel<Category> {
 
 	private static final long serialVersionUID = 1L;
 
 	private CategoryService categoryService;
-	private List<LinkBrandCategory> dataModel;
+	private List<Category> dataModel;
 
 	private SelectedRecordBean selectedRecordBean;
 
@@ -25,9 +25,9 @@ public class CategoryLazyListDataModel extends LazyDataModel<LinkBrandCategory> 
 	}
 
 	@Override
-	public List<LinkBrandCategory> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+	public List<Category> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-		List<LinkBrandCategory> page = categoryService.findCategoryByIdBrand(selectedRecordBean.getBrand().getIdBrand());
+		List<Category> page = categoryService.findCategoryByIdBrand(selectedRecordBean.getBrand().getIdBrand());
 		setRowCount(page.size());
 
 		dataModel = page;
@@ -36,9 +36,9 @@ public class CategoryLazyListDataModel extends LazyDataModel<LinkBrandCategory> 
 	}
 
 	@Override
-	public LinkBrandCategory getRowData(String rowKey) {
-		for (LinkBrandCategory s : dataModel) {
-			if (s.getCategory().getIdCategory() == Long.parseLong(rowKey)) {
+	public Category getRowData(String rowKey) {
+		for (Category s : dataModel) {
+			if (s.getIdCategory() == Long.parseLong(rowKey)) {
 				return s;
 			}
 		}
@@ -46,8 +46,8 @@ public class CategoryLazyListDataModel extends LazyDataModel<LinkBrandCategory> 
 	}
 
 	@Override
-	public Object getRowKey(LinkBrandCategory object) {
-		return object.getCategory().getIdCategory();
+	public Object getRowKey(Category object) {
+		return object.getIdCategory();
 	}
 
 }

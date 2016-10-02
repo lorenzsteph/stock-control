@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 
-public class LinkCategoryProductSearchFilter implements Serializable {
+public class ProductSearchFilter implements Serializable {
 
 	private static final long serialVersionUID = -1585612142057165754L;
 
@@ -15,7 +15,7 @@ public class LinkCategoryProductSearchFilter implements Serializable {
 
 	private List<Order> order;
 
-	public LinkCategoryProductSearchFilter() {
+	public ProductSearchFilter() {
 
 		initDefaultFilter();
 	}
@@ -23,7 +23,7 @@ public class LinkCategoryProductSearchFilter implements Serializable {
 	private void initDefaultFilter() {
 		List<Order> order = new ArrayList<Order>();
 
-		Order orderName = new Order(Direction.ASC, "product.idProduct");
+		Order orderName = new Order(Direction.ASC, "idProduct");
 		order.add(orderName);
 
 		setOrder(order);

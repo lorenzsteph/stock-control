@@ -16,21 +16,11 @@ import com.stock.control.configuration.JPAConfiguration;
 import com.stock.control.configuration.MvcConfiguration;
 import com.stock.control.dao.BrandRepository;
 import com.stock.control.dao.CategoryRepository;
-import com.stock.control.dao.LinkBrandCategoryRepository;
-import com.stock.control.dao.LinkCategoryProductRepository;
-import com.stock.control.dao.LinkProductRangeRepository;
-import com.stock.control.dao.LinkStockistBrandRepository;
 import com.stock.control.dao.ProductRepository;
-import com.stock.control.dao.RangeRepository;
 import com.stock.control.dao.StockistRepository;
 import com.stock.control.model.Brand;
 import com.stock.control.model.Category;
-import com.stock.control.model.LinkBrandCategory;
-import com.stock.control.model.LinkCategoryProduct;
-import com.stock.control.model.LinkProductRange;
-import com.stock.control.model.LinkStockistBrand;
 import com.stock.control.model.Product;
-import com.stock.control.model.Range;
 import com.stock.control.model.Stockist;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,21 +39,6 @@ public class TestLoadDatabase {
 
 	@Autowired
 	private ProductRepository productR;
-
-	@Autowired
-	private RangeRepository rangeR;
-
-	@Autowired
-	private LinkStockistBrandRepository stockistBrandR;
-
-	@Autowired
-	private LinkBrandCategoryRepository brandCategoryR;
-
-	@Autowired
-	private LinkCategoryProductRepository categoryProductR;
-
-	@Autowired
-	private LinkProductRangeRepository productRangeR;
 
 	@Test
 	public void load() throws Exception {
@@ -95,24 +70,16 @@ public class TestLoadDatabase {
 				if (b == null) {
 					b = new Brand();
 					b.setDescr(record[1]);
+					b.setStockist(s);
 					b = brandR.save(b);
-
-					LinkStockistBrand l = new LinkStockistBrand();
-					l.setStockist(s);
-					l.setBrand(b);
-					stockistBrandR.save(l);
 				}
 
 				Category c = categoryR.findByDescr(record[2]);
 				if (c == null) {
 					c = new Category();
 					c.setDescr(record[2]);
+					c.setBrand(b);
 					c = categoryR.save(c);
-
-					LinkBrandCategory l = new LinkBrandCategory();
-					l.setBrand(b);
-					l.setCategory(c);
-					brandCategoryR.save(l);
 				}
 
 				Product p = productR.findByCodProduct(record[3]);
@@ -120,24 +87,12 @@ public class TestLoadDatabase {
 					p = new Product();
 					p.setDescr(record[4]);
 					p.setCodProduct(record[3]);
+					p.setSellingPrice(new BigDecimal(record[6].replace(",", ".")));
+					p.setRange(record[5]);
+					p.setCategory(c);
 					p = productR.save(p);
 
-					LinkCategoryProduct l = new LinkCategoryProduct();
-					l.setProduct(p);
-					l.setCategory(c);
-					categoryProductR.save(l);
 				}
-
-				Range r = new Range();
-				r.setDescr(record[5]);
-				r.setSellingPrice(new BigDecimal(record[6].replace(",", ".")));
-				r.setColor(record[5]);
-				r = rangeR.save(r);
-
-				LinkProductRange l = new LinkProductRange();
-				l.setProduct(p);
-				l.setRange(r);
-				productRangeR.save(l);
 
 			}
 

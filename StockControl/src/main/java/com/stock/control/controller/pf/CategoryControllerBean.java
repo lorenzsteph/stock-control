@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.stock.control.controller.pf.datamodel.CategoryLazyListDataModel;
-import com.stock.control.model.LinkBrandCategory;
+import com.stock.control.model.Category;
 import com.stock.control.service.CategoryService;
 
 @Component(value = "categoryCtrl")
@@ -35,19 +35,19 @@ public class CategoryControllerBean implements Serializable {
 
 	private CategoryLazyListDataModel categoryDataModel;
 
-	private LinkBrandCategory selectedLinkBrandCategory;
+	private Category selectedCategory;
 
 	@PostConstruct
 	public void initBean() {
 		categoryDataModel = new CategoryLazyListDataModel(categoryService, selectedRecordBean);
-		selectedLinkBrandCategory = null;
+		selectedCategory = null;
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesMessage msg = new FacesMessage("Category Selected", (((LinkBrandCategory) event.getObject()).getCategory()).getDescr());
+		FacesMessage msg = new FacesMessage("Category Selected", ((Category) event.getObject()).getDescr());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		selectedRecordBean.setCategory(((LinkBrandCategory) event.getObject()).getCategory());
+		selectedRecordBean.setCategory((Category) event.getObject());
 	}
 
 	public SelectedRecordBean getSelectedRecordBean() {
@@ -74,12 +74,12 @@ public class CategoryControllerBean implements Serializable {
 		this.categoryDataModel = categoryDataModel;
 	}
 
-	public LinkBrandCategory getSelectedLinkBrandCategory() {
-		return selectedLinkBrandCategory;
+	public Category getSelectedCategory() {
+		return selectedCategory;
 	}
 
-	public void setSelectedLinkBrandCategory(LinkBrandCategory selectedLinkBrandCategory) {
-		this.selectedLinkBrandCategory = selectedLinkBrandCategory;
+	public void setSelectedCategory(Category selectedCategory) {
+		this.selectedCategory = selectedCategory;
 	}
 
 }

@@ -7,19 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stock.control.dao.LinkBrandCategoryRepository;
-import com.stock.control.model.LinkBrandCategory;
+import com.stock.control.dao.CategoryRepository;
+import com.stock.control.model.Category;
 
 @Service
 @Transactional(value = "transactionManager", propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = java.lang.Exception.class)
 public class CategoryServiceBean implements CategoryService {
 
 	@Autowired
-	private LinkBrandCategoryRepository linkBrandCategoryRepository;
+	private CategoryRepository categoryRepository;
 
 	@Override
-	public List<LinkBrandCategory> findCategoryByIdBrand(long idBrand) {
-		return linkBrandCategoryRepository.findCategoryByIdBrand(idBrand);
+	public List<Category> findCategoryByIdBrand(long idBrand) {
+		return categoryRepository.findCategoryByIdBrand(idBrand);
 	}
 
 }

@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -31,27 +33,12 @@ public class Brand implements Serializable {
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
-	@OneToMany(mappedBy = "brand", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	private Set<LinkStockistBrand> linkStockistBrand;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_stockist")
+	private Stockist stockist;
 
 	@OneToMany(mappedBy = "brand", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	private Set<LinkBrandCategory> linkBrandCategory;
-
-	public Set<LinkStockistBrand> getLinkStockistBrand() {
-		return linkStockistBrand;
-	}
-
-	public void setLinkStockistBrand(Set<LinkStockistBrand> linkStockistBrand) {
-		this.linkStockistBrand = linkStockistBrand;
-	}
-
-	public Set<LinkBrandCategory> getLinkBrandCategory() {
-		return linkBrandCategory;
-	}
-
-	public void setLinkBrandCategory(Set<LinkBrandCategory> linkBrandCategory) {
-		this.linkBrandCategory = linkBrandCategory;
-	}
+	private Set<Category> category;
 
 	public Long getIdBrand() {
 		return idBrand;
@@ -75,6 +62,22 @@ public class Brand implements Serializable {
 
 	public void setDateEndValidity(Date dateEndValidity) {
 		this.dateEndValidity = dateEndValidity;
+	}
+
+	public Stockist getStockist() {
+		return stockist;
+	}
+
+	public void setStockist(Stockist stockist) {
+		this.stockist = stockist;
+	}
+
+	public Set<Category> getCategory() {
+		return category;
+	}
+
+	public void setCategory(Set<Category> category) {
+		this.category = category;
 	}
 
 }
