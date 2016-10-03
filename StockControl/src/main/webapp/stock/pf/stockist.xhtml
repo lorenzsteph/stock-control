@@ -9,6 +9,7 @@
 				<p:panel>
 					<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="10" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{stockistCtrl.selectedStockist}" id="stockistTable">
+						
 						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" update=":form:growl :form:brand-category :form:product" />
 						<f:facet name="header">
 				            Stockist
@@ -95,11 +96,11 @@
 							<p:rowEditor />
 						</p:column>
 					</p:dataTable>
-					<p:contextMenu for="productTable">
-						<p:menuitem value="New" update=":form:growl :form:product" icon="ui-icon-plus" actionListener="#{productCtrl.addProduct}" />
-						<p:menuitem value="Delete" icon="ui-icon-close" update=":form:growl :form:product" actionListener="#{productCtrl.deleteProduct}" />
-					</p:contextMenu>
 				</p:panel>
+				<p:contextMenu for="productTable">
+					<p:menuitem value="New" update=":form:growl :form:product" icon="ui-icon-plus" actionListener="#{productCtrl.addProduct}" />
+					<p:menuitem value="Delete" icon="ui-icon-close" update=":form:growl :form:product" actionListener="#{productCtrl.deleteProduct}" />
+				</p:contextMenu>
 			</p:panelGrid>
 		</h:form>
 	</ui:define>

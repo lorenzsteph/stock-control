@@ -3,12 +3,19 @@ package com.stock.control.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,23 +29,13 @@ public class StockistOrderProduct implements Serializable {
 	@Column(name = "id_stockist_order_product")
 	private Long idStockistOrderProduct;
 
-	@Column(name = "id_stockist_order")
-	private BigDecimal idStockistOrder;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_stockist_order")
+	private StockistOrder stockistOrder;
 
-	@Column(name = "id_stockist")
-	private BigDecimal idStockist;
-
-	@Column(name = "id_brand")
-	private BigDecimal idBrand;
-
-	@Column(name = "id_category")
-	private BigDecimal idCategory;
-
-	@Column(name = "id_product")
-	private BigDecimal idProduct;
-
-	@Column(name = "id_range")
-	private BigDecimal idRange;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_product")
+	private Product product;
 
 	@Column(name = "price")
 	private BigDecimal price;
@@ -49,60 +46,15 @@ public class StockistOrderProduct implements Serializable {
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
+	@OneToMany(mappedBy = "stockistOrderProduct", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	private Set<StockistOrderProduct> stockistOrderProduct;
+
 	public Long getIdStockistOrderProduct() {
 		return idStockistOrderProduct;
 	}
 
 	public void setIdStockistOrderProduct(Long idStockistOrderProduct) {
 		this.idStockistOrderProduct = idStockistOrderProduct;
-	}
-
-	public BigDecimal getIdStockistOrder() {
-		return idStockistOrder;
-	}
-
-	public void setIdStockistOrder(BigDecimal idStockistOrder) {
-		this.idStockistOrder = idStockistOrder;
-	}
-
-	public BigDecimal getIdStockist() {
-		return idStockist;
-	}
-
-	public void setIdStockist(BigDecimal idStockist) {
-		this.idStockist = idStockist;
-	}
-
-	public BigDecimal getIdBrand() {
-		return idBrand;
-	}
-
-	public void setIdBrand(BigDecimal idBrand) {
-		this.idBrand = idBrand;
-	}
-
-	public BigDecimal getIdCategory() {
-		return idCategory;
-	}
-
-	public void setIdCategory(BigDecimal idCategory) {
-		this.idCategory = idCategory;
-	}
-
-	public BigDecimal getIdProduct() {
-		return idProduct;
-	}
-
-	public void setIdProduct(BigDecimal idProduct) {
-		this.idProduct = idProduct;
-	}
-
-	public BigDecimal getIdRange() {
-		return idRange;
-	}
-
-	public void setIdRange(BigDecimal idRange) {
-		this.idRange = idRange;
 	}
 
 	public BigDecimal getPrice() {
@@ -127,6 +79,30 @@ public class StockistOrderProduct implements Serializable {
 
 	public void setDateEndValidity(Date dateEndValidity) {
 		this.dateEndValidity = dateEndValidity;
+	}
+
+	public Set<StockistOrderProduct> getStockistOrderProduct() {
+		return stockistOrderProduct;
+	}
+
+	public void setStockistOrderProduct(Set<StockistOrderProduct> stockistOrderProduct) {
+		this.stockistOrderProduct = stockistOrderProduct;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public StockistOrder getStockistOrder() {
+		return stockistOrder;
+	}
+
+	public void setStockistOrder(StockistOrder stockistOrder) {
+		this.stockistOrder = stockistOrder;
 	}
 
 }

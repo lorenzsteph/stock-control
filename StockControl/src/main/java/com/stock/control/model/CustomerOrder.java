@@ -3,12 +3,18 @@ package com.stock.control.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +28,9 @@ public class CustomerOrder implements Serializable {
 	@Column(name = "id_customer_order")
 	private Long idCustomerOrder;
 
-	@Column(name = "id_customer")
-	private Long idCustomer;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_customer")
+	private Customer customer;
 
 	@Column(name = "date_order")
 	private Date dateOrder;
@@ -43,20 +50,15 @@ public class CustomerOrder implements Serializable {
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
+	@OneToMany(mappedBy = "customerOrder", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	private Set<LinkOrder> linkOrder;
+
 	public Long getIdCustomerOrder() {
 		return idCustomerOrder;
 	}
 
 	public void setIdCustomerOrder(Long idCustomerOrder) {
 		this.idCustomerOrder = idCustomerOrder;
-	}
-
-	public Long getIdCustomer() {
-		return idCustomer;
-	}
-
-	public void setIdCustomer(Long idCustomer) {
-		this.idCustomer = idCustomer;
 	}
 
 	public Date getDateOrder() {
@@ -105,6 +107,22 @@ public class CustomerOrder implements Serializable {
 
 	public void setDateEndValidity(Date dateEndValidity) {
 		this.dateEndValidity = dateEndValidity;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Set<LinkOrder> getLinkOrder() {
+		return linkOrder;
+	}
+
+	public void setLinkOrder(Set<LinkOrder> linkOrder) {
+		this.linkOrder = linkOrder;
 	}
 
 }

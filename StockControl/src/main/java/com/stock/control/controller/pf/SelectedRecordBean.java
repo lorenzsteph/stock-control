@@ -8,6 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.stock.control.model.Brand;
 import com.stock.control.model.Category;
+import com.stock.control.model.CustomerOrder;
 import com.stock.control.model.Product;
 import com.stock.control.model.Stockist;
 
@@ -24,6 +25,8 @@ public class SelectedRecordBean implements Serializable {
 	private Category category;
 
 	private Product product;
+
+	private CustomerOrder customerOrder;
 
 	public Stockist getStockist() {
 		return stockist;
@@ -61,6 +64,14 @@ public class SelectedRecordBean implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public CustomerOrder getCustomerOrder() {
+		return customerOrder;
+	}
+
+	public void setCustomerOrder(CustomerOrder customerOrder) {
+		this.customerOrder = customerOrder;
 	}
 
 }

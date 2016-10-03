@@ -27,6 +27,21 @@
 						<h:outputLabel value="Storehouse" styleClass="menu-icon-label" />
 					</p:panel>
 				</p:commandLink>
+				
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist-order.xhtml?faces-redirect=true')}" ajax="false">
+					<p:panel id="stockistOrder" styleClass="menu-icon-panel">
+						<h:outputLabel value="Stockist order" styleClass="menu-icon-label" />
+					</p:panel>
+				</p:commandLink>
+
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer-order.xhtml?faces-redirect=true')}" ajax="false">
+					<p:panel id="customerOrder" styleClass="menu-icon-panel">
+						<h:outputLabel value="Customer order" styleClass="menu-icon-label" />
+					</p:panel>
+				</p:commandLink>
+				
+				
+				
 
 			</p:panelGrid>
 			<p:tooltip for="home" value="Home" />

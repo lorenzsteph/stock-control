@@ -6,7 +6,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,11 +22,13 @@ public class LinkOrder implements Serializable {
 	@Column(name = "id_link_order")
 	private Long idLinkOrder;
 
-	@Column(name = "id_customer_order")
-	private Long idCustomerOrder;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_customer_order")
+	private CustomerOrder customerOrder;
 
-	@Column(name = "id_stockist_order_product")
-	private Long idStockistOrderProduct;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_stockist_order_product")
+	private StockistOrderProduct stockistOrderProduct;
 
 	@Column(name = "real_selling_price")
 	private BigDecimal realSellingPrice;
@@ -37,22 +42,6 @@ public class LinkOrder implements Serializable {
 
 	public void setIdLinkOrder(Long idLinkOrder) {
 		this.idLinkOrder = idLinkOrder;
-	}
-
-	public Long getIdCustomerOrder() {
-		return idCustomerOrder;
-	}
-
-	public void setIdCustomerOrder(Long idCustomerOrder) {
-		this.idCustomerOrder = idCustomerOrder;
-	}
-
-	public Long getIdStockistOrderProduct() {
-		return idStockistOrderProduct;
-	}
-
-	public void setIdStockistOrderProduct(Long idStockistOrderProduct) {
-		this.idStockistOrderProduct = idStockistOrderProduct;
 	}
 
 	public BigDecimal getRealSellingPrice() {
@@ -69,6 +58,22 @@ public class LinkOrder implements Serializable {
 
 	public void setDateEndValidity(Date dateEndValidity) {
 		this.dateEndValidity = dateEndValidity;
+	}
+
+	public CustomerOrder getCustomerOrder() {
+		return customerOrder;
+	}
+
+	public void setCustomerOrder(CustomerOrder customerOrder) {
+		this.customerOrder = customerOrder;
+	}
+
+	public StockistOrderProduct getStockistOrderProduct() {
+		return stockistOrderProduct;
+	}
+
+	public void setStockistOrderProduct(StockistOrderProduct stockistOrderProduct) {
+		this.stockistOrderProduct = stockistOrderProduct;
 	}
 
 }

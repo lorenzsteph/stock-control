@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/stock/pf/template-stock.xhtml">
+	<ui:define name="title"> Customer order</ui:define>
+	<ui:define name="body">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" />
+			<p:panelGrid columns="1" styleClass="panel-top-stockist">
+				<p:panel>
+					<p:dataTable var="row" id="customerOrderTable" widgetVar="customerOrderTable" value="#{customerOrderCtrl.customerOrderDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,50,100" selectionMode="single" selection="#{customerOrderCtrl.selectedCustomerOrder}">
+
+						<p:ajax event="rowSelect" listener="#{customerOrderCtrl.onRowSelect}" update=":form:growl detail" />
+						<f:facet name="header">
+				            Customer Order
+				        </f:facet>
+						<p:column style="width:6px">
+							<p:rowToggler />
+						</p:column>
+						<p:column headerText="date" style="width:7%" filterBy="#{row.dateOrder}">
+							<f:facet name="filter">
+								<p:calendar id="inline" pattern="dd-MM-yyyy" styleClass="calendarFilter" onkeyup="PF('customerOrderTable').filter()"> 
+									<p:ajax event="dateSelect" oncomplete="PF('customerOrderTable').filter()" update=":form:customerOrderTable"/>
+								</p:calendar>
+							</f:facet>
+							<h:outputText value="#{row.dateOrder}">
+								<f:convertDateTime pattern="dd-MM-yyyy"  timeZone="CET"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="customer" style="width:25%" filterBy="#{row.customer.descr}">
+							<h:outputText value="#{row.customer.descr}" />
+						</p:column>
+						<p:column headerText="note" style="width:25%">
+							<h:outputText value="#{row.note}" />
+						</p:column>
+						<p:column headerText="price order" style="width:5%">
+							<h:outputText value="#{row.priceOrder}" />
+						</p:column>
+						<p:column headerText="discount %" style="width:5%">
+							<h:outputText value="#{row.discountPercentage}" />
+						</p:column>
+						<p:column headerText="real price" style="width:5%">
+							<h:outputText value="#{row.realOrderPrice}" />
+						</p:column>
+						<p:rowExpansion>
+							<p:panelGrid columns="1" columnClasses="label,value" id="detail">
+								
+								<p:dataTable var="link" value="#{row.linkOrder}">
+									<f:facet name="header">
+									Order detail
+								</f:facet>
+									<p:column headerText="Id" width="5%">
+										<h:outputText value="#{link.idLinkOrder}" />
+									</p:column>
+									<p:column headerText="product" width="25%">
+										<h:outputText value="#{link.stockistOrderProduct.product.descr}" />
+									</p:column>
+									<p:column headerText="code product" width="10%">
+										<h:outputText value="#{link.stockistOrderProduct.product.codProduct}" />
+									</p:column>
+									<p:column headerText="range" width="25%">
+										<h:outputText value="#{link.stockistOrderProduct.product.range}" />
+									</p:column>
+									<p:column headerText="brand" width="15%">
+										<h:outputText value="#{link.stockistOrderProduct.product.brand.descr}" />
+									</p:column>
+									<p:column headerText="stockist" width="15%">
+										<h:outputText value="#{link.stockistOrderProduct.product.brand.stockist.descr}" />
+									</p:column>
+									<p:column headerText="date buying" width="10%">
+										<h:outputText value="#{link.stockistOrderProduct.stockistOrder.dateOrder}" >
+											<f:convertDateTime pattern="dd-MM-yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="price buying" width="7%">
+										<h:outputText value="#{link.stockistOrderProduct.price}" />
+									</p:column>
+									<p:column headerText="real selling price" width="7%">
+										<h:outputText value="#{link.realSellingPrice}" />
+									</p:column>
+									
+								</p:dataTable>
+
+							</p:panelGrid>
+						</p:rowExpansion>
+					</p:dataTable>
+				</p:panel>
+				<p:spacer />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

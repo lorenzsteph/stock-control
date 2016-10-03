@@ -66,7 +66,7 @@
 
 .menu-icon-panel .ui-panel-content {
 	margin: auto;
-	width: 45%;
+	width: 70%;
 	padding: 10px;
 }
 
@@ -109,7 +109,7 @@
 }
 
 .layout-center>div {
-	width: 90%;
+	width: 98%;
 }
 
 .ui-tooltip {
@@ -137,4 +137,20 @@
 a.ui-state-hover {
 	color: white !important;
 	background-color: #26a69a !important;
+}
+
+.calendarFilter>input {
+	width: 80px;
+}
+
+.ui-column-customfilter {
+	padding-top: 5px !important;
+}
+
+.ui-column-customfilter>span>input, .ui-filter-column > input{
+	height: 5px;
+}
+
+.ui-filter-column > input{
+	margin-top: 5px !important;
 }
