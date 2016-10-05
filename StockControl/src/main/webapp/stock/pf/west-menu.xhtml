@@ -33,10 +33,20 @@
 						<h:outputLabel value="Stockist order" styleClass="menu-icon-label" />
 					</p:panel>
 				</p:commandLink>
-
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist-order-new.xhtml?faces-redirect=true')}" ajax="false">
+					<p:panel id="customerStockistNew" styleClass="menu-icon-panel-sub">
+						<h:outputLabel value="    New" styleClass="menu-icon-label" />
+					</p:panel>
+				</p:commandLink>
+				
 				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer-order.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="customerOrder" styleClass="menu-icon-panel">
 						<h:outputLabel value="Customer order" styleClass="menu-icon-label" />
+					</p:panel>
+				</p:commandLink>
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer-order-new.xhtml?faces-redirect=true')}" ajax="false">
+					<p:panel id="customerOrderNew" styleClass="menu-icon-panel-sub">
+						<h:outputLabel value="    New" styleClass="menu-icon-label" />
 					</p:panel>
 				</p:commandLink>
 				

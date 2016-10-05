@@ -5,20 +5,22 @@
 	<ui:define name="body">
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
-			<p:dataTable var="customer" value="#{customerCtrl.customerDataModel}" paginator="true" rows="10" paginatorPosition="bottom"
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{customerCtrl.selectedCustomer}" id="customerTable"
-				lazy="true">
-				<p:ajax event="rowSelect" listener="#{customerCtrl.onRowSelect}" />
-				<f:facet name="header">
+			<p:panelGrid columns="2" styleClass="panel-top-stockist" >
+				<p:dataTable var="customer" value="#{customerCtrl.customerDataModel}" paginator="true" rows="10" paginatorPosition="bottom"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{customerCtrl.selectedCustomer}" id="customerTable"
+					lazy="true">
+					<p:ajax event="rowSelect" listener="#{customerCtrl.onRowSelect}" />
+					<f:facet name="header">
 		            Customer
 		        </f:facet>
-				<p:column headerText="Cliente" sortBy="#{customer.idCustomer}">
-					<h:outputText value="#{customer.idCustomer}" />
-				</p:column>
-				<p:column headerText="Descrizione" sortBy="#{customer.descr}">
-					<h:outputText value="#{customer.descr}" />
-				</p:column>
-			</p:dataTable>
+					<p:column headerText="Cliente" sortBy="#{customer.idCustomer}">
+						<h:outputText value="#{customer.idCustomer}" />
+					</p:column>
+					<p:column headerText="Descrizione" sortBy="#{customer.descr}">
+						<h:outputText value="#{customer.descr}" />
+					</p:column>
+				</p:dataTable>
+			</p:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

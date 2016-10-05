@@ -30,6 +30,9 @@ public class Storehouse implements Serializable {
 	@Column(name = "category")
 	private String category;
 
+	@Column(name = "id_product")
+	private long idProduct;
+
 	@Column(name = "cod_product")
 	private String codProduct;
 
@@ -137,6 +140,14 @@ public class Storehouse implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getIdProduct() {
+		return idProduct;
+	}
+
+	public void setIdProduct(long idProduct) {
+		this.idProduct = idProduct;
 	}
 
 }

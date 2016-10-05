@@ -38,7 +38,7 @@ public class Product implements Serializable {
 	@Column(name = "selling_price")
 	private BigDecimal sellingPrice;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_brand")
 	private Brand brand;
 

@@ -35,6 +35,13 @@
 	margin-right: 15px
 }
 
+.separator-input {
+	border: none !important;
+	height: 1px;
+	background-color: #2e92cf !important;
+	margin-right: 15px
+}
+
 .ui-container-west {
 	border: none;
 	top: 90px !important;
@@ -55,7 +62,7 @@
 	border: none;
 	width: 160px;
 	height: 50px;
-	background-color: #2e92cf;
+	background-color: #0277bd;
 	margin: 1px;
 	margin-right: 2px;
 	margin-bottom: 1px;
@@ -70,6 +77,39 @@
 	padding: 10px;
 }
 
+
+.menu-icon-panel>div {
+	padding-top: 12px !important;
+}
+
+
+.menu-icon-panel-sub {
+	border: none;
+	width: 160px;
+	height: 50px;
+	background-color: #26a69a;
+	margin: 1px;
+	margin-right: 2px;
+	margin-bottom: 1px;
+	position: relative;
+	display: block;
+	border-radius: 0px;
+}
+
+.menu-icon-panel-sub .ui-panel-content {
+	margin: auto;
+	width: 50%;
+	padding: 10px;
+	padding-top: 0px;
+}
+
+
+.menu-icon-panel-sub > div {
+	padding-top: 12px !important;
+}
+
+
+
 .class-container-west {
 	border: 0px !important;
 }
@@ -82,10 +122,6 @@
 	border-width: 0px;
 	padding-bottom: 0px;
 	padding-top: 0px;
-}
-
-.menu-icon-panel>div {
-	padding-top: 12px !important;
 }
 
 .icon-template {
@@ -153,4 +189,20 @@ a.ui-state-hover {
 
 .ui-filter-column > input{
 	margin-top: 5px !important;
+}
+
+.ui-expanded-row-content td table {
+border: 0px;
+}
+
+.customer-order  {
+	width: 20%;
+}
+
+.customer-order-order {
+	width: 25%;
+}
+
+.customer-order-product  {
+	width: 55%;
 }

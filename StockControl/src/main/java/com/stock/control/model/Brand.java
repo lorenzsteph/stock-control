@@ -33,7 +33,7 @@ public class Brand implements Serializable {
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_stockist")
 	private Stockist stockist;
 

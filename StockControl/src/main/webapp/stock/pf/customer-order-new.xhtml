@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/stock/pf/template-stock.xhtml">
+	<ui:define name="title"> Customer order</ui:define>
+	<ui:define name="body">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" />
+			<p:panelGrid columns="3" columnClasses="customer-order,customer-order-order,customer-order-product" styleClass="panel-top-stockist">
+				<p:panel>
+					<p:dataTable var="customer" value="#{customerCtrl.customerDataModel}" paginator="true" rows="5" paginatorPosition="bottom"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{customerOrderNewCtrl.selectedCustomer}" id="customerTable" lazy="true">
+						<p:ajax event="rowSelect" listener="#{customerCtrl.onRowSelect}" />
+						<f:facet name="header">
+				            Customer
+				        </f:facet>
+						<p:column>
+							<h:outputText value="#{customer.descr}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:panel>
+					<div class="Container100">
+						<div class="ContainerIndent">
+							<div class="Card ui-fluid">
+								<div class="Container50 Responsive50">
+									<div class="ContainerIndent">
+										<p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+
+											<p:outputLabel for="multi" value="date order:" />
+											<p:outputLabel for="realOrderPrice" value="real price:" />
+
+											<p:separator styleClass="separator-input" />
+											<p:separator styleClass="separator-input" />
+
+											<p:calendar required="true" id="multi" value="#{customerOrderNewCtrl.customerOrder.dateOrder}" pages="1" placeholder="date order" />
+											<p:inputNumber required="true" id="realOrderPrice" value="#{customerOrderNewCtrl.customerOrder.realOrderPrice}" placeholder="real order price"  symbolPosition="s" decimalSeparator="," thousandSeparator="."/>
+
+												<p:outputLabel for="inputText" value="note:" />
+												<p:separator />
+
+												<p:separator styleClass="separator-input" />
+												<p:separator />
+
+												<p:inputTextarea rows="5" value="#{customerOrderNewCtrl.customerOrder.note}" id="inputText" placeholder="note" />
+												<p:separator />
+										</p:panelGrid>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+				<p:panel>
+					<p:dataTable var="cart" value="#{customerOrderNewCtrl.cart}" editable="true" paginator="true" rows="5" paginatorPosition="bottom"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" id="cart">
+
+						<p:ajax event="rowEdit" listener="#{customerOrderNewCtrl.onRowEdit}" update=":form:growl" />
+						<p:ajax event="rowEditCancel" listener="#{customerOrderNewCtrl.onRowCancel}" update=":form:growl" />
+
+						<f:facet name="header">
+				            cart
+				        </f:facet>
+						<p:column headerText="code">
+							<h:outputText value="#{cart.product.codProduct}" />
+						</p:column>
+						<p:column headerText="descreiption">
+							<h:outputText value="#{cart.product.descr}" />
+						</p:column>
+						<p:column headerText="amount" width="15%">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cart.amount}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="amount" value="#{cart.amount}" style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="width:32px">
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+					<p:commandLink id="ajax" update="form" actionListener="#{customerOrderNewCtrl.saveCart}">
+						<h:outputText value="Save Cart" />
+					</p:commandLink>
+				</p:panel>
+			</p:panelGrid>
+
+
+			<p:panelGrid columns="1" styleClass="panel-top-stockist">
+				<p:panel>
+					<p:dataTable var="sh" id="storehouseTable" widgetVar="storehouseTable" value="#{customerOrderNewCtrl.storehouseDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,50,100">
+						<f:facet name="header">
+				            Storehouse
+				        </f:facet>
+						<p:column headerText="Cliente">
+							<h:outputText value="#{sh.stockist}" />
+						</p:column>
+						<p:column headerText="brand">
+							<h:outputText value="#{sh.brand}" />
+						</p:column>
+						<p:column headerText="category">
+							<h:outputText value="#{sh.category}" />
+						</p:column>
+						<p:column headerText="category" filterMatchMode="exact">
+							<h:outputText value="#{sh.category}" />
+						</p:column>
+						<p:column headerText="code product">
+							<h:outputText value="#{sh.codProduct}" />
+						</p:column>
+						<p:column headerText="product">
+							<h:outputText value="#{sh.product}" />
+						</p:column>
+						<p:column headerText="range">
+							<h:outputText value="#{sh.range}" />
+						</p:column>
+						<p:column headerText="sellingPrice">
+							<h:outputText value="#{sh.sellingPrice}" />
+						</p:column>
+						<p:column headerText="priceOrder">
+							<h:outputText value="#{sh.priceOrder}" />
+						</p:column>
+						<p:column headerText="storeTotal">
+							<h:outputText value="#{sh.storeTotal}" />
+						</p:column>
+						<p:column style="width:32px;text-align: center">
+							<p:commandButton disabled="#{sh.storeTotal==null}" update=":form" icon="ui-icon-search" title="View" action="#{customerOrderNewCtrl.addCart}">
+								<f:setPropertyActionListener value="#{sh}" target="#{customerOrderNewCtrl.selectedStorehouse}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:spacer />
+			</p:panelGrid>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

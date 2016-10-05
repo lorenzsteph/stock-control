@@ -49,6 +49,10 @@ public class StockistOrderProduct implements Serializable {
 	@OneToMany(mappedBy = "stockistOrderProduct", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
 	private Set<StockistOrderProduct> stockistOrderProduct;
 
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "stockistOrderProduct")
+	private LinkOrder linkOrder;
+
 	public Long getIdStockistOrderProduct() {
 		return idStockistOrderProduct;
 	}
@@ -103,6 +107,14 @@ public class StockistOrderProduct implements Serializable {
 
 	public void setStockistOrder(StockistOrder stockistOrder) {
 		this.stockistOrder = stockistOrder;
+	}
+
+	public LinkOrder getLinkOrder() {
+		return linkOrder;
+	}
+
+	public void setLinkOrder(LinkOrder linkOrder) {
+		this.linkOrder = linkOrder;
 	}
 
 }

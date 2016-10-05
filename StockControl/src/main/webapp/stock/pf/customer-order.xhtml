@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="/stock/pf/template-stock.xhtml">
-	<ui:define name="title"> Customer order</ui:define>
+	<ui:define name="title"> Customer order new</ui:define>
 	<ui:define name="body">
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
@@ -74,6 +74,9 @@
 									</p:column>
 									<p:column headerText="price buying" width="7%">
 										<h:outputText value="#{link.stockistOrderProduct.price}" />
+									</p:column>
+									<p:column headerText="selling price" width="7%">
+										<h:outputText value="#{link.stockistOrderProduct.product.sellingPrice}" />
 									</p:column>
 									<p:column headerText="real selling price" width="7%">
 										<h:outputText value="#{link.realSellingPrice}" />

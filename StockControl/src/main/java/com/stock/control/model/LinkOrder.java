@@ -7,9 +7,12 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +22,7 @@ public class LinkOrder implements Serializable {
 	private static final long serialVersionUID = 1666813845981148173L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	@Column(name = "id_link_order")
 	private Long idLinkOrder;
 
@@ -26,7 +30,7 @@ public class LinkOrder implements Serializable {
 	@JoinColumn(name = "id_customer_order")
 	private CustomerOrder customerOrder;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_stockist_order_product")
 	private StockistOrderProduct stockistOrderProduct;
 
