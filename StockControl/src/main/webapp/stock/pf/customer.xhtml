@@ -5,23 +5,44 @@
 	<ui:define name="body">
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
-			<p:panelGrid columns="2" styleClass="panel-top-stockist" >
-				<p:dataTable var="customer" value="#{customerCtrl.customerDataModel}" paginator="true" rows="10" paginatorPosition="bottom"
-					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{customerCtrl.selectedCustomer}" id="customerTable"
-					lazy="true">
+			<p:panelGrid columns="2" styleClass="panel-top-stockist">
+				<p:dataTable var="customer" editable="true" value="#{customerCtrl.customerDataModel}" paginator="true" rows="30" paginatorPosition="bottom"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,30,50,100" selectionMode="single" selection="#{customerCtrl.selectedCustomer}"
+					id="customerTable" widgetVar="customerTable" lazy="true">
+					
 					<p:ajax event="rowSelect" listener="#{customerCtrl.onRowSelect}" />
+					<p:ajax event="rowEdit" listener="#{customerCtrl.onRowEdit}" update=":form:growl" />
+					<p:ajax event="rowEditCancel" listener="#{customerCtrl.onRowCancel}" update=":form:growl" />
+					
 					<f:facet name="header">
-		            Customer
-		        </f:facet>
-					<p:column headerText="Cliente" sortBy="#{customer.idCustomer}">
+		            	Customer
+		        	</f:facet>
+					<p:column headerText="id" sortBy="#{customer.idCustomer}" width="10%">
 						<h:outputText value="#{customer.idCustomer}" />
 					</p:column>
-					<p:column headerText="Descrizione" sortBy="#{customer.descr}">
-						<h:outputText value="#{customer.descr}" />
+					<p:column headerText="description" sortBy="#{customer.descr}">
+
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{customer.descr}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="descr" value="#{customer.descr}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+
+					</p:column>
+					<p:column style="width:32px">
+						<p:rowEditor />
 					</p:column>
 				</p:dataTable>
+				<p:contextMenu for="customerTable">
+					<p:menuitem value="New" update=":form:growl :form:customerTable" icon="ui-icon-plus" actionListener="#{customerCtrl.addNewCustomer}" />
+				</p:contextMenu>
 			</p:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>
 </html>
+
+

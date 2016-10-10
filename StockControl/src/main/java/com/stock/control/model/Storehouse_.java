@@ -18,5 +18,7 @@ public class Storehouse_ {
 	public static volatile SingularAttribute<Storehouse, BigDecimal> priceOrder;
 	public static volatile SingularAttribute<Storehouse, BigDecimal> storeTotal;
 	public static volatile SingularAttribute<Storehouse, BigDecimal> storePrice;
+	
+	public static volatile SingularAttribute<Storehouse, BigDecimal> idProductForOrder;
 
 }

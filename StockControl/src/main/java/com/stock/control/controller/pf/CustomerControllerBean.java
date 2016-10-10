@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +36,34 @@ public class CustomerControllerBean implements Serializable {
 	private Customer selectedCustomer;
 
 	@PostConstruct
-	public void initBean(){
+	public void initBean() {
 		customerDataModel = new CustomerLazyListDataModel(customerService);
 		selectedCustomer = null;
 	}
-	
+
 	public void onRowSelect(SelectEvent event) {
 		FacesMessage msg = new FacesMessage("Customer Selected", ((Customer) event.getObject()).getDescr());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void addNewCustomer() {
+		Customer c = new Customer();
+		c = customerService.saveOrUpdateCustomer(c);
+		FacesMessage msg = new FacesMessage("Customer added id : " + c.getIdCustomer());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		Customer edit = (Customer) event.getObject();
+		edit = customerService.saveOrUpdateCustomer(edit);
+
+		FacesMessage msg = new FacesMessage("Customer Edited", edit.getDescr());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edit Cancelled", ((Customer) event.getObject()).getDescr());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 

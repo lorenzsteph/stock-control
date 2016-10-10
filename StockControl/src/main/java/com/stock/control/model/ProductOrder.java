@@ -1,7 +1,6 @@
 package com.stock.control.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class ProductOrder implements Serializable {
 

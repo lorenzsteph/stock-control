@@ -35,8 +35,8 @@ public class ProductServiceBean implements ProductService {
 	}
 
 	@Override
-	public void deleteProduct(Product product) {
-		productRepository.delete(product);
+	public void deleteProduct(long product) {
+		productRepository.delete(productRepository.findOne(product));
 
 	}
 

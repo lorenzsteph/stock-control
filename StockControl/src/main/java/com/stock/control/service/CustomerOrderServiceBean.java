@@ -109,4 +109,13 @@ public class CustomerOrderServiceBean implements CustomerOrderService {
 		return result;
 	}
 
+	@Override
+	public void removeCustomerOrder(CustomerOrder selectedCustomerOrder) {
+		for (LinkOrder lo : selectedCustomerOrder.getLinkOrder()) {
+			linkOrderRepository.delete(lo.getIdLinkOrder());
+		}
+		customerOrderRepository.delete(selectedCustomerOrder.getIdCustomerOrder());
+
+	}
+
 }

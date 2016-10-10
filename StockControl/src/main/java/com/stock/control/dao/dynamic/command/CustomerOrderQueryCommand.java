@@ -30,7 +30,7 @@ public class CustomerOrderQueryCommand implements QueryCommand<CustomerOrderSear
 		if (spec == null) {
 			spec = Specifications.where(specification);
 		} else {
-			spec.and(specification);
+			spec = spec.and(specification);
 		}
 		return spec;
 	}

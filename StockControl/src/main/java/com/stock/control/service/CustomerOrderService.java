@@ -15,4 +15,6 @@ public interface CustomerOrderService {
 
 	public void saveOrder(List<ProductOrder> cart, CustomerOrder customerOrder, Customer selectedCustomer);
 
+	public void removeCustomerOrder(CustomerOrder selectedCustomerOrder);
+
 }

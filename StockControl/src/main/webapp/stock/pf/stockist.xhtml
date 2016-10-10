@@ -14,10 +14,10 @@
 						<f:facet name="header">
 				            Stockist
 				        </f:facet>
-						<p:column headerText="Cliente" sortBy="#{stockist.idStockist}">
+						<p:column headerText="id" sortBy="#{stockist.idStockist}"  width="10%">
 							<h:outputText value="#{stockist.idStockist}" />
 						</p:column>
-						<p:column headerText="Descrizione" sortBy="#{stockist.descr}">
+						<p:column headerText="description" sortBy="#{stockist.descr}">
 							<h:outputText value="#{stockist.descr}" />
 						</p:column>
 					</p:dataTable>
@@ -50,6 +50,7 @@
 
 						<p:ajax event="rowEdit" listener="#{productCtrl.onRowEdit}" update=":form:growl" />
 						<p:ajax event="rowEditCancel" listener="#{productCtrl.onRowCancel}" update=":form:growl" />
+						
 
 						<p:column width="15%">
 							<p:cellEditor>
@@ -98,8 +99,8 @@
 					</p:dataTable>
 				</p:panel>
 				<p:contextMenu for="productTable">
-					<p:menuitem value="New" update=":form:growl :form:product" icon="ui-icon-plus" actionListener="#{productCtrl.addProduct}" />
-					<p:menuitem value="Delete" icon="ui-icon-close" update=":form:growl :form:product" actionListener="#{productCtrl.deleteProduct}" />
+					<p:menuitem value="New"  update=":form:growl :form:product" icon="ui-icon-plus" actionListener="#{productCtrl.addProduct}" />
+					<p:menuitem value="Delete"  icon="ui-icon-close" update=":form:growl :form:product" actionListener="#{productCtrl.deleteProduct}" />
 				</p:contextMenu>
 			</p:panelGrid>
 		</h:form>

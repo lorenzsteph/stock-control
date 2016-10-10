@@ -54,6 +54,9 @@ public class Storehouse implements Serializable {
 	@Column(name = "store_price")
 	private BigDecimal storePrice;
 
+	@Column(name = "id_product_for_order")
+	private BigDecimal idProductForOrder;
+
 	public String getStockist() {
 		return stockist;
 	}
@@ -148,6 +151,14 @@ public class Storehouse implements Serializable {
 
 	public void setIdProduct(long idProduct) {
 		this.idProduct = idProduct;
+	}
+
+	public BigDecimal getIdProductForOrder() {
+		return idProductForOrder;
+	}
+
+	public void setIdProductForOrder(BigDecimal idProductForOrder) {
+		this.idProductForOrder = idProductForOrder;
 	}
 
 }

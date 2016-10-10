@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +36,7 @@ public class Brand implements Serializable {
 	@JoinColumn(name = "id_stockist")
 	private Stockist stockist;
 
-	@OneToMany(mappedBy = "brand", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
 	private Set<Product> product;
 
 	public Long getIdBrand() {

@@ -1,6 +1,5 @@
 package com.stock.control.controller.pf.datamodel;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.primefaces.model.SortOrder;
 import org.springframework.data.domain.Page;
 
 import com.stock.control.dao.dynamic.filter.StorehouseSearchFilter;
-import com.stock.control.model.Category;
 import com.stock.control.model.Storehouse;
 import com.stock.control.service.StorehouseService;
 import com.stock.control.utils.CommonUtils;
@@ -42,19 +40,16 @@ public class StorehouseLazyListDataModel extends LazyDataModel<Storehouse> {
 
 	private StorehouseSearchFilter setSortOrderToDataFilter(StorehouseSearchFilter dataFilter, String sortField, SortOrder sortOrder) {
 		dataFilter.initDefaultFilter();
-		
+		if(sortField!=null){
+			dataFilter.addOrder(sortField, sortOrder.toString());
+		}
 		return dataFilter;
 	}
 
 	private StorehouseSearchFilter createDataFilter(Map<String, Object> filters, StorehouseSearchFilter storehouseFilter) {
 
 		if (filters != null) {
-			for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-				String filterProperty = it.next();
-				Object filterValue = filters.get(filterProperty);
-
-				storehouseFilter.setCategory(((Category) filterValue).getDescr());
-			}
+			storehouseFilter.setFilters(filters);
 		}
 
 		return storehouseFilter;

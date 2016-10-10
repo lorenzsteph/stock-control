@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,7 +49,7 @@ public class CustomerOrder implements Serializable {
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
-	@OneToMany(mappedBy = "customerOrder", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "customerOrder", fetch = FetchType.EAGER)
 	private Set<LinkOrder> linkOrder;
 
 	public Long getIdCustomerOrder() {

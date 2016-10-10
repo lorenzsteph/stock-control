@@ -195,14 +195,18 @@ a.ui-state-hover {
 border: 0px;
 }
 
-.customer-order  {
+.customer-order, .stockist-order  {
 	width: 20%;
 }
 
-.customer-order-order {
+.customer-order-order, .stockist-order-order {
 	width: 25%;
 }
 
-.customer-order-product  {
+.customer-order-product, .stockist-order-product    {
 	width: 55%;
+}
+
+.sh-min table tbody td {
+	padding: 0px 10px !important;
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,8 +30,11 @@ public class Stockist implements Serializable {
 	@Column(name = "date_end_validity")
 	private Date dateEndValidity;
 
-	@OneToMany(mappedBy = "stockist", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "stockist", fetch = FetchType.EAGER)
 	private Set<Brand> brand;
+
+	@OneToMany(mappedBy = "stockist", fetch = FetchType.EAGER)
+	private Set<StockistOrder> stockistOrder;
 
 	public Long getIdStockist() {
 		return idStockist;
@@ -64,6 +66,14 @@ public class Stockist implements Serializable {
 
 	public void setBrand(Set<Brand> brand) {
 		this.brand = brand;
+	}
+
+	public Set<StockistOrder> getStockistOrder() {
+		return stockistOrder;
+	}
+
+	public void setStockistOrder(Set<StockistOrder> stockistOrder) {
+		this.stockistOrder = stockistOrder;
 	}
 
 }

@@ -87,6 +87,10 @@
 							</p:panelGrid>
 						</p:rowExpansion>
 					</p:dataTable>
+					<p:contextMenu for="customerOrderTable">
+						<p:menuitem value="Edit" icon="ui-icon-pencil" actionListener="#{customerOrderNewCtrl.editCustomerOrder(customerOrderCtrl.selectedCustomerOrder)}" />
+						<p:menuitem value="Delete" icon="ui-icon-close" update=":form:growl :form:customerOrderTable" actionListener="#{customerOrderCtrl.deleteCustomerOrder}" />
+					</p:contextMenu>
 				</p:panel>
 				<p:spacer />
 			</p:panelGrid>

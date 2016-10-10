@@ -45,7 +45,7 @@ public class ProductControllerBean implements Serializable {
 	}
 
 	public void deleteProduct() {
-		productService.deleteProduct(selectedProduct);
+		productService.deleteProduct(selectedProduct.getIdProduct());
 		FacesMessage msg = new FacesMessage("Product deleted");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}

@@ -24,7 +24,6 @@ public class CustomerOrderControllerBean implements Serializable {
 
 	private static final long serialVersionUID = -4329067638789959238L;
 
-	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(CustomerOrderControllerBean.class);
 
 	@Autowired
@@ -50,6 +49,11 @@ public class CustomerOrderControllerBean implements Serializable {
 
 		selectedRecordBean.setCustomerOrder((CustomerOrder) event.getObject());
 
+	}
+
+	public void deleteCustomerOrder() {
+		log.debug("delete customer order: " + selectedCustomerOrder.getIdCustomerOrder());
+		customerOrderService.removeCustomerOrder(selectedCustomerOrder);
 	}
 
 	public CustomerOrderLazyListDataModel getCustomerOrderDataModel() {

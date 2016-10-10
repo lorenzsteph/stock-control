@@ -53,6 +53,7 @@ CREATE TABLE customer_order (
 
 CREATE TABLE stockist_order (
         id_stockist_order serial PRIMARY KEY,
+        id_stockist INTEGER REFERENCES stockist (id_stockist), 
 		date_order date,
 		price_order numeric,
 		shipping_charges numeric,
@@ -84,8 +85,8 @@ CREATE TABLE link_order (
 CREATE SEQUENCE storehouse_id_seq START 1;
 
 CREATE or replace VIEW storehouse AS 
-SELECT nextval('storehouse_id_seq'::regclass) AS id, s.descr as stockist, b.descr as brand, c.descr as category, p.cod_product, p.descr as product, p.range, p.selling_price,
-        asd.price as price_order, asd.tot as store_total, asd.price * asd.tot as store_price 
+SELECT nextval('storehouse_id_seq'::regclass) AS id, s.descr as stockist, b.descr as brand, c.descr as category, p.cod_product, p.descr as product, p.id_product , p.range, p.selling_price,
+        asd.price as price_order, asd.tot as store_total, asd.price * asd.tot as store_price , asd.id_product as id_product_for_order
 FROM stockist s join brand b
         on s.id_stockist = b.id_stockist
      join product p

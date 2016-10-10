@@ -3,12 +3,17 @@ package com.stock.control.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -39,6 +44,13 @@ public class StockistOrder implements Serializable {
 
 	@Column(name = "other_shopping")
 	private BigDecimal otherShopping;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_stockist")
+	private Stockist stockist;
+
+	@OneToMany(mappedBy = "stockistOrder", fetch = FetchType.EAGER)
+	private Set<StockistOrderProduct> stockistOrderProduct;
 
 	public Long getIdStockistOrder() {
 		return idStockistOrder;
@@ -94,6 +106,22 @@ public class StockistOrder implements Serializable {
 
 	public void setOtherShopping(BigDecimal otherShopping) {
 		this.otherShopping = otherShopping;
+	}
+
+	public Stockist getStockist() {
+		return stockist;
+	}
+
+	public void setStockist(Stockist stockist) {
+		this.stockist = stockist;
+	}
+
+	public Set<StockistOrderProduct> getStockistOrderProduct() {
+		return stockistOrderProduct;
+	}
+
+	public void setStockistOrderProduct(Set<StockistOrderProduct> stockistOrderProduct) {
+		this.stockistOrderProduct = stockistOrderProduct;
 	}
 
 }

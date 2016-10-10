@@ -19,25 +19,25 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.stock.control.controller.pf.datamodel.StorehouseLazyListDataModel;
-import com.stock.control.model.Customer;
-import com.stock.control.model.CustomerOrder;
-import com.stock.control.model.LinkOrder;
+import com.stock.control.model.Stockist;
+import com.stock.control.model.StockistOrder;
+import com.stock.control.model.StockistOrderProduct;
 import com.stock.control.model.ProductOrder;
 import com.stock.control.model.Storehouse;
-import com.stock.control.service.CustomerOrderService;
+import com.stock.control.service.StockistOrderService;
 import com.stock.control.service.ProductService;
 import com.stock.control.service.StorehouseService;
 
-@Component(value = "customerOrderNewCtrl")
+@Component(value = "stockistOrderNewCtrl")
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class CustomerOrderNewControllerBean implements Serializable {
+public class StockistOrderNewControllerBean implements Serializable {
 
 	private static final long serialVersionUID = -4329067638789959238L;
 
-	private static final Logger log = LoggerFactory.getLogger(CustomerOrderNewControllerBean.class);
+	private static final Logger log = LoggerFactory.getLogger(StockistOrderNewControllerBean.class);
 
 	@Autowired
-	private CustomerOrderService customerOrderService;
+	private StockistOrderService stockistOrderService;
 
 	@Autowired
 	private ProductService productService;
@@ -53,13 +53,13 @@ public class CustomerOrderNewControllerBean implements Serializable {
 
 	private Storehouse selectedStorehouse;
 
-	private Customer selectedCustomer;
+	private Stockist selectedStockist;
 
 	private StorehouseLazyListDataModel storehouseDataModel;
 
 	private List<ProductOrder> cart;
 
-	private CustomerOrder customerOrder;
+	private StockistOrder stockistOrder;
 
 	@PostConstruct
 	public void initBean() {
@@ -67,8 +67,8 @@ public class CustomerOrderNewControllerBean implements Serializable {
 		this.emptyCart();
 		selectedStorehouse = null;
 
-		customerOrder = new CustomerOrder();
-		selectedCustomer = new Customer();
+		stockistOrder = new StockistOrder();
+		selectedStockist = new Stockist();
 
 	}
 
@@ -94,17 +94,17 @@ public class CustomerOrderNewControllerBean implements Serializable {
 	}
 
 	public void saveCart() {
-		if (selectedCustomer == null) {
-			FacesMessage msg = new FacesMessage("No customer selected!");
+		if (selectedStockist == null) {
+			FacesMessage msg = new FacesMessage("No stockist selected!");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return;
 		}
-		customerOrderService.saveOrder(cart, customerOrder, selectedCustomer);
+		stockistOrderService.saveOrder(cart, stockistOrder, selectedStockist);
 
 		log.debug("cart saved...empties");
 		emptyCart();
-		customerOrder = new CustomerOrder();
-		selectedCustomer = new Customer();
+		stockistOrder = new StockistOrder();
+		selectedStockist = new Stockist();
 
 		FacesMessage msg = new FacesMessage("Order saved!");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -166,34 +166,34 @@ public class CustomerOrderNewControllerBean implements Serializable {
 		cart.add(productOrder);
 	}
 
-	public void editCustomerOrder(CustomerOrder selectedCustomerOrder) {
-		log.debug("edit customer order: " + selectedCustomerOrder.getIdCustomerOrder());
+	public void editStockistOrder(StockistOrder selectedStockistOrder) {
+		log.debug("edit stockist order: " + selectedStockistOrder.getIdStockistOrder());
 
-		selectedCustomer = selectedCustomerOrder.getCustomer();
-		customerOrder = selectedCustomerOrder;
-		cart = createCartFromCustomerOrder(selectedCustomerOrder);
+		selectedStockist = selectedStockistOrder.getStockist();
+		stockistOrder = selectedStockistOrder;
+		cart = createCartFromStockistOrder(selectedStockistOrder);
 
-		navigationBean.goToPageSelected("/stock/pf/customer-order-new.xhtml?faces-redirect=true");
+		navigationBean.goToPageSelected("/stock/pf/stockist-order-new.xhtml?faces-redirect=true");
 	}
 
-	public void newCustomerOrder() {
+	public void newStockistOrder() {
 		this.emptyCart();
 		selectedStorehouse = null;
 
-		customerOrder = new CustomerOrder();
-		selectedCustomer = new Customer();
+		stockistOrder = new StockistOrder();
+		selectedStockist = new Stockist();
 
-		navigationBean.goToPageSelected("/stock/pf/customer-order-new.xhtml?faces-redirect=true");
+		navigationBean.goToPageSelected("/stock/pf/stockist-order-new.xhtml?faces-redirect=true");
 	}
 
-	private List<ProductOrder> createCartFromCustomerOrder(CustomerOrder selectedCustomerOrder) {
+	private List<ProductOrder> createCartFromStockistOrder(StockistOrder selectedStockistOrder) {
 		List<ProductOrder> result = new ArrayList<ProductOrder>();
 
-		for (LinkOrder lo : selectedCustomerOrder.getLinkOrder()) {
+		for (StockistOrderProduct lo : selectedStockistOrder.getStockistOrderProduct()) {
 
 			boolean productFound = false;
 			for (ProductOrder productOrder : result) {
-				if (productOrder.getProduct().getIdProduct() == lo.getStockistOrderProduct().getProduct().getIdProduct()) {
+				if (productOrder.getProduct().getIdProduct() == lo.getProduct().getIdProduct()) {
 					productOrder.setAmount(productOrder.getAmount() + 1);
 					productFound = true;
 					log.debug("product found in cart, add - " + productOrder.getProduct().getIdProduct() + " - " + productOrder.getAmount());
@@ -204,7 +204,7 @@ public class CustomerOrderNewControllerBean implements Serializable {
 			if (!productFound) {
 				ProductOrder e = new ProductOrder();
 				e.setAmount(1);
-				e.setProduct(lo.getStockistOrderProduct().getProduct());
+				e.setProduct(lo.getProduct());
 				result.add(e);
 			}
 
@@ -248,20 +248,20 @@ public class CustomerOrderNewControllerBean implements Serializable {
 		this.storehouseDataModel = storehouseDataModel;
 	}
 
-	public CustomerOrder getCustomerOrder() {
-		return customerOrder;
+	public StockistOrder getStockistOrder() {
+		return stockistOrder;
 	}
 
-	public void setCustomerOrder(CustomerOrder customerOrder) {
-		this.customerOrder = customerOrder;
+	public void setStockistOrder(StockistOrder stockistOrder) {
+		this.stockistOrder = stockistOrder;
 	}
 
-	public Customer getSelectedCustomer() {
-		return selectedCustomer;
+	public Stockist getSelectedStockist() {
+		return selectedStockist;
 	}
 
-	public void setSelectedCustomer(Customer selectedCustomer) {
-		this.selectedCustomer = selectedCustomer;
+	public void setSelectedStockist(Stockist selectedStockist) {
+		this.selectedStockist = selectedStockist;
 	}
 
 }
