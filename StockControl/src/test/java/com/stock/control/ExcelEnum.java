@@ -2,7 +2,8 @@ package com.stock.control;
 
 public enum ExcelEnum {
 
-	PALLA("Palla", 0), CLAVETTE("Clavete", 1), MEZZEPUNTE("Mezzepunte", 2), CERCHIO("Cerchio", 3), NASTRO("Nastro", 4), BASTONCINO("Bastoncino", 5), FUNE("Fune", 6);
+	PALLA("Palla", 0), CLAVETTE("Clavete", 1), MEZZEPUNTE("Mezzepunte", 2), CERCHIO("Cerchio", 3), NASTRO("Nastro", 4), BASTONCINO("Bastoncino", 5), FUNE("Fune", 6), NASTRINI_DECORATIVI("Nastrini decorativi", 7), GADGET("Gadget",
+			8), CAPELLI("Capelli", 9), ACCESSORI("Accessori", 10), PORTATTREZZI("Portattrezzi", 11), ABBIGLIAMENTO("Abbigliamento", 12);
 
 	private final String name;
 	private final int sheet;

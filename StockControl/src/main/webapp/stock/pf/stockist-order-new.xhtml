@@ -24,31 +24,40 @@
 							<div class="Card ui-fluid">
 								<div class="Container50 Responsive50">
 									<div class="ContainerIndent">
-										<p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+										<p:panelGrid columns="3" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
 
 											<p:outputLabel for="multi" value="date order:" />
-											<p:outputLabel for="price" value="price:" />
+											<p:outputLabel for="priceOrder" value="price:" />
+											<p:outputLabel for="shippingCharges" value="shipping charge:" />
 
+											<p:separator styleClass="separator-input" />
 											<p:separator styleClass="separator-input" />
 											<p:separator styleClass="separator-input" />
 
 											<p:calendar required="true" id="multi" value="#{stockistOrderNewCtrl.stockistOrder.dateOrder}" pages="1" placeholder="date order" />
-											<p:inputNumber required="true" id="price" value="#{stockistOrderNewCtrl.stockistOrder.priceOrder}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+											<p:inputNumber required="true" id="priceOrder" value="#{stockistOrderNewCtrl.stockistOrder.priceOrder}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+											<p:inputNumber required="true" id="shippingCharges" value="#{stockistOrderNewCtrl.stockistOrder.shippingCharges}" placeholder="shipping charges" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
 
 											<p:outputLabel for="inputText" value="note:" />
+											<p:outputLabel for="otherShopping" value="other shopping:" />
 											<p:separator styleClass="header-panel" />
 
 
 											<p:separator styleClass="separator-input" />
+											<p:separator styleClass="separator-input" />
 											<p:separator styleClass="header-panel" />
 
 											<p:inputTextarea rows="5" value="#{stockistOrderNewCtrl.stockistOrder.note}" id="inputText" placeholder="note" />
+											<p:inputNumber required="true" id="otherShopping" value="#{stockistOrderNewCtrl.stockistOrder.otherShopping}" placeholder="other shopping" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+
+
 											<p:panel>
 												<p:commandLink id="ajax" update=":form" actionListener="#{stockistOrderNewCtrl.saveCart}">
 													<h:outputText value="Save Cart" />
 												</p:commandLink>
 											</p:panel>
 										</p:panelGrid>
+
 									</div>
 								</div>
 							</div>
@@ -57,7 +66,7 @@
 				</p:panel>
 				<p:panel>
 					<p:dataTable var="cart" value="#{stockistOrderNewCtrl.cart}" editable="true" paginator="true" rows="5" paginatorPosition="bottom"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" id="cart">
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" id="cart" widgetVar="cart">
 
 						<p:ajax event="rowEdit" listener="#{stockistOrderNewCtrl.onRowEdit}" update=":form:growl" />
 						<p:ajax event="rowEditCancel" listener="#{stockistOrderNewCtrl.onRowCancel}" update=":form:growl" />
@@ -74,7 +83,16 @@
 						<p:column headerText="range">
 							<h:outputText value="#{cart.product.range}" />
 						</p:column>
-
+						<p:column headerText="unit price" width="15%">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cart.price}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="price" value="#{cart.price}" style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
 						<p:column headerText="amount" width="15%">
 							<p:cellEditor>
 								<f:facet name="output">
@@ -91,8 +109,7 @@
 
 						<p:columnGroup type="footer">
 							<p:row>
-								<p:column colspan="2" style="text-align:right" footerText="Totals price/amount:" />
-								<p:column footerText="€ #{stockistOrderNewCtrl.getOrderPrice()}" />
+								<p:column colspan="4" style="text-align:right" footerText="Totals price/amount:" />
 
 								<p:column footerText="n° #{stockistOrderNewCtrl.getSumProduct()}" />
 								<p:column colspan="1" style="text-align:right" />
@@ -110,6 +127,7 @@
 						<f:facet name="header">
 				            Storehouse
 				        </f:facet>
+
 						<p:column headerText="stockist" sortBy="#{sh.stockist}" filterBy="#{sh.stockist}">
 							<h:outputText value="#{sh.stockist}" />
 						</p:column>
@@ -131,14 +149,11 @@
 						<p:column headerText="selling price" width="7%">
 							<h:outputText value="#{sh.sellingPrice}" />
 						</p:column>
-						<p:column headerText="price buying" width="7%">
-							<h:outputText value="#{sh.priceOrder}" />
-						</p:column>
 						<p:column headerText="store total" width="7%">
 							<h:outputText value="#{sh.storeTotal}" />
 						</p:column>
 						<p:column style="width:32px;text-align: center">
-							<p:commandButton process="storehouseTable" update=":form" icon="ui-icon-search" title="View" action="#{stockistOrderNewCtrl.addCart}">
+							<p:commandButton process="storehouseTable" icon="ui-icon-plus" title="View" oncomplete="PF('addProduct').show()">
 								<f:setPropertyActionListener value="#{sh}" target="#{stockistOrderNewCtrl.selectedStorehouse}" />
 							</p:commandButton>
 						</p:column>
@@ -146,9 +161,38 @@
 				</p:panel>
 				<p:spacer />
 			</p:panelGrid>
-
-
 		</h:form>
+		<p:dialog appendTo="@(body)" header="product add" id="addProduct" widgetVar="addProduct" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			<h:form id="form-dialog">
+				<p:outputPanel id="carDetail" style="text-align:center;">
+					<p:panel>
+						<div class="Container100">
+							<div class="ContainerIndent">
+								<div class="Card ui-fluid">
+									<div class="Container50 Responsive50">
+										<div class="ContainerIndent">
+											<p:panelGrid columns="2" id="panelDetail" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+
+												<p:outputLabel for="amount" value="amount:" />
+												<p:outputLabel for="price" value="unit price:" />
+
+												<p:separator styleClass="separator-input" />
+												<p:separator styleClass="separator-input" />
+
+												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+												<p:inputNumber required="true" id="price" value="#{stockistOrderNewCtrl.price}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+
+												<p:commandButton process="@this, @form" update=":form:growl :form:cart" icon="ui-icon-plus" title="View" onsuccess="PF('addProduct').hide();" actionListener="#{stockistOrderNewCtrl.addCart()}" />
+											</p:panelGrid>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

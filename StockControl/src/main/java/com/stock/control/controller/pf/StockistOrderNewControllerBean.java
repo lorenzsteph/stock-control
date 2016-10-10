@@ -61,6 +61,9 @@ public class StockistOrderNewControllerBean implements Serializable {
 
 	private StockistOrder stockistOrder;
 
+	private BigDecimal price;
+	private BigDecimal amount;
+
 	@PostConstruct
 	public void initBean() {
 		storehouseDataModel = new StorehouseLazyListDataModel(storehouseService);
@@ -91,6 +94,8 @@ public class StockistOrderNewControllerBean implements Serializable {
 		add(selectedStorehouse, idProduct);
 		FacesMessage msg = new FacesMessage("Storehouse product selected", selectedStorehouse.getProduct());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+		amount = null;
+		price = null;
 	}
 
 	public void saveCart() {
@@ -134,8 +139,9 @@ public class StockistOrderNewControllerBean implements Serializable {
 	private void add(Storehouse storehouse, Long idProduct) {
 		boolean productFound = false;
 		for (ProductOrder productOrder : cart) {
-			if (productOrder.getProduct().getIdProduct() == idProduct) {
-				productOrder.setAmount(productOrder.getAmount() + 1);
+			if (productOrder.getProduct().getIdProduct().equals(idProduct)) {
+				productOrder.setAmount(productOrder.getAmount() + amount.intValue());
+				productOrder.setPrice(price);
 				productFound = true;
 				log.debug("product found in cart, add - " + productOrder.getProduct().getIdProduct() + " - " + productOrder.getAmount());
 				break;
@@ -150,8 +156,9 @@ public class StockistOrderNewControllerBean implements Serializable {
 	private void addCartNewStorehouse(Storehouse storehouse) {
 		log.debug("product not found create cart and add");
 		ProductOrder e = new ProductOrder();
-		e.setAmount(1);
+		e.setAmount(amount.intValue());
 		e.setProduct(productService.findProduct(storehouse.getIdProduct()));
+		e.setPrice(price);
 		cart.add(e);
 		log.debug("product added");
 	}
@@ -177,6 +184,8 @@ public class StockistOrderNewControllerBean implements Serializable {
 	}
 
 	public void newStockistOrder() {
+
+		selectedRecordBean.reset();
 		this.emptyCart();
 		selectedStorehouse = null;
 
@@ -262,6 +271,22 @@ public class StockistOrderNewControllerBean implements Serializable {
 
 	public void setSelectedStockist(Stockist selectedStockist) {
 		this.selectedStockist = selectedStockist;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 
 }

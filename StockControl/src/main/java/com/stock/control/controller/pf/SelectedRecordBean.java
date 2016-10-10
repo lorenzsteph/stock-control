@@ -32,6 +32,14 @@ public class SelectedRecordBean implements Serializable {
 		return stockist;
 	}
 
+	public void reset() {
+		this.stockist = null;
+		this.brand = null;
+		this.category = null;
+		this.product = null;
+
+	}
+
 	public void setStockist(Stockist stockist) {
 		this.stockist = stockist;
 		this.brand = null;

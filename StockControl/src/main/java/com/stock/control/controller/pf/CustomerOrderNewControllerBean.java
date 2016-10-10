@@ -134,7 +134,7 @@ public class CustomerOrderNewControllerBean implements Serializable {
 	private void add(Storehouse storehouse, Long idProduct) {
 		boolean productFound = false;
 		for (ProductOrder productOrder : cart) {
-			if (productOrder.getProduct().getIdProduct() == idProduct) {
+			if (productOrder.getProduct().getIdProduct().equals(idProduct)) {
 				productOrder.setAmount(productOrder.getAmount() + 1);
 				productFound = true;
 				log.debug("product found in cart, add - " + productOrder.getProduct().getIdProduct() + " - " + productOrder.getAmount());

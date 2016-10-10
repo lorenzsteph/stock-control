@@ -44,7 +44,7 @@ public class StockistOrderProduct implements Serializable {
 	private Date dateEndValidity;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "stockistOrderProduct")
+	@JoinColumn(name = "id_stockist_order_product")
 	private LinkOrder linkOrder;
 
 	public Long getIdStockistOrderProduct() {

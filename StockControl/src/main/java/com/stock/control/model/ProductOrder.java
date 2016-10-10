@@ -1,12 +1,15 @@
 package com.stock.control.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class ProductOrder implements Serializable {
 
 	private static final long serialVersionUID = -4652951600994096526L;
 
 	private int amount;
+
+	private BigDecimal price;
 
 	private Product product;
 
@@ -24,6 +27,14 @@ public class ProductOrder implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
 }
