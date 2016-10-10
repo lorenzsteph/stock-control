@@ -14,6 +14,7 @@ public class ProductSearchFilter implements Serializable {
 	private static final long serialVersionUID = -1585612142057165754L;
 
 	private long idCategory;
+	private long idBrand;
 
 	private List<Order> order;
 
@@ -46,6 +47,14 @@ public class ProductSearchFilter implements Serializable {
 
 	public void setIdCategory(long idCategory) {
 		this.idCategory = idCategory;
+	}
+
+	public long getIdBrand() {
+		return idBrand;
+	}
+
+	public void setIdBrand(long idBrand) {
+		this.idBrand = idBrand;
 	}
 
 }

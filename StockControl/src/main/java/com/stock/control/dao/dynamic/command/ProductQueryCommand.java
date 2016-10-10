@@ -1,5 +1,6 @@
 package com.stock.control.dao.dynamic.command;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
 import com.stock.control.dao.dynamic.filter.ProductSearchFilter;
@@ -14,10 +15,23 @@ public class ProductQueryCommand implements QueryCommand<ProductSearchFilter, Pr
 
 		if (filter != null) {
 			if (filter.getIdCategory() != 0L) {
-				spec = Specifications.where(ProductSpecifications.idCategory(filter.getIdCategory()));
+				spec = setSpecification(spec, ProductSpecifications.idCategory(filter.getIdCategory()));
+			}
+
+			if (filter.getIdBrand() != 0L) {
+				spec = setSpecification(spec, ProductSpecifications.idBrand(filter.getIdBrand()));
 			}
 		}
 
+		return spec;
+	}
+
+	private Specifications<Product> setSpecification(Specifications<Product> spec, Specification<Product> specification) {
+		if (spec == null) {
+			spec = Specifications.where(specification);
+		} else {
+			spec = spec.and(specification);
+		}
 		return spec;
 	}
 

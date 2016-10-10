@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.stock.control.model.Brand_;
 import com.stock.control.model.Category_;
 import com.stock.control.model.Product;
 import com.stock.control.model.Product_;
@@ -23,6 +24,17 @@ public class ProductSpecifications {
 			@Override
 			public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 				return cb.equal(root.get(Product_.category).get(Category_.idCategory), idCategory);
+			}
+		};
+		return spec;
+	}
+
+	public static Specification<Product> idBrand(final long idBrand) {
+		logger.debug("Product: idBrand");
+		Specification<Product> spec = new Specification<Product>() {
+			@Override
+			public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+				return cb.equal(root.get(Product_.brand).get(Brand_.idBrand), idBrand);
 			}
 		};
 		return spec;

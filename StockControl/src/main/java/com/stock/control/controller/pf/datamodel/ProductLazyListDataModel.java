@@ -32,6 +32,7 @@ public class ProductLazyListDataModel extends LazyDataModel<Product> {
 
 		ProductSearchFilter filter = new ProductSearchFilter();
 		filter.setIdCategory(selectedRecordBean.getCategory().getIdCategory());
+		filter.setIdBrand(selectedRecordBean.getBrand().getIdBrand());
 
 		Page<Product> page = productService.findProductByIdCategory(filter, CommonUtils.getPageNumber(first, pageSize), pageSize);
 		setRowCount(new Long(page.getTotalElements()).intValue());
