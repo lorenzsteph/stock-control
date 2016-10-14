@@ -6,17 +6,19 @@
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
 			<p:panelGrid columns="2" styleClass="panel-top-stockist">
-				<p:dataTable var="customer" editable="true" value="#{customerCtrl.customerDataModel}" paginator="true" rows="30" paginatorPosition="bottom"
+				<p:dataTable var="customer" editable="true" value="#{customerCtrl.customerDataModel}" paginator="true" rows="20" paginatorPosition="bottom"
 					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,30,50,100" selectionMode="single" selection="#{customerCtrl.selectedCustomer}"
-					id="customerTable" widgetVar="customerTable" lazy="true">
-					
+					id="customerTable" widgetVar="customerTable" lazy="true" styleClass="header-datatable">
+
 					<p:ajax event="rowSelect" listener="#{customerCtrl.onRowSelect}" />
 					<p:ajax event="rowEdit" listener="#{customerCtrl.onRowEdit}" update=":form:growl" />
 					<p:ajax event="rowEditCancel" listener="#{customerCtrl.onRowCancel}" update=":form:growl" />
-					
+
 					<f:facet name="header">
-		            	Customer
-		        	</f:facet>
+        				Customer
+       					 <p:commandLink styleClass="button-datatable" id="add" type="button" value="new customer +" actionListener="#{customerCtrl.addNewCustomer}" ajax="true" update=":form:growl :form:customerTable" />
+					</f:facet>
+					
 					<p:column headerText="id" sortBy="#{customer.idCustomer}" width="10%">
 						<h:outputText value="#{customer.idCustomer}" />
 					</p:column>

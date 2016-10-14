@@ -7,12 +7,12 @@
 			<p:growl id="growl" showDetail="true" />
 			<p:panelGrid columns="1" styleClass="panel-top-stockist">
 				<p:panel>
-					<p:dataTable var="sh" id="storehouseTable" widgetVar="storehouseTable" value="#{storehouseCtrl.storehouseDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,50,100">
+					<p:dataTable var="sh" id="storehouseTable" widgetVar="storehouseTable" value="#{storehouseCtrl.storehouseDataModel}" paginator="true" rows="20" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,50,100" styleClass="header-datatable">
 						<f:facet name="header">
 				            Storehouse
 				        </f:facet>
-				        <p:column headerText="stockist" sortBy="#{sh.stockist}" filterBy="#{sh.stockist}">
+						<p:column headerText="stockist" sortBy="#{sh.stockist}" filterBy="#{sh.stockist}">
 							<h:outputText value="#{sh.stockist}" />
 						</p:column>
 						<p:column headerText="brand" sortBy="#{sh.brand}" filterBy="#{sh.brand}">
@@ -39,12 +39,11 @@
 						<p:column headerText="store total" width="7%">
 							<h:outputText value="#{sh.storeTotal}" />
 						</p:column>
-						<p:column headerText="storePrice"  width="7%">
+						<p:column headerText="storePrice" width="7%">
 							<h:outputText value="#{sh.storePrice}" />
 						</p:column>
 					</p:dataTable>
 				</p:panel>
-				<p:spacer />
 			</p:panelGrid>
 		</h:form>
 	</ui:define>

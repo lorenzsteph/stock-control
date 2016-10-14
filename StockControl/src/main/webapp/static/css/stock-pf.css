@@ -228,3 +228,9 @@ th[role=columnheader] {
 	background-color: #0277bd !important;
 	box-shaddow: ;
 }
+
+
+.button-datatable {
+	color: white !important;
+	float:left;
+}
