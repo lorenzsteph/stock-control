@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 
+import com.stock.control.model.Stockist_;
+
 public class StockistSearchFilter implements Serializable {
 
 	private static final long serialVersionUID = -1585612142057165754L;
@@ -20,10 +22,10 @@ public class StockistSearchFilter implements Serializable {
 		initDefaultFilter();
 	}
 
-	private void initDefaultFilter() {
+	public void initDefaultFilter() {
 		List<Order> order = new ArrayList<Order>();
 
-		Order orderName = new Order(Direction.ASC, "idStockist");
+		Order orderName = new Order(Direction.ASC, Stockist_.idStockist.getName());
 		order.add(orderName);
 
 		setOrder(order);
@@ -44,6 +46,16 @@ public class StockistSearchFilter implements Serializable {
 
 	public void setOrder(List<Order> order) {
 		this.order = order;
+	}
+
+	public void addOrder(String sortField, String sortOrder) {
+		order = new ArrayList<Order>();
+
+		Order orderName = new Order(sortOrder.equals("ASCENDING") ? Direction.ASC : Direction.DESC, sortField);
+		order.add(orderName);
+
+		orderName = new Order(Direction.ASC, Stockist_.idStockist.getName());
+		order.add(orderName);
 	}
 
 }

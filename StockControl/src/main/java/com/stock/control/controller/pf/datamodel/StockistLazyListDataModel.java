@@ -1,5 +1,6 @@
 package com.stock.control.controller.pf.datamodel;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,14 +28,39 @@ public class StockistLazyListDataModel extends LazyDataModel<Stockist> {
 	@Override
 	public List<Stockist> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-		StockistSearchFilter StockistFilter = new StockistSearchFilter();
+		StockistSearchFilter stockistFilter = new StockistSearchFilter();
+		stockistFilter = this.createDataFilter(filters, stockistFilter);
+		stockistFilter = this.setSortOrderToDataFilter(stockistFilter, sortField, sortOrder);
 
-		Page<Stockist> page = stockistService.findStockistFilter(StockistFilter, CommonUtils.getPageNumber(first, pageSize), pageSize);
+		Page<Stockist> page = stockistService.findStockistFilter(stockistFilter, CommonUtils.getPageNumber(first, pageSize), pageSize);
 		setRowCount(new Long(page.getTotalElements()).intValue());
 
 		dataModel = page.getContent();
 
 		return this.dataModel;
+	}
+
+	private StockistSearchFilter setSortOrderToDataFilter(StockistSearchFilter dataFilter, String sortField, SortOrder sortOrder) {
+		dataFilter.initDefaultFilter();
+		if(sortField!=null){
+			dataFilter.addOrder(sortField, sortOrder.toString());
+		}
+		return dataFilter;
+	}
+	
+	private StockistSearchFilter createDataFilter(Map<String, Object> filters, StockistSearchFilter filter) {
+
+		if (filters != null) {
+			for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+				String filterProperty = it.next();
+				Object filterValue = filters.get(filterProperty);
+				if ("stockist.descr".equals(filterProperty)) {
+					filter.setDescr((String) filterValue);
+				}
+			}
+		}
+
+		return filter;
 	}
 
 	@Override

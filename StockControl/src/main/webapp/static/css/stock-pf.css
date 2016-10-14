@@ -77,11 +77,9 @@
 	padding: 10px;
 }
 
-
 .menu-icon-panel>div {
 	padding-top: 12px !important;
 }
-
 
 .menu-icon-panel-sub {
 	border: none;
@@ -103,12 +101,9 @@
 	padding-top: 0px;
 }
 
-
-.menu-icon-panel-sub > div {
+.menu-icon-panel-sub>div {
 	padding-top: 12px !important;
 }
-
-
 
 .class-container-west {
 	border: 0px !important;
@@ -183,19 +178,19 @@ a.ui-state-hover {
 	padding-top: 5px !important;
 }
 
-.ui-column-customfilter>span>input, .ui-filter-column > input{
+.ui-column-customfilter>span>input, .ui-filter-column>input {
 	height: 5px;
 }
 
-.ui-filter-column > input{
+.ui-filter-column>input {
 	margin-top: 5px !important;
 }
 
 .ui-expanded-row-content td table {
-border: 0px;
+	border: 0px;
 }
 
-.customer-order, .stockist-order  {
+.customer-order, .stockist-order {
 	width: 20%;
 }
 
@@ -203,10 +198,33 @@ border: 0px;
 	width: 25%;
 }
 
-.customer-order-product, .stockist-order-product    {
+.customer-order-product, .stockist-order-product {
 	width: 55%;
 }
 
 .sh-min table tbody td {
 	padding: 0px 10px !important;
+}
+
+.dashboard-stockist .ui-dashboard-column {
+	width: 33%;
+}
+
+.dashboard-stockist {
+	border: solid 0px #c6d6df;
+	background-color: white;
+}
+
+.dashboard-stockist .ui-panel, .product-stockist-panel {
+	border: none;
+}
+
+th[role=columnheader] {
+	background-color: #0277bd !important;
+	color: white !important;
+}
+
+.header-datatable > div > table > thead > tr th.ui-state-active  {
+	background-color: #0277bd !important;
+	box-shaddow: ;
 }
