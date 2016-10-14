@@ -1,5 +1,6 @@
 package com.stock.control.controller.pf.datamodel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +31,16 @@ public class CategoryLazyListDataModel extends LazyDataModel<Category> {
 		if (selectedRecordBean.getBrand() != null) {
 			List<Category> page = categoryService.findCategoryByIdBrand(selectedRecordBean.getBrand().getIdBrand());
 			setRowCount(page.size());
+			List<Category> result = new ArrayList<Category>();
+			for (int i = 0; i < page.size(); i++) {
+				if (i < first || i > first + pageSize) {
+					continue;
+				}
+				result.add(page.get(i));
 
-			dataModel = page;
+			}
+
+			dataModel = result;
 		}
 
 		return this.dataModel;

@@ -14,7 +14,7 @@ public interface CategoryRepository extends CrudRepository<Category, Long>, JpaS
 	@Query("SELECT s FROM Category s WHERE s.descr = :descr")
 	public Category findByDescr(@Param("descr") String descr);
 
-	@Query("SELECT distinct l FROM Category l JOIN l.product p JOIN p.brand b WHERE b.idBrand = :idBrand")
+	@Query("SELECT distinct l FROM Category l JOIN l.product p JOIN p.brand b WHERE b.idBrand = :idBrand order by l.idCategory")
 	public List<Category> findCategoryByIdBrand(@Param("idBrand") long idBrand);
 
 }
