@@ -9,7 +9,11 @@
 						<h:outputLabel value="Home" styleClass="menu-icon-label" />
 					</p:panel>
 				</p:commandLink>
-
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/super-search.xhtml?faces-redirect=true')}" ajax="false">
+					<p:panel id="search" styleClass="menu-icon-panel">
+						<h:outputLabel value="Super search" styleClass="menu-icon-label" />
+					</p:panel>
+				</p:commandLink>
 				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist-dashboard.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="stockist" styleClass="menu-icon-panel">
 						<h:outputLabel value="Stockist" styleClass="menu-icon-label" />
@@ -57,6 +61,7 @@
 			<p:tooltip for="home" value="Home" />
 			<p:tooltip for="stockist" value="Stockist" />
 			<p:tooltip for="customer" value="Customer" />
+			<p:tooltip for="search" value="Super search" />
 		</h:form>
 	</ui:composition>
 </h:body>

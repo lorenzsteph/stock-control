@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/stock/pf/template-stock.xhtml">
+	<ui:define name="title">title</ui:define>
+	<ui:define name="body">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" />
+
+			<p:panel styleClass="panel-top-stockist">
+				<div class="Container100">
+					<div class="ContainerIndent">
+						<div class="Card ui-fluid">
+							<div class="Container50 Responsive50">
+								<div class="ContainerIndent">
+									<p:panelGrid columns="3" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+
+										<p:inputText value="#{superSearchCtrl.word}" />
+										<p:commandButton actionListener="#{superSearchCtrl.search}" id="iconOnly" update=":form" icon="ui-icon-search" title="search" />
+										<p:commandButton actionListener="#{superSearchCtrl.indexer}" id="index" update=":form" icon="ui-icon-play" title="indexer" />
+									</p:panelGrid>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</p:panel>
+
+
+			<p:dataTable id="data" var="data" value="#{superSearchCtrl.dataModel}" widgetVar="carsTable" resizableColumns="true">
+				<p:columns value="#{superSearchCtrl.columns}" var="column" columnIndexVar="colIndex">
+					<h:outputText escape="false" value="#{data[column.property]}" />
+				</p:columns>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
+
+

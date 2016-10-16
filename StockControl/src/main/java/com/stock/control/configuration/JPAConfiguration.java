@@ -14,6 +14,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -24,6 +26,8 @@ import com.stock.control.configuration.properties.JdbcProperties;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.stock.control.dao")
 @PropertySources({ @PropertySource(value = "classpath:jdbc.properties", ignoreResourceNotFound = false), @PropertySource(value = "classpath:stock.properties", ignoreResourceNotFound = false) })
+@EnableScheduling
+@EnableAsync
 public class JPAConfiguration {
 
 	@Autowired

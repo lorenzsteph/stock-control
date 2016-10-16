@@ -9,6 +9,9 @@ public class StockProperties {
 	@Value("${example}")
 	private String example;
 
+	@Value("${path.lucene}")
+	private String pathLucene;
+
 	public String getExample() {
 		return example;
 	}
@@ -17,5 +20,12 @@ public class StockProperties {
 		this.example = example;
 	}
 
+	public String getPathLucene() {
+		return pathLucene;
+	}
+
+	public void setPathLucene(String pathLucene) {
+		this.pathLucene = pathLucene;
+	}
 
 }
