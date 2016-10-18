@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/stock/pf/template/template-stock-home.xhtml">
+	<ui:define name="title">title</ui:define>
+	<ui:define name="body">
+		<p:ring id="ring" value="#{homeRing.rings}" var="ring">
+					<p:outputPanel styleClass="panel-ring">
+						<p:panel id="search" styleClass="menu-icon-panel-ring">
+							<h:outputLabel value="#{ring.info}" styleClass="menu-icon-label-ring" />
+						</p:panel>
+						<p:commandButton icon="ui-icon-search" title="View" update="ringDetail" ajax="true">
+							<f:setPropertyActionListener value="#{ring}" target="#{homeRing.selectedRing}" />
+						</p:commandButton>
+					</p:outputPanel>
+				</p:ring>
+				<p:outputPanel id="ringDetail" style="text-align:center;" layout="block">
+					<p:panelGrid columns="2" rendered="#{not empty homeRing.selectedRing}" columnClasses="value">
+
+						<h:outputText value="position:" />
+						<h:outputText value="#{homeRing.selectedRing.position}" />
+
+						<h:outputText value="info: " />
+						<h:outputText value="#{homeRing.selectedRing.info}" />
+
+						<h:outputText value="color:" />
+						<h:outputText value="#{homeRing.selectedRing.color}" style="color:#{homeRing.selectedRing.color}" />
+					</p:panelGrid>
+				</p:outputPanel>
+		
+		<div id="dashBoard" class="Container100 Responsive100 stock-ctrl">
+			<h:form id="form">
+				<p:growl id="growl" showDetail="true" />
+				<p:growl id="msgs" showDetail="true" />
+				
+				
+				<p:dashboard id="board" model="#{homeDetail.model}">
+					<p:ajax event="reorder" listener="#{homeDetail.handleReorder}" update="msgs" />
+					<p:panel id="todo" header="ToDo List" styleClass="ruby_color todoList_icon Container100 Responsive100">
+
+						<p:panel id="basic" header="" closable="true" toggleSpeed="500" closeSpeed="500" styleClass="Container50 Responsive100">
+							<h:outputText styleClass="taskTitle" value="Pratiche tipo 'C'" />
+							<div class="percentBox percentBox_#{homeDetail.progress1}">
+								<h:outputText styleClass="percentValue" value="#{homeDetail.progress1}" />
+								<h:outputText styleClass="absoluteValue" value="27 pratiche aperte" />
+								<p:progressBar ajax="true" value="#{homeDetail.progress1}" />
+							</div>
+							<p:panel header="" toggleable="true" toggleOrientation="vertical" collapsed="true" styleClass="azure_color">
+								<p:dataTable var="element" value="#{homeDetail.tasks}" scrollable="false" rows="5" paginator="false" styleClass="taskTable">
+									<p:column headerText="name">
+										<p:outputLabel value="#{element.name}" />
+									</p:column>
+
+									<p:column headerText="ratio">
+										<p:outputLabel value="#{element.ratio}" />
+									</p:column>
+
+									<p:column headerText="button">
+										<p:commandButton value=">" id="ajax" actionListener="#{homeDetail.buttonAction}" />
+									</p:column>
+
+								</p:dataTable>
+							</p:panel>
+							<div class="taskFooter">
+								<p:link value="Altro" styleClass="taskLink">
+									<f:param name="productId" value="10" />
+								</p:link>
+							</div>
+						</p:panel>
+
+						<p:panel id="basic1" header="" closable="true" toggleSpeed="500" closeSpeed="500" styleClass="Container50 Responsive100">
+							<h:outputText styleClass="taskTitle" value="Pratiche tipo 'C'" />
+							<div class="percentBox percentBox_#{homeDetail.progress2}">
+								<h:outputText styleClass="percentValue" value="#{homeDetail.progress2}" />
+								<h:outputText styleClass="absoluteValue" value="27 pratiche aperte" />
+								<p:progressBar ajax="true" value="#{homeDetail.progress2}" />
+							</div>
+							<p:panel header="" toggleable="true" toggleOrientation="vertical" collapsed="true" styleClass="azure_color">
+								<p:dataTable var="element" value="#{homeDetail.tasks}" scrollable="false" rows="5" paginator="false" styleClass="taskTable">
+									<p:column headerText="name">
+										<p:outputLabel value="#{element.name}" />
+									</p:column>
+
+									<p:column headerText="ratio">
+										<p:outputLabel value="#{element.ratio}" />
+									</p:column>
+
+									<p:column headerText="button">
+										<p:commandButton value=">" id="ajax" actionListener="#{homeDetail.buttonAction}" />
+									</p:column>
+
+								</p:dataTable>
+							</p:panel>
+							<div class="taskFooter">
+								<p:link value="Altro" styleClass="taskLink">
+									<f:param name="productId" value="10" />
+								</p:link>
+							</div>
+						</p:panel>
+
+						<p:panel id="basic2" header="" closable="true" toggleSpeed="500" closeSpeed="500" styleClass="Container50 Responsive100">
+							<h:outputText styleClass="taskTitle" value="Pratiche tipo 'C'" />
+							<div class="percentBox percentBox_#{homeDetail.progress3}">
+								<h:outputText styleClass="percentValue" value="#{homeDetail.progress3}" />
+								<h:outputText styleClass="absoluteValue" value="27 pratiche aperte" />
+								<p:progressBar ajax="true" value="#{homeDetail.progress3}" />
+							</div>
+							<p:panel header="" toggleable="true" toggleOrientation="vertical" collapsed="true" styleClass="azure_color">
+								<p:dataTable var="element" value="#{homeDetail.tasks}" scrollable="false" rows="5" paginator="false" styleClass="taskTable">
+									<p:column headerText="name">
+										<p:outputLabel value="#{element.name}" />
+									</p:column>
+
+									<p:column headerText="ratio">
+										<p:outputLabel value="#{element.ratio}" />
+									</p:column>
+
+									<p:column headerText="button">
+										<p:commandButton value=">" id="ajax" actionListener="#{homeDetail.buttonAction}" />
+									</p:column>
+
+								</p:dataTable>
+							</p:panel>
+							<div class="taskFooter">
+								<p:link value="Altro" styleClass="taskLink">
+									<f:param name="productId" value="10" />
+								</p:link>
+							</div>
+						</p:panel>
+
+						<p:panel id="basic3" header="" closable="true" toggleSpeed="500" closeSpeed="500" styleClass="Container50 Responsive100">
+							<h:outputText styleClass="taskTitle" value="Pratiche tipo 'C'" />
+							<div class="percentBox percentBox_#{homeDetail.progress4}">
+								<h:outputText styleClass="percentValue" value="#{homeDetail.progress4}" />
+								<h:outputText styleClass="absoluteValue" value="27 pratiche aperte" />
+								<p:progressBar ajax="true" value="#{homeDetail.progress4}" />
+							</div>
+							<p:panel header="" toggleable="true" toggleOrientation="vertical" collapsed="true" styleClass="azure_color">
+								<p:dataTable var="element" value="#{homeDetail.tasks}" scrollable="false" rows="5" paginator="false" styleClass="taskTable">
+									<p:column headerText="name">
+										<p:outputLabel value="#{element.name}" />
+									</p:column>
+
+									<p:column headerText="ratio">
+										<p:outputLabel value="#{element.ratio}" />
+									</p:column>
+
+									<p:column headerText="button">
+										<p:commandButton value=">" id="ajax" actionListener="#{homeDetail.buttonAction}" />
+									</p:column>
+
+								</p:dataTable>
+							</p:panel>
+							<div class="taskFooter">
+								<p:link value="Altro" styleClass="taskLink">
+									<f:param name="productId" value="10" />
+								</p:link>
+							</div>
+						</p:panel>
+
+						<p:panel id="basic4" header="" closable="true" toggleSpeed="500" closeSpeed="500" styleClass="Container50 Responsive100">
+							<h:outputText styleClass="taskTitle" value="Pratiche tipo 'C'" />
+							<div class="percentBox percentBox_#{homeDetail.progress5}">
+								<h:outputText styleClass="percentValue" value="#{homeDetail.progress5}" />
+								<h:outputText styleClass="absoluteValue" value="27 pratiche aperte" />
+								<p:progressBar ajax="true" value="#{homeDetail.progress5}" />
+							</div>
+							<p:panel header="" toggleable="true" toggleOrientation="vertical" collapsed="true" styleClass="azure_color">
+								<p:dataTable var="element" value="#{homeDetail.tasks}" scrollable="false" rows="5" paginator="false" styleClass="taskTable">
+									<p:column headerText="name">
+										<p:outputLabel value="#{element.name}" />
+									</p:column>
+
+									<p:column headerText="ratio">
+										<p:outputLabel value="#{element.ratio}" />
+									</p:column>
+
+									<p:column headerText="button">
+										<p:commandButton value=">" id="ajax" actionListener="#{homeDetail.buttonAction}" />
+									</p:column>
+
+								</p:dataTable>
+							</p:panel>
+							<div class="taskFooter">
+								<p:link value="Altro" styleClass="taskLink">
+									<f:param name="productId" value="10" />
+								</p:link>
+							</div>
+						</p:panel>
+					</p:panel>
+					<p:panel id="tasks" header="Tasks" styleClass="azure_color tasks_icon Container100 Responsive100">
+						<p:dataTable var="tasksList" value="#{homeDetail.tasks}" scrollable="false" rows="5" paginator="false" styleClass="taskTable tasksResults">
+							<p:column headerText="name">
+								<h4>#{tasksList.taskTitle}</h4>
+								<p:outputLabel value="#{tasksList.date}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+							</p:column>
+
+							<p:column headerText="ratio">
+								<span class="inheritColor">#{tasksList.taskNumber}</span>
+							</p:column>
+
+						</p:dataTable>
+					</p:panel>
+
+					<p:panel id="deadlines" header="Deadlines" styleClass="green_color deadlines_icon Container100 Responsive100">
+						<p:dataTable var="deadlinesList" value="#{homeDetail.tasks}" scrollable="false" rows="5" paginator="false" styleClass="taskTable deadlinesResults">
+							<p:column headerText="name">
+								<p:outputLabel value="#{deadlinesList.date}" styleClass="inheritColor">
+									<small><f:convertDateTime pattern="dd/MM/yyyy" /></small>
+									<!-- pattern="dd.MM.yyyy HH:mm" -->
+								</p:outputLabel>
+								<strong>#{deadlinesList.name}</strong>
+								<span>#{deadlinesList.deadlinesText}</span>
+							</p:column>
+
+						</p:dataTable>
+					</p:panel>
+
+				</p:dashboard>
+
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

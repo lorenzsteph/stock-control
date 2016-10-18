@@ -11,6 +11,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DashboardColumn;
+import org.primefaces.model.DashboardModel;
+import org.primefaces.model.DefaultDashboardColumn;
+import org.primefaces.model.DefaultDashboardModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,7 @@ import com.stock.control.model.Storehouse;
 import com.stock.control.service.StockistOrderService;
 import com.stock.control.service.ProductService;
 import com.stock.control.service.StorehouseService;
+import com.stock.control.utils.ConstantStock;
 
 @Component(value = "stockistOrderNewCtrl")
 @Scope(WebApplicationContext.SCOPE_SESSION)
@@ -64,6 +69,8 @@ public class StockistOrderNewControllerBean implements Serializable {
 	private BigDecimal price;
 	private BigDecimal amount;
 
+	private DashboardModel model;
+
 	@PostConstruct
 	public void initBean() {
 		storehouseDataModel = new StorehouseLazyListDataModel(storehouseService);
@@ -72,7 +79,22 @@ public class StockistOrderNewControllerBean implements Serializable {
 
 		stockistOrder = new StockistOrder();
 		selectedStockist = new Stockist();
+		initDashboard();
+	}
 
+	private void initDashboard() {
+		model = new DefaultDashboardModel();
+		DashboardColumn column1 = new DefaultDashboardColumn();
+		DashboardColumn column2 = new DefaultDashboardColumn();
+		DashboardColumn column3 = new DefaultDashboardColumn();
+
+		column1.addWidget("stockist");
+		column2.addWidget("order");
+		column3.addWidget("cart");
+
+		model.addColumn(column1);
+		model.addColumn(column2);
+		model.addColumn(column3);
 	}
 
 	public void emptyCart() {
@@ -180,7 +202,7 @@ public class StockistOrderNewControllerBean implements Serializable {
 		stockistOrder = selectedStockistOrder;
 		cart = createCartFromStockistOrder(selectedStockistOrder);
 
-		navigationBean.goToPageSelected("/stock/pf/stockist-order-new.xhtml?faces-redirect=true");
+		navigationBean.goToPageSelected(ConstantStock.URL_NEW_STOKIST_ORDER);
 	}
 
 	public void newStockistOrder() {
@@ -192,7 +214,7 @@ public class StockistOrderNewControllerBean implements Serializable {
 		stockistOrder = new StockistOrder();
 		selectedStockist = new Stockist();
 
-		navigationBean.goToPageSelected("/stock/pf/stockist-order-new.xhtml?faces-redirect=true");
+		navigationBean.goToPageSelected(ConstantStock.URL_NEW_STOKIST_ORDER);
 	}
 
 	private List<ProductOrder> createCartFromStockistOrder(StockistOrder selectedStockistOrder) {
@@ -287,6 +309,14 @@ public class StockistOrderNewControllerBean implements Serializable {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	public DashboardModel getModel() {
+		return model;
+	}
+
+	public void setModel(DashboardModel model) {
+		this.model = model;
 	}
 
 }

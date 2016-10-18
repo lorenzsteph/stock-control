@@ -4,7 +4,7 @@
 	<ui:composition>
 		<h:form id="form-menu">
 			<p:panelGrid id="panelTemplate" columns="1" styleClass="class-container-west">
-				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/home.xhtml?faces-redirect=true')}" ajax="false">
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/home/home.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="home" styleClass="menu-icon-panel">
 						<h:outputLabel value="Home" styleClass="menu-icon-label" />
 					</p:panel>
@@ -14,13 +14,13 @@
 						<h:outputLabel value="Super search" styleClass="menu-icon-label" />
 					</p:panel>
 				</p:commandLink>
-				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist-dashboard.xhtml?faces-redirect=true')}" ajax="false">
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist/stockist-dashboard.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="stockist" styleClass="menu-icon-panel">
 						<h:outputLabel value="Stockist" styleClass="menu-icon-label" />
 					</p:panel>
 				</p:commandLink>
 
-				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer.xhtml?faces-redirect=true')}" ajax="false">
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer/customer.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="customer" styleClass="menu-icon-panel">
 						<h:outputLabel value="Customer" styleClass="menu-icon-label" />
 					</p:panel>
@@ -32,7 +32,7 @@
 					</p:panel>
 				</p:commandLink>
 
-				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist-order.xhtml?faces-redirect=true')}" ajax="false">
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/stockist/stockist-order.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="stockistOrder" styleClass="menu-icon-panel">
 						<h:outputLabel value="Stockist order" styleClass="menu-icon-label" />
 					</p:panel>
@@ -43,7 +43,7 @@
 					</p:panel>
 				</p:commandLink>
 
-				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer-order.xhtml?faces-redirect=true')}" ajax="false">
+				<p:commandLink action="#{navigationBean.goToPageSelected('/stock/pf/customer/customer-order.xhtml?faces-redirect=true')}" ajax="false">
 					<p:panel id="customerOrder" styleClass="menu-icon-panel">
 						<h:outputLabel value="Customer order" styleClass="menu-icon-label" />
 					</p:panel>

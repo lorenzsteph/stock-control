@@ -27,6 +27,7 @@ import com.stock.control.model.Storehouse;
 import com.stock.control.service.CustomerOrderService;
 import com.stock.control.service.ProductService;
 import com.stock.control.service.StorehouseService;
+import com.stock.control.utils.ConstantStock;
 
 @Component(value = "customerOrderNewCtrl")
 @Scope(WebApplicationContext.SCOPE_SESSION)
@@ -173,7 +174,7 @@ public class CustomerOrderNewControllerBean implements Serializable {
 		customerOrder = selectedCustomerOrder;
 		cart = createCartFromCustomerOrder(selectedCustomerOrder);
 
-		navigationBean.goToPageSelected("/stock/pf/customer-order-new.xhtml?faces-redirect=true");
+		navigationBean.goToPageSelected(ConstantStock.URL_NEW_CUSTOMER_ORDER);
 	}
 
 	public void newCustomerOrder() {
@@ -183,7 +184,7 @@ public class CustomerOrderNewControllerBean implements Serializable {
 		customerOrder = new CustomerOrder();
 		selectedCustomer = new Customer();
 
-		navigationBean.goToPageSelected("/stock/pf/customer-order-new.xhtml?faces-redirect=true");
+		navigationBean.goToPageSelected(ConstantStock.URL_NEW_CUSTOMER_ORDER);
 	}
 
 	private List<ProductOrder> createCartFromCustomerOrder(CustomerOrder selectedCustomerOrder) {

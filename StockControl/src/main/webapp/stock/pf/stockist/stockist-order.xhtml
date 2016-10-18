@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
-<ui:composition template="/stock/pf/template-stock.xhtml">
+<ui:composition template="/stock/pf/template/template-stock.xhtml">
 	<ui:define name="title"> Stockist order</ui:define>
 	<ui:define name="body">
 		<h:form id="form">
@@ -47,9 +47,6 @@
 							<p:panelGrid columns="1" columnClasses="label,value" id="detail">
 
 								<p:dataTable var="link" value="#{row.stockistOrderProduct}">
-									<f:facet name="header">
-										Order detail
-									</f:facet>
 									
 									<p:column headerText="product" width="25%">
 										<h:outputText value="#{link.product.descr}" />

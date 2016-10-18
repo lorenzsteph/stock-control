@@ -44,7 +44,6 @@ public class StockistOrderServiceBean implements StockistOrderService {
 
 	@Override
 	public void removeStockistOrder(StockistOrder selectedStockistOrder) {
-		// TODO Auto-generated method stub
 
 	}
 

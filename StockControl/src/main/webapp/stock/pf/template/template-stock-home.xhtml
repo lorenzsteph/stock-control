@@ -4,7 +4,7 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-8" />
 	<link href="${request.contextPath}/static/css/stock-pf.css" rel="stylesheet" />
-
+<link href="${request.contextPath}/static/css/home.css" rel="stylesheet" />
 	<title>Stock Control<ui:insert name="title" />
 	</title>
 </h:head>
@@ -17,13 +17,13 @@
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true" styleClass="layout-header">
 			<ui:insert name="header">
-				<ui:include src="/stock/pf/header.xhtml" />
+				<ui:include src="/stock/pf/template/header.xhtml" />
 			</ui:insert>
 		</p:layoutUnit>
 
 		<p:layoutUnit position="west" size="200" resizable="true" closable="true" collapsible="true">
 			<ui:insert name="header">
-				<ui:include src="/stock/pf/west-menu.xhtml" />
+				<ui:include src="/stock/pf/template/west-menu.xhtml" />
 			</ui:insert>
 		</p:layoutUnit>
 

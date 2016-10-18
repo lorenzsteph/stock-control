@@ -1,24 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
-<ui:composition template="/stock/pf/template-stock.xhtml">
+<ui:composition template="/stock/pf/template/template-stock.xhtml">
 	<ui:define name="title"> Stockist order</ui:define>
 	<ui:define name="body">
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
-			<p:panelGrid columns="3" columnClasses="stockist-order,stockist-order-order,stockist-order-product" styleClass="panel-top-stockist">
-				<p:panel>
+
+			<p:dashboard id="board" model="#{stockistOrderNewCtrl.model}" styleClass="dashboard-stockist-order">
+				<p:panel id="stockist">
 					<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="5" paginatorPosition="bottom"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{stockistOrderNewCtrl.selectedStockist}" id="stockistTable" lazy="true">
 						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" />
-						<f:facet name="header">
-				            Stockist
-				        </f:facet>
-						<p:column>
+						<p:column headerText="stockist">
 							<h:outputText value="#{stockist.descr}" />
 						</p:column>
 					</p:dataTable>
 				</p:panel>
-				<p:panel>
+				<p:panel id="order">
 					<div class="Container100">
 						<div class="ContainerIndent">
 							<div class="Card ui-fluid">
@@ -64,93 +62,101 @@
 						</div>
 					</div>
 				</p:panel>
-				<p:panel>
+				<p:panel id="cart">
 					<p:dataTable var="cart" value="#{stockistOrderNewCtrl.cart}" editable="true" paginator="true" rows="5" paginatorPosition="bottom"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" id="cart" widgetVar="cart">
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" id="cartDatatable" widgetVar="cart">
 
 						<p:ajax event="rowEdit" listener="#{stockistOrderNewCtrl.onRowEdit}" update=":form:growl" />
 						<p:ajax event="rowEditCancel" listener="#{stockistOrderNewCtrl.onRowCancel}" update=":form:growl" />
 
-						<f:facet name="header">
+						<!-- 						<f:facet name="header">
 				            cart
 				        </f:facet>
-						<p:column headerText="code">
+ -->
+						<!-- <p:column headerText="code" width="15%">
 							<h:outputText value="#{cart.product.codProduct}" />
+						</p:column> -->
+						<p:column headerText="code | description | range" width="50%">
+							<h:outputText value="#{cart.product.codProduct} | #{cart.product.descr} | #{cart.product.range}" />
 						</p:column>
-						<p:column headerText="description" width="50%">
-							<h:outputText value="#{cart.product.descr}" />
-						</p:column>
-						<p:column headerText="range">
+						<!-- 	<p:column headerText="range">
 							<h:outputText value="#{cart.product.range}" />
-						</p:column>
-						<p:column headerText="unit price" width="15%">
+						</p:column> -->
+						<p:column headerText="unit price" width="8%">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{cart.price}" />
+									<h:outputText value="#{cart.price}" style="float:right">
+										<f:convertNumber pattern="#0.00" locale="pt_BR" />
+									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
 									<p:inputText id="price" value="#{cart.price}" style="width:100%" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="amount" width="15%">
+						<p:column headerText="amount" width="8%">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{cart.amount}" />
+									<h:outputText value="#{cart.amount}" style="float:right">
+										<f:convertNumber pattern="#0.00" locale="pt_BR" />
+									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
 									<p:inputText id="amount" value="#{cart.amount}" style="width:100%" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column style="width:32px">
+						<p:column style="width:8px">
 							<p:rowEditor />
 						</p:column>
 
 						<p:columnGroup type="footer">
 							<p:row>
-								<p:column colspan="4" style="text-align:right" footerText="Totals price/amount:" />
+								<p:column colspan="2" style="text-align:right" footerText="Totals price/amount:" />
 
 								<p:column footerText="n° #{stockistOrderNewCtrl.getSumProduct()}" />
 								<p:column colspan="1" style="text-align:right" />
 							</p:row>
 						</p:columnGroup>
 					</p:dataTable>
-
 				</p:panel>
-			</p:panelGrid>
+			</p:dashboard>
+
+
 
 			<p:panelGrid columns="1" styleClass="panel-top-stockist">
 				<p:panel>
 					<p:dataTable styleClass="sh-min" var="sh" id="storehouseTable" widgetVar="storehouseTable" value="#{stockistOrderNewCtrl.storehouseDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,50,100">
-						<f:facet name="header">
+						<!-- <f:facet name="header">
 				            Storehouse
-				        </f:facet>
+				        </f:facet> -->
 
-						<p:column headerText="stockist" sortBy="#{sh.stockist}" filterBy="#{sh.stockist}">
+						<p:column headerText="stockist" width="9%" sortBy="#{sh.stockist}" filterBy="#{sh.stockist}">
 							<h:outputText value="#{sh.stockist}" />
 						</p:column>
-						<p:column headerText="brand" sortBy="#{sh.brand}" filterBy="#{sh.brand}">
+						<p:column headerText="brand" width="9%" sortBy="#{sh.brand}" filterBy="#{sh.brand}">
 							<h:outputText value="#{sh.brand}" />
 						</p:column>
-						<p:column headerText="category" sortBy="#{sh.category}" filterBy="#{sh.category}">
+						<p:column headerText="category" width="11%" sortBy="#{sh.category}" filterBy="#{sh.category}">
 							<h:outputText value="#{sh.category}" />
 						</p:column>
-						<p:column headerText="code product" sortBy="#{sh.codProduct}" filterBy="#{sh.codProduct}">
+						<p:column headerText="code product" width="12%" sortBy="#{sh.codProduct}" filterBy="#{sh.codProduct}">
 							<h:outputText value="#{sh.codProduct}" />
 						</p:column>
-						<p:column headerText="product" width="20%" sortBy="#{sh.product}" filterBy="#{sh.product}">
+						<p:column headerText="product" width="30%" sortBy="#{sh.product}" filterBy="#{sh.product}">
 							<h:outputText value="#{sh.product}" />
 						</p:column>
-						<p:column headerText="range" width="10%" sortBy="#{sh.range}" filterBy="#{sh.range}">
+						<p:column headerText="range" width="15%" sortBy="#{sh.range}" filterBy="#{sh.range}">
 							<h:outputText value="#{sh.range}" />
 						</p:column>
 						<p:column headerText="selling price" width="7%">
-							<h:outputText value="#{sh.sellingPrice}" />
+							<h:outputText value="#{sh.sellingPrice}" style="float:right">
+								<f:convertNumber pattern="#0.00" locale="pt_BR" />
+							</h:outputText>
 						</p:column>
 						<p:column headerText="store total" width="7%">
-							<h:outputText value="#{sh.storeTotal}" />
+							<h:outputText value="#{sh.storeTotal}" style="float:right" />
 						</p:column>
 						<p:column style="width:32px;text-align: center">
 							<p:commandButton process="storehouseTable" icon="ui-icon-plus" title="View" oncomplete="PF('addProduct').show()">
@@ -173,16 +179,16 @@
 										<div class="ContainerIndent">
 											<p:panelGrid columns="2" id="panelDetail" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
 
-												<p:outputLabel for="amount" value="amount:" />
 												<p:outputLabel for="price" value="unit price:" />
+												<p:outputLabel for="amount" value="amount:" />
 
 												<p:separator styleClass="separator-input" />
 												<p:separator styleClass="separator-input" />
 
-												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
 												<p:inputNumber required="true" id="price" value="#{stockistOrderNewCtrl.price}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
 
-												<p:commandButton process="@this, @form" update=":form:growl :form:cart" icon="ui-icon-plus" title="View" onsuccess="PF('addProduct').hide();" actionListener="#{stockistOrderNewCtrl.addCart()}" />
+												<p:commandButton process="@this, @form" update=":form:growl :form:cartDatatable" icon="ui-icon-plus" title="View" onsuccess="PF('addProduct').hide();" actionListener="#{stockistOrderNewCtrl.addCart()}" />
 											</p:panelGrid>
 										</div>
 									</div>

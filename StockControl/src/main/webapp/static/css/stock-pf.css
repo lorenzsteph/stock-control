@@ -62,7 +62,7 @@
 	border: none;
 	width: 160px;
 	height: 50px;
-	background-color: #0277bd;
+	background-color: #f98904;
 	margin: 1px;
 	margin-right: 2px;
 	margin-bottom: 1px;
@@ -85,7 +85,7 @@
 	border: none;
 	width: 160px;
 	height: 50px;
-	background-color: #26a69a;
+	background-color: #f61e6d;
 	margin: 1px;
 	margin-right: 2px;
 	margin-bottom: 1px;
@@ -210,22 +210,35 @@ a.ui-state-hover {
 	width: 33%;
 }
 
-.dashboard-stockist {
+.dashboard-stockist-order .ui-dashboard-column:first-child {
+	width: 15%;
+}
+
+.dashboard-stockist-order .ui-dashboard-column:last-child {
+	width: 49%;
+}
+
+.dashboard-stockist-order .ui-dashboard-column {
+	width: 35%;
+}
+
+.dashboard-stockist, .dashboard-stockist-order {
 	border: solid 0px #c6d6df;
 	background-color: white;
 }
 
-.dashboard-stockist .ui-panel, .product-stockist-panel {
+.dashboard-stockist .ui-panel, .product-stockist-panel, .dashboard-stockist-order .ui-panel {
 	border: none;
 }
 
 th[role=columnheader] {
-	background-color: #0277bd !important;
+	background-color: #f98904 !important;
 	color: white !important;
+	opacity: 0.8;
 }
 
 .header-datatable>div>table>thead>tr th.ui-state-active {
-	background-color: #0277bd !important;
+	background-color: #f98904 !important;
 	box-shaddow:;
 }
 
@@ -255,4 +268,52 @@ th[role=columnheader] {
 	margin-top: 3px;
 	width: 100%;
 	color: black;
+}
+
+/*ring*/
+.panel-ring {
+	text-align: center;
+	layout: block;
+	width: 200px;
+}
+
+.menu-icon-panel-ring {
+	border: none;
+	height: 50px;
+	background-color: #f98904;
+	margin: 1px;
+	margin-right: 2px;
+	margin-bottom: 1px;
+	position: relative;
+	display: block;
+	border-radius: 0px;
+}
+
+.ui-paginator-bottom {
+	background-color: #35a04c
+}
+
+.menu-icon-panel-ring .ui-panel-content {
+	margin: auto;
+	width: 100%;
+}
+
+.ui-datatable .ui-datatable-header {
+	background-color: #f98904;
+}
+
+.menu-icon-panel-ring>div {
+	padding-top: 12px !important;
+}
+
+.menu-icon-label-ring {
+	border: none;
+	color: white;
+	font-size: 1em;
+	position: relative;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
