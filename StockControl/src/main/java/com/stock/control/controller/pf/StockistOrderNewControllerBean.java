@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
@@ -73,7 +74,6 @@ public class StockistOrderNewControllerBean implements Serializable {
 
 	@PostConstruct
 	public void initBean() {
-		storehouseDataModel = new StorehouseLazyListDataModel(storehouseService);
 		this.emptyCart();
 		selectedStorehouse = null;
 
@@ -81,7 +81,7 @@ public class StockistOrderNewControllerBean implements Serializable {
 		selectedStockist = new Stockist();
 		initDashboard();
 	}
-
+	
 	private void initDashboard() {
 		model = new DefaultDashboardModel();
 		DashboardColumn column1 = new DefaultDashboardColumn();
@@ -110,6 +110,16 @@ public class StockistOrderNewControllerBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
+	public void onStockistRowSelect(SelectEvent event) {
+		Stockist stockist = (Stockist) event.getObject();
+		FacesMessage msg = new FacesMessage("Stockist Selected", stockist.getDescr());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+
+		selectedRecordBean.setStockist(stockist);
+		storehouseDataModel = new StorehouseLazyListDataModel(storehouseService,stockist);
+		
+	}
+	
 	public void addCart() {
 		log.debug("addCart");
 		Long idProduct = selectedStorehouse.getIdProduct();
@@ -215,6 +225,8 @@ public class StockistOrderNewControllerBean implements Serializable {
 		selectedStockist = new Stockist();
 
 		navigationBean.goToPageSelected(ConstantStock.URL_NEW_STOKIST_ORDER);
+		
+		storehouseDataModel = null;
 	}
 
 	private List<ProductOrder> createCartFromStockistOrder(StockistOrder selectedStockistOrder) {

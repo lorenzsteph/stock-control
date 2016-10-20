@@ -10,7 +10,7 @@
 				<p:panel id="stockist">
 					<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="5" paginatorPosition="bottom"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{stockistOrderNewCtrl.selectedStockist}" id="stockistTable" lazy="true">
-						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" />
+						<p:ajax event="rowSelect" process="@form" immediate="true" update=":form" listener="#{stockistOrderNewCtrl.onStockistRowSelect}" />
 						<p:column headerText="stockist">
 							<h:outputText value="#{stockist.descr}" />
 						</p:column>
@@ -22,40 +22,56 @@
 							<div class="Card ui-fluid">
 								<div class="Container50 Responsive50">
 									<div class="ContainerIndent">
-										<p:panelGrid columns="3" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+										<p:panelGrid styleClass="panel-form">
+											<p:row>
+												<p:column styleClass="align-center">
+													<p:outputLabel for="multi" value="date order:" />
+												</p:column>
+												<p:column styleClass="align-center">
+													<p:outputLabel for="priceOrder" value="price:" />
+												</p:column>
+											</p:row>
+											<p:row>
+												<p:column>
+													<p:calendar pattern="dd-MM-yyyy" mask="true" required="true" id="multi" value="#{stockistOrderNewCtrl.stockistOrder.dateOrder}" pages="1" placeholder="date order" />
+												</p:column>
+												<p:column>
+													<p:inputNumber styleClass="align-right" required="true" id="priceOrder" value="#{stockistOrderNewCtrl.stockistOrder.priceOrder}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+												</p:column>
+											</p:row>
+											<p:row>
+												<p:column styleClass="align-center">
+													<p:outputLabel for="inputText" value="note:"  />
+												</p:column>
+												<p:column styleClass="align-center">
+													<p:outputLabel for="otherShopping" value="other shopping:" />
+												</p:column>
+											</p:row>
+											<p:row>
+												<p:column rowspan="3">
+													<p:inputTextarea rows="5" value="#{stockistOrderNewCtrl.stockistOrder.note}" id="inputText" placeholder="note" />
+												</p:column>
+												<p:column>
+													<p:inputNumber styleClass="align-right" required="true" id="otherShopping" value="#{stockistOrderNewCtrl.stockistOrder.otherShopping}" placeholder="other shopping" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+												</p:column>
+											</p:row>
+											<p:row>
+												<p:column styleClass="align-center">
+													<p:outputLabel for="shippingCharges" value="shipping charge:" />
+												</p:column>
+											</p:row>
+											<p:row>
+												<p:column>
+													<p:inputNumber styleClass="align-right" required="true" id="shippingCharges" value="#{stockistOrderNewCtrl.stockistOrder.shippingCharges}" placeholder="shipping charges" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
 
-											<p:outputLabel for="multi" value="date order:" />
-											<p:outputLabel for="priceOrder" value="price:" />
-											<p:outputLabel for="shippingCharges" value="shipping charge:" />
-
-											<p:separator styleClass="separator-input" />
-											<p:separator styleClass="separator-input" />
-											<p:separator styleClass="separator-input" />
-
-											<p:calendar required="true" id="multi" value="#{stockistOrderNewCtrl.stockistOrder.dateOrder}" pages="1" placeholder="date order" />
-											<p:inputNumber required="true" id="priceOrder" value="#{stockistOrderNewCtrl.stockistOrder.priceOrder}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
-											<p:inputNumber required="true" id="shippingCharges" value="#{stockistOrderNewCtrl.stockistOrder.shippingCharges}" placeholder="shipping charges" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
-
-											<p:outputLabel for="inputText" value="note:" />
-											<p:outputLabel for="otherShopping" value="other shopping:" />
-											<p:separator styleClass="header-panel" />
-
-
-											<p:separator styleClass="separator-input" />
-											<p:separator styleClass="separator-input" />
-											<p:separator styleClass="header-panel" />
-
-											<p:inputTextarea rows="5" value="#{stockistOrderNewCtrl.stockistOrder.note}" id="inputText" placeholder="note" />
-											<p:inputNumber required="true" id="otherShopping" value="#{stockistOrderNewCtrl.stockistOrder.otherShopping}" placeholder="other shopping" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
-
-
-											<p:panel>
-												<p:commandLink id="ajax" update=":form" actionListener="#{stockistOrderNewCtrl.saveCart}">
-													<h:outputText value="Save Cart" />
-												</p:commandLink>
-											</p:panel>
+												</p:column>
+											</p:row>
+											<p:row>
+												<p:column colspan="2" styleClass="align-right">
+													<p:commandButton process="@form" update=":form" icon="ui-icon-next" title="Save Cart" actionListener="#{stockistOrderNewCtrl.saveCart}" />
+												</p:column>
+											</p:row>
 										</p:panelGrid>
-
 									</div>
 								</div>
 							</div>
@@ -69,19 +85,9 @@
 						<p:ajax event="rowEdit" listener="#{stockistOrderNewCtrl.onRowEdit}" update=":form:growl" />
 						<p:ajax event="rowEditCancel" listener="#{stockistOrderNewCtrl.onRowCancel}" update=":form:growl" />
 
-						<!-- 						<f:facet name="header">
-				            cart
-				        </f:facet>
- -->
-						<!-- <p:column headerText="code" width="15%">
-							<h:outputText value="#{cart.product.codProduct}" />
-						</p:column> -->
 						<p:column headerText="code | description | range" width="50%">
 							<h:outputText value="#{cart.product.codProduct} | #{cart.product.descr} | #{cart.product.range}" />
 						</p:column>
-						<!-- 	<p:column headerText="range">
-							<h:outputText value="#{cart.product.range}" />
-						</p:column> -->
 						<p:column headerText="unit price" width="8%">
 							<p:cellEditor>
 								<f:facet name="output">
@@ -125,14 +131,11 @@
 
 
 			<p:panelGrid columns="1" styleClass="panel-top-stockist">
-				<p:panel>
+				<p:panel rendered="#{stockistOrderNewCtrl.selectedRecordBean.stockist==null?'false':'true'}">
 					<p:dataTable styleClass="sh-min" var="sh" id="storehouseTable" widgetVar="storehouseTable" value="#{stockistOrderNewCtrl.storehouseDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,50,100">
-						<!-- <f:facet name="header">
-				            Storehouse
-				        </f:facet> -->
 
-						<p:column headerText="stockist" width="9%" sortBy="#{sh.stockist}" filterBy="#{sh.stockist}">
+						<p:column headerText="stockist" width="9%" >
 							<h:outputText value="#{sh.stockist}" />
 						</p:column>
 						<p:column headerText="brand" width="9%" sortBy="#{sh.brand}" filterBy="#{sh.brand}">
@@ -181,14 +184,10 @@
 
 												<p:outputLabel for="price" value="unit price:" />
 												<p:outputLabel for="amount" value="amount:" />
+												<p:inputNumber required="true" id="price" value="#{stockistOrderNewCtrl.price}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right" />
+												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right" />
 
-												<p:separator styleClass="separator-input" />
-												<p:separator styleClass="separator-input" />
-
-												<p:inputNumber required="true" id="price" value="#{stockistOrderNewCtrl.price}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
-												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
-
-												<p:commandButton process="@this, @form" update=":form:growl :form:cartDatatable" icon="ui-icon-plus" title="View" onsuccess="PF('addProduct').hide();" actionListener="#{stockistOrderNewCtrl.addCart()}" />
+												<p:commandButton process="@this, @form" update=":form:growl :form:cartDatatable" icon="ui-icon-plus" title="add" onsuccess="PF('addProduct').hide();" actionListener="#{stockistOrderNewCtrl.addCart()}" />
 											</p:panelGrid>
 										</div>
 									</div>

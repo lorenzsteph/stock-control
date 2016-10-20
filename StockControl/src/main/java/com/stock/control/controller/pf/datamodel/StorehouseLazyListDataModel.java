@@ -1,5 +1,6 @@
 package com.stock.control.controller.pf.datamodel;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.primefaces.model.SortOrder;
 import org.springframework.data.domain.Page;
 
 import com.stock.control.dao.dynamic.filter.StorehouseSearchFilter;
+import com.stock.control.model.Stockist;
 import com.stock.control.model.Storehouse;
 import com.stock.control.service.StorehouseService;
 import com.stock.control.utils.CommonUtils;
@@ -19,10 +21,18 @@ public class StorehouseLazyListDataModel extends LazyDataModel<Storehouse> {
 	private StorehouseService storehouseService;
 	private List<Storehouse> dataModel;
 	private StorehouseSearchFilter storehouseFilter;
+	private String stockistFilter;
 
 	public StorehouseLazyListDataModel(StorehouseService storehouseService) {
 		this.storehouseService = storehouseService;
 		storehouseFilter = new StorehouseSearchFilter();
+	}
+
+	public StorehouseLazyListDataModel(StorehouseService storehouseService, Stockist stockist) {
+		this.storehouseService = storehouseService;
+		storehouseFilter = new StorehouseSearchFilter();
+
+		stockistFilter = stockist.getDescr();
 	}
 
 	@Override
@@ -40,18 +50,20 @@ public class StorehouseLazyListDataModel extends LazyDataModel<Storehouse> {
 
 	private StorehouseSearchFilter setSortOrderToDataFilter(StorehouseSearchFilter dataFilter, String sortField, SortOrder sortOrder) {
 		dataFilter.initDefaultFilter();
-		if(sortField!=null){
+		if (sortField != null) {
 			dataFilter.addOrder(sortField, sortOrder.toString());
 		}
 		return dataFilter;
 	}
 
 	private StorehouseSearchFilter createDataFilter(Map<String, Object> filters, StorehouseSearchFilter storehouseFilter) {
-
-		if (filters != null) {
-			storehouseFilter.setFilters(filters);
+		storehouseFilter = new StorehouseSearchFilter();
+		if (filters == null) {
+			filters = new HashMap<String, Object>();
 		}
 
+		filters.put("stockist", stockistFilter);
+		storehouseFilter.setFilters(filters);
 		return storehouseFilter;
 	}
 
