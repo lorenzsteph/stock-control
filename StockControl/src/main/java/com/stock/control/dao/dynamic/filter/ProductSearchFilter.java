@@ -23,7 +23,7 @@ public class ProductSearchFilter implements Serializable {
 		initDefaultFilter();
 	}
 
-	private void initDefaultFilter() {
+	public void initDefaultFilter() {
 		List<Order> order = new ArrayList<Order>();
 
 		Order orderName = new Order(Direction.ASC, Product_.codProduct.getName());
@@ -31,6 +31,15 @@ public class ProductSearchFilter implements Serializable {
 
 		setOrder(order);
 
+	}
+
+	public void addOrder(String sortField, String sortOrder) {
+		order = new ArrayList<Order>();
+		Order orderName = new Order(sortOrder.equals("ASCENDING") ? Direction.ASC : Direction.DESC, sortField);
+		order.add(orderName);
+
+		orderName = new Order(Direction.ASC, Product_.idProduct.getName());
+		order.add(orderName);
 	}
 
 	public List<Order> getOrder() {

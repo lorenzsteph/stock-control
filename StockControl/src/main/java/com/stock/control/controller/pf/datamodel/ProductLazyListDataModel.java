@@ -34,12 +34,22 @@ public class ProductLazyListDataModel extends LazyDataModel<Product> {
 		filter.setIdCategory(selectedRecordBean.getCategory().getIdCategory());
 		filter.setIdBrand(selectedRecordBean.getBrand().getIdBrand());
 
+		filter = this.setSortOrderToDataFilter(filter, sortField, sortOrder);
+
 		Page<Product> page = productService.findProductByIdCategory(filter, CommonUtils.getPageNumber(first, pageSize), pageSize);
 		setRowCount(new Long(page.getTotalElements()).intValue());
 
 		dataModel = page.getContent();
 
 		return this.dataModel;
+	}
+
+	private ProductSearchFilter setSortOrderToDataFilter(ProductSearchFilter dataFilter, String sortField, SortOrder sortOrder) {
+		dataFilter.initDefaultFilter();
+		if (sortField != null) {
+			dataFilter.addOrder(sortField, sortOrder.toString());
+		}
+		return dataFilter;
 	}
 
 	@Override

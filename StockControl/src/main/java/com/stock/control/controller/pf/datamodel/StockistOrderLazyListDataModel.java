@@ -34,8 +34,8 @@ public class StockistOrderLazyListDataModel extends LazyDataModel<StockistOrder>
 		log.debug("call StockistOrderLazyListDataModel load");
 		StockistOrderSearchFilter stockistOrderFilter = new StockistOrderSearchFilter();
 		stockistOrderFilter = this.createDataFilter(filters, stockistOrderFilter);
-		stockistOrderFilter = this.setSortOrderToDataFilter(stockistOrderFilter, sortField, sortOrder);
 		Page<StockistOrder> page = stockistOrderService.findStockistOrderFilter(stockistOrderFilter, CommonUtils.getPageNumber(first, pageSize), pageSize);
+		stockistOrderFilter = this.setSortOrderToDataFilter(stockistOrderFilter, sortField, sortOrder);
 		setRowCount(new Long(page.getTotalElements()).intValue());
 
 		dataModel = page.getContent();

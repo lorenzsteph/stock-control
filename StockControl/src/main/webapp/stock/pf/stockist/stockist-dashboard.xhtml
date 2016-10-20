@@ -5,15 +5,14 @@
 	<ui:define name="body">
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
-
+			
 			<p:dashboard id="board" model="#{stockistDashboardCtrl.model}" styleClass="dashboard-stockist">
-
 				<p:panel id="stockist">
 					<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="5" paginatorPosition="bottom" lazy="true" styleClass="header-datatable"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{stockistCtrl.selectedStockist}" id="stockistTable">
 
 						<p:ajax event="rowSelect" listener="#{stockistCtrl.onRowSelect}" update=":form:growl :form:brand :form:product :form:category" />
-						<p:column headerText="id" sortBy="#{stockist.idStockist}" width="10%" >
+						<p:column headerText="id" sortBy="#{stockist.idStockist}" width="12%">
 							<h:outputText value="#{stockist.idStockist}" />
 						</p:column>
 						<p:column headerText="Stockist" sortBy="#{stockist.descr}">
@@ -22,37 +21,34 @@
 
 					</p:dataTable>
 				</p:panel>
-
 				<p:panel id="brand">
-						<p:dataTable id="brandTable" rendered="#{selectedRecordBean.stockist == null?'false':'true'}" var="brand" value="#{brandCtrl.brandDataModel}" paginator="true" rows="5" paginatorPosition="bottom" lazy="true"
-							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{brandCtrl.selectedBrand}">
-							<p:ajax event="rowSelect" listener="#{brandCtrl.onRowSelect}" update=":form:growl :form:product :form:category " />
-							<p:column headerText="Brand">
-								<h:outputText value="#{brand.descr}" />
-							</p:column>
-						</p:dataTable>
+					<p:dataTable id="brandTable" rendered="#{selectedRecordBean.stockist == null?'false':'true'}" var="brand" value="#{brandCtrl.brandDataModel}" paginator="true" rows="5" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{brandCtrl.selectedBrand}">
+						<p:ajax event="rowSelect" listener="#{brandCtrl.onRowSelect}" update=":form:growl :form:product :form:category " />
+						<p:column headerText="Brand">
+							<h:outputText value="#{brand.descr}" />
+						</p:column>
+					</p:dataTable>
 				</p:panel>
-
 				<p:panel id="category">
-						<p:dataTable id="category_" style="display: #{selectedRecordBean.brand == null?'none':'block'}" var="category" value="#{categoryCtrl.categoryDataModel}" paginator="true" rows="5" paginatorPosition="bottom" lazy="true"
-							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{categoryCtrl.selectedCategory}">
+					<p:dataTable id="category_" style="display: #{selectedRecordBean.brand == null?'none':'block'}" var="category" value="#{categoryCtrl.categoryDataModel}" paginator="true" rows="5" paginatorPosition="bottom" lazy="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{categoryCtrl.selectedCategory}">
 
-							<p:ajax event="rowSelect" listener="#{categoryCtrl.onRowSelect}" update=":form:growl :form:product " />
-							<p:column headerText="Category">
-								<h:outputText value="#{category.descr}" />
-							</p:column>
-						</p:dataTable>
+						<p:ajax event="rowSelect" listener="#{categoryCtrl.onRowSelect}" update=":form:growl :form:product " />
+						<p:column headerText="Category">
+							<h:outputText value="#{category.descr}" />
+						</p:column>
+					</p:dataTable>
 				</p:panel>
 			</p:dashboard>
+			
 			<p:panel id="product" styleClass="product-stockist-panel">
 				<p:dataTable id="productTable" editable="true" rendered="#{selectedRecordBean.category == null?'false':'true'}" var="product" value="#{productCtrl.productDataModel}" paginator="true" rows="20" paginatorPosition="bottom" lazy="true"
-					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="10,20,50,100" selectionMode="single" selection="#{productCtrl.selectedProduct}">
+					styleClass="header-datatable" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="10,20,50,100" selectionMode="single" selection="#{productCtrl.selectedProduct}">
 
 					<p:ajax event="rowEdit" listener="#{productCtrl.onRowEdit}" update=":form:growl" />
 					<p:ajax event="rowEditCancel" listener="#{productCtrl.onRowCancel}" update=":form:growl" />
-
-
-					<p:column width="15%">
+					<p:column width="15%" sortBy="#{product.codProduct}">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{product.codProduct}" />
@@ -62,7 +58,7 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column headerText="Product">
+					<p:column headerText="Product" sortBy="#{product.descr}">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{product.descr}" />
@@ -71,9 +67,8 @@
 								<p:inputText id="descr" value="#{product.descr}" style="width:100%" />
 							</f:facet>
 						</p:cellEditor>
-
 					</p:column>
-					<p:column headerText="Range" width="20%">
+					<p:column headerText="Range" width="20%"  sortBy="#{product.range}">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{product.range}" />
@@ -83,7 +78,7 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column headerText="Selling price" width="15%">
+					<p:column headerText="Selling price" width="15%"  sortBy="#{product.sellingPrice}">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{product.sellingPrice}" />
@@ -102,9 +97,6 @@
 					<p:menuitem value="Delete" icon="ui-icon-close" update=":form:growl :form:product" actionListener="#{productCtrl.deleteProduct}" />
 				</p:contextMenu>
 			</p:panel>
-
-
-
 		</h:form>
 	</ui:define>
 </ui:composition>

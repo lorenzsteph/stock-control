@@ -28,13 +28,21 @@ public class CustomerLazyListDataModel extends LazyDataModel<Customer> {
 	public List<Customer> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
 		CustomerSearchFilter customerFilter = new CustomerSearchFilter();
-
+		customerFilter = this.setSortOrderToDataFilter(customerFilter, sortField, sortOrder);
 		Page<Customer> page = customerService.findCustomerFilter(customerFilter, CommonUtils.getPageNumber(first, pageSize), pageSize);
 		setRowCount(new Long(page.getTotalElements()).intValue());
 
 		dataModel = page.getContent();
 
 		return this.dataModel;
+	}
+
+	private CustomerSearchFilter setSortOrderToDataFilter(CustomerSearchFilter dataFilter, String sortField, SortOrder sortOrder) {
+		dataFilter.initDefaultFilter();
+		if (sortField != null) {
+			dataFilter.addOrder(sortField, sortOrder.toString());
+		}
+		return dataFilter;
 	}
 
 	@Override
