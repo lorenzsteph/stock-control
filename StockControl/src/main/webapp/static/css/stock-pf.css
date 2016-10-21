@@ -210,8 +210,6 @@ a.ui-state-hover {
 	width: 33%;
 }
 
-
-
 .dashboard-stockist-order .ui-dashboard-column:first-child {
 	width: 15%;
 }
@@ -339,3 +337,26 @@ th[role=columnheader] {
 .ui-cell-editor-output {
 	min-width: 10px;
 }
+
+.button-orange {
+	background-color: #35a04c !important;
+}
+
+.button-orange>span.ui-icon {
+	background-image: url(/StockControl/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-adamantium) !important;
+}
+
+.label-important-input {
+	text-decoration: underline;
+}
+
+.vale-important-input > input {
+	color: white;
+	background-color: grey !important;
+}
+
+.vale-important-input .ui-inputfield.ui-state-hover, .vale-important-input .ui-inputfield.ui-state-focus{
+	color: white !important;
+	
+}
+

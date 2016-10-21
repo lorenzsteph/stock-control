@@ -3,7 +3,9 @@ package com.stock.control.dao.dynamic.filter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
@@ -32,6 +34,22 @@ public class StockistOrderSearchFilter implements Serializable {
 
 		setOrder(order);
 
+	}
+
+	public void initFilter(Map<String, Object> filters) {
+		if (filters != null) {
+			for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+				String filterProperty = it.next();
+				Object filterValue = filters.get(filterProperty);
+				if ("stockist.descr".equals(filterProperty)) {
+					this.setStockist((String) filterValue);
+				} else if ("descr".equals(filterProperty)) {
+					this.setStockist((String) filterValue);
+				} else if ("dateOrder".equals(filterProperty)) {
+					this.setDateOrder((Date) filterValue);
+				}
+			}
+		}
 	}
 
 	public List<Order> getOrder() {

@@ -1,7 +1,5 @@
 package com.stock.control.controller.pf.datamodel;
 
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -49,19 +47,8 @@ public class StockistOrderLazyListDataModel extends LazyDataModel<StockistOrder>
 	}
 
 	private StockistOrderSearchFilter createDataFilter(Map<String, Object> filters, StockistOrderSearchFilter filter) {
-
-		if (filters != null) {
-			for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-				String filterProperty = it.next();
-				Object filterValue = filters.get(filterProperty);
-				if ("stockist.descr".equals(filterProperty)) {
-					filter.setStockist((String) filterValue);
-				} else if ("dateOrder".equals(filterProperty)) {
-					filter.setDateOrder((Date) filterValue);
-				}
-			}
-		}
-
+		filter = new StockistOrderSearchFilter();
+		filter.initFilter(filters);
 		return filter;
 	}
 

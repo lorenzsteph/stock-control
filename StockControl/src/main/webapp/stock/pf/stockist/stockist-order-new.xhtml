@@ -3,14 +3,14 @@
 <ui:composition template="/stock/pf/template/template-stock.xhtml">
 	<ui:define name="title"> Stockist order</ui:define>
 	<ui:define name="body">
+		<p:growl id="growl" showDetail="true" />
 		<h:form id="form">
-			<p:growl id="growl" showDetail="true" />
 
 			<p:dashboard id="board" model="#{stockistOrderNewCtrl.model}" styleClass="dashboard-stockist-order">
 				<p:panel id="stockist">
 					<p:dataTable var="stockist" value="#{stockistCtrl.stockistDataModel}" paginator="true" rows="5" paginatorPosition="bottom"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" selectionMode="single" selection="#{stockistOrderNewCtrl.selectedStockist}" id="stockistTable" lazy="true">
-						<p:ajax event="rowSelect" process="@form" immediate="true" update=":form" listener="#{stockistOrderNewCtrl.onStockistRowSelect}" />
+						<p:ajax event="rowSelect" process="@form" immediate="true" update=":form:panel-top-stockist" listener="#{stockistOrderNewCtrl.onStockistRowSelect}" />
 						<p:column headerText="stockist">
 							<h:outputText value="#{stockist.descr}" />
 						</p:column>
@@ -34,6 +34,7 @@
 											<p:row>
 												<p:column>
 													<p:calendar pattern="dd-MM-yyyy" mask="true" required="true" id="multi" value="#{stockistOrderNewCtrl.stockistOrder.dateOrder}" pages="1" placeholder="date order" />
+													<p:message for="multi" display="tooltip" />
 												</p:column>
 												<p:column>
 													<p:inputNumber styleClass="align-right" required="true" id="priceOrder" value="#{stockistOrderNewCtrl.stockistOrder.priceOrder}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." />
@@ -41,7 +42,7 @@
 											</p:row>
 											<p:row>
 												<p:column styleClass="align-center">
-													<p:outputLabel for="inputText" value="note:"  />
+													<p:outputLabel for="inputText" value="note:" />
 												</p:column>
 												<p:column styleClass="align-center">
 													<p:outputLabel for="otherShopping" value="other shopping:" />
@@ -68,7 +69,7 @@
 											</p:row>
 											<p:row>
 												<p:column colspan="2" styleClass="align-right">
-													<p:commandButton process="@form" update=":form" icon="ui-icon-next" title="Save Cart" actionListener="#{stockistOrderNewCtrl.saveCart}" />
+													<p:commandButton process="@form" update=":form" styleClass="button-orange" icon="ui-icon-triangle-1-e" title="Save Cart" actionListener="#{stockistOrderNewCtrl.saveCart}" />
 												</p:column>
 											</p:row>
 										</p:panelGrid>
@@ -82,8 +83,8 @@
 					<p:dataTable var="cart" value="#{stockistOrderNewCtrl.cart}" editable="true" paginator="true" rows="5" paginatorPosition="bottom"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" id="cartDatatable" widgetVar="cart">
 
-						<p:ajax event="rowEdit" listener="#{stockistOrderNewCtrl.onRowEdit}" update=":form:growl" />
-						<p:ajax event="rowEditCancel" listener="#{stockistOrderNewCtrl.onRowCancel}" update=":form:growl" />
+						<p:ajax event="rowEdit" listener="#{stockistOrderNewCtrl.onRowEdit}" update="growl" />
+						<p:ajax event="rowEditCancel" listener="#{stockistOrderNewCtrl.onRowCancel}" update="growl" />
 
 						<p:column headerText="code | description | range" width="50%">
 							<h:outputText value="#{cart.product.codProduct} | #{cart.product.descr} | #{cart.product.range}" />
@@ -130,12 +131,12 @@
 
 
 
-			<p:panelGrid columns="1" styleClass="panel-top-stockist">
+			<p:panelGrid columns="1" styleClass="panel-top-stockist" id="panel-top-stockist">
 				<p:panel rendered="#{stockistOrderNewCtrl.selectedRecordBean.stockist==null?'false':'true'}">
-					<p:dataTable styleClass="sh-min" var="sh" id="storehouseTable" widgetVar="storehouseTable" value="#{stockistOrderNewCtrl.storehouseDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true"
+					<p:dataTable styleClass="sh-min header-datatable" var="sh" id="storehouseTable" widgetVar="storehouseTable" value="#{stockistOrderNewCtrl.storehouseDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,50,100">
 
-						<p:column headerText="stockist" width="9%" >
+						<p:column headerText="stockist" width="9%">
 							<h:outputText value="#{sh.stockist}" />
 						</p:column>
 						<p:column headerText="brand" width="9%" sortBy="#{sh.brand}" filterBy="#{sh.brand}">
@@ -162,7 +163,7 @@
 							<h:outputText value="#{sh.storeTotal}" style="float:right" />
 						</p:column>
 						<p:column style="width:32px;text-align: center">
-							<p:commandButton process="storehouseTable" icon="ui-icon-plus" title="View" oncomplete="PF('addProduct').show()">
+							<p:commandButton process="storehouseTable" styleClass="button-orange" icon="ui-icon-plus" title="View" update="addProduct" oncomplete="PF('addProduct').show()">
 								<f:setPropertyActionListener value="#{sh}" target="#{stockistOrderNewCtrl.selectedStorehouse}" />
 							</p:commandButton>
 						</p:column>
@@ -180,14 +181,42 @@
 								<div class="Card ui-fluid">
 									<div class="Container50 Responsive50">
 										<div class="ContainerIndent">
-											<p:panelGrid columns="2" id="panelDetail" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+											<p:panelGrid columns="3" id="panelDetail" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+
+												<p:spacer />
+												<p:outputLabel for="amount" value="amount:" tyleClass="label-important-input" />
+												<p:spacer />
+												<p:spacer />
+												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.modelStockistOrderProductNew.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right vale-important-input"  />
+												<p:spacer />
 
 												<p:outputLabel for="price" value="unit price:" />
-												<p:outputLabel for="amount" value="amount:" />
-												<p:inputNumber required="true" id="price" value="#{stockistOrderNewCtrl.price}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right" />
-												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right" />
+												<p:outputLabel for="priceForAmount" value="price for amount:" />
+												<p:outputLabel for="priceForAmountIva" value="price for amount + iva:" />
 
-												<p:commandButton process="@this, @form" update=":form:growl :form:cartDatatable" icon="ui-icon-plus" title="add" onsuccess="PF('addProduct').hide();" actionListener="#{stockistOrderNewCtrl.addCart()}" />
+												<p:inputNumber id="price" value="#{stockistOrderNewCtrl.modelStockistOrderProductNew.price}" placeholder="price" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right">
+													<p:ajax event="change" process="form-dialog" update="carDetail" listener="#{stockistOrderNewCtrl.reloadPriceIva}" />
+												</p:inputNumber>
+
+												<p:inputNumber id="priceForAmount" value="#{stockistOrderNewCtrl.modelStockistOrderProductNew.priceForAmount}" placeholder="price for amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right">
+													<p:ajax event="change" process="form-dialog" update="carDetail" listener="#{stockistOrderNewCtrl.reloadPriceIva}" />
+												</p:inputNumber>
+
+												<p:inputNumber id="priceForAmountIva" value="#{stockistOrderNewCtrl.modelStockistOrderProductNew.priceForAmountIva}" placeholder="price for amount + iva" symbolPosition="s" decimalSeparator="," thousandSeparator="."
+													styleClass="align-right">
+													<p:ajax event="change" process="form-dialog" update="carDetail" listener="#{stockistOrderNewCtrl.reloadPriceIva}" />
+												</p:inputNumber>
+
+												<p:spacer />
+												<p:spacer />
+												<p:spacer />
+												<p:spacer />
+												<p:outputLabel for="priceIva" value="unit price + iva:" styleClass="label-important-input" />
+												<p:spacer />
+												<p:spacer />
+												<p:inputNumber id="priceIva" value="#{stockistOrderNewCtrl.modelStockistOrderProductNew.priceIva}" placeholder="unit price + iva" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right vale-important-input" />
+
+												<p:commandButton process="@this, @form" update="growl :form:cartDatatable" styleClass="button-orange" icon="ui-icon-plus" title="add" onsuccess="PF('addProduct').hide();" actionListener="#{stockistOrderNewCtrl.addCart()}" />
 											</p:panelGrid>
 										</div>
 									</div>

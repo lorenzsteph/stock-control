@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
@@ -24,13 +25,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.stock.control.controller.pf.datamodel.StorehouseLazyListDataModel;
+import com.stock.control.controller.pf.helper.StockistNewOrderHelperBean;
+import com.stock.control.model.ProductOrder;
 import com.stock.control.model.Stockist;
 import com.stock.control.model.StockistOrder;
 import com.stock.control.model.StockistOrderProduct;
-import com.stock.control.model.ProductOrder;
+import com.stock.control.model.StockistOrderProductNew;
 import com.stock.control.model.Storehouse;
-import com.stock.control.service.StockistOrderService;
 import com.stock.control.service.ProductService;
+import com.stock.control.service.StockistOrderService;
 import com.stock.control.service.StorehouseService;
 import com.stock.control.utils.ConstantStock;
 
@@ -57,6 +60,11 @@ public class StockistOrderNewControllerBean implements Serializable {
 	@Autowired
 	private NavigationBean navigationBean;
 
+	@Autowired
+	private StockistNewOrderHelperBean stockistNewOrderHelper;
+
+	private StockistOrderProductNew modelStockistOrderProductNew;
+
 	private Storehouse selectedStorehouse;
 
 	private Stockist selectedStockist;
@@ -67,21 +75,14 @@ public class StockistOrderNewControllerBean implements Serializable {
 
 	private StockistOrder stockistOrder;
 
-	private BigDecimal price;
-	private BigDecimal amount;
-
 	private DashboardModel model;
 
 	@PostConstruct
 	public void initBean() {
-		this.emptyCart();
-		selectedStorehouse = null;
-
-		stockistOrder = new StockistOrder();
-		selectedStockist = new Stockist();
+		initOrder();
 		initDashboard();
 	}
-	
+
 	private void initDashboard() {
 		model = new DefaultDashboardModel();
 		DashboardColumn column1 = new DefaultDashboardColumn();
@@ -95,6 +96,18 @@ public class StockistOrderNewControllerBean implements Serializable {
 		model.addColumn(column1);
 		model.addColumn(column2);
 		model.addColumn(column3);
+
+		log.debug("dashboard initialized!!!");
+	}
+
+	private void initOrder() {
+		emptyCart();
+		selectedStorehouse = null;
+		stockistOrder = new StockistOrder();
+		selectedStockist = new Stockist();
+		modelStockistOrderProductNew = new StockistOrderProductNew();
+
+		log.debug("order initialized!!!");
 	}
 
 	public void emptyCart() {
@@ -116,18 +129,17 @@ public class StockistOrderNewControllerBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		selectedRecordBean.setStockist(stockist);
-		storehouseDataModel = new StorehouseLazyListDataModel(storehouseService,stockist);
-		
+		storehouseDataModel = new StorehouseLazyListDataModel(storehouseService, stockist);
+
 	}
-	
+
 	public void addCart() {
 		log.debug("addCart");
 		Long idProduct = selectedStorehouse.getIdProduct();
 		add(selectedStorehouse, idProduct);
 		FacesMessage msg = new FacesMessage("Storehouse product selected", selectedStorehouse.getProduct());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-		amount = null;
-		price = null;
+		modelStockistOrderProductNew = new StockistOrderProductNew();
 	}
 
 	public void saveCart() {
@@ -139,9 +151,7 @@ public class StockistOrderNewControllerBean implements Serializable {
 		stockistOrderService.saveOrder(cart, stockistOrder, selectedStockist);
 
 		log.debug("cart saved...empties");
-		emptyCart();
-		stockistOrder = new StockistOrder();
-		selectedStockist = new Stockist();
+		initOrder();
 
 		FacesMessage msg = new FacesMessage("Order saved!");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -172,8 +182,8 @@ public class StockistOrderNewControllerBean implements Serializable {
 		boolean productFound = false;
 		for (ProductOrder productOrder : cart) {
 			if (productOrder.getProduct().getIdProduct().equals(idProduct)) {
-				productOrder.setAmount(productOrder.getAmount() + amount.intValue());
-				productOrder.setPrice(price);
+				productOrder.setAmount(productOrder.getAmount() + modelStockistOrderProductNew.getAmount().intValue());
+				productOrder.setPrice(modelStockistOrderProductNew.getPriceIva());
 				productFound = true;
 				log.debug("product found in cart, add - " + productOrder.getProduct().getIdProduct() + " - " + productOrder.getAmount());
 				break;
@@ -188,9 +198,9 @@ public class StockistOrderNewControllerBean implements Serializable {
 	private void addCartNewStorehouse(Storehouse storehouse) {
 		log.debug("product not found create cart and add");
 		ProductOrder e = new ProductOrder();
-		e.setAmount(amount.intValue());
+		e.setAmount(modelStockistOrderProductNew.getAmount().intValue());
 		e.setProduct(productService.findProduct(storehouse.getIdProduct()));
-		e.setPrice(price);
+		e.setPrice(modelStockistOrderProductNew.getPriceIva());
 		cart.add(e);
 		log.debug("product added");
 	}
@@ -216,17 +226,11 @@ public class StockistOrderNewControllerBean implements Serializable {
 	}
 
 	public void newStockistOrder() {
-
+		log.debug("call go to new stockist order!");
 		selectedRecordBean.reset();
-		this.emptyCart();
-		selectedStorehouse = null;
-
-		stockistOrder = new StockistOrder();
-		selectedStockist = new Stockist();
-
+		initOrder();
 		navigationBean.goToPageSelected(ConstantStock.URL_NEW_STOKIST_ORDER);
-		
-		storehouseDataModel = null;
+
 	}
 
 	private List<ProductOrder> createCartFromStockistOrder(StockistOrder selectedStockistOrder) {
@@ -254,6 +258,11 @@ public class StockistOrderNewControllerBean implements Serializable {
 		}
 
 		return result;
+	}
+
+	public void reloadPriceIva(AjaxBehaviorEvent event) {
+		log.info("call to calculate price for order!");
+		stockistNewOrderHelper.calculatePrice(modelStockistOrderProductNew);
 	}
 
 	public void onRowCancel(RowEditEvent event) {
@@ -307,28 +316,20 @@ public class StockistOrderNewControllerBean implements Serializable {
 		this.selectedStockist = selectedStockist;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
-
 	public DashboardModel getModel() {
 		return model;
 	}
 
 	public void setModel(DashboardModel model) {
 		this.model = model;
+	}
+
+	public StockistOrderProductNew getModelStockistOrderProductNew() {
+		return modelStockistOrderProductNew;
+	}
+
+	public void setModelStockistOrderProductNew(StockistOrderProductNew modelStockistOrderProductNew) {
+		this.modelStockistOrderProductNew = modelStockistOrderProductNew;
 	}
 
 }
