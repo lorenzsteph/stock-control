@@ -13,8 +13,6 @@ public interface StockistOrderService {
 
 	public Page<StockistOrder> findStockistOrderFilter(StockistOrderSearchFilter stockistOrderFilter, int pageNumber, int pageSize);
 
-	public void removeStockistOrder(StockistOrder selectedStockistOrder);
-
 	public void saveOrder(List<ProductOrder> cart, StockistOrder stockistOrder, Stockist selectedStockist);
 
 }

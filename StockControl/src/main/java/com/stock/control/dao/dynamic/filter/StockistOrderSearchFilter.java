@@ -76,4 +76,14 @@ public class StockistOrderSearchFilter implements Serializable {
 		this.stockist = stockist;
 	}
 
+	public void addOrder(String sortField, String sortOrder) {
+		order = new ArrayList<Order>();
+
+		Order orderName = new Order(sortOrder.equals("ASCENDING") ? Direction.ASC : Direction.DESC, sortField);
+		order.add(orderName);
+
+		orderName = new Order(Direction.DESC, CustomerOrder_.dateOrder.getName());
+		order.add(orderName);
+	}
+
 }

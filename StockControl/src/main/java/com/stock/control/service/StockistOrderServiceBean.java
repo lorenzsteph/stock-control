@@ -43,11 +43,6 @@ public class StockistOrderServiceBean implements StockistOrderService {
 	}
 
 	@Override
-	public void removeStockistOrder(StockistOrder selectedStockistOrder) {
-
-	}
-
-	@Override
 	public void saveOrder(List<ProductOrder> cart, StockistOrder stockistOrder, Stockist selectedStockist) {
 		stockistOrder.setStockist(selectedStockist);
 		log.debug("save stockist order in service");

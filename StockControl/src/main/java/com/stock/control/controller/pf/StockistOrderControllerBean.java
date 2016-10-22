@@ -1,12 +1,15 @@
 package com.stock.control.controller.pf;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.ToggleEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.stock.control.controller.pf.datamodel.StockistOrderLazyListDataModel;
 import com.stock.control.model.StockistOrder;
+import com.stock.control.model.StockistOrderProduct;
+import com.stock.control.model.StockistOrderProductGroup;
 import com.stock.control.service.StockistOrderService;
 
 @Component(value = "stockistOrderCtrl")
@@ -33,6 +38,8 @@ public class StockistOrderControllerBean implements Serializable {
 
 	private StockistOrder selectedStockistOrder;
 
+	private List<StockistOrderProductGroup> listDetail;
+
 	@PostConstruct
 	public void initBean() {
 		stockistOrderDataModel = new StockistOrderLazyListDataModel(stockistOrderService);
@@ -45,9 +52,41 @@ public class StockistOrderControllerBean implements Serializable {
 
 	}
 
-	public void deleteStockistOrder() {
-		log.debug("delete Stockist order: " + selectedStockistOrder.getIdStockistOrder());
-		stockistOrderService.removeStockistOrder(selectedStockistOrder);
+	public void onRowToggle(ToggleEvent event) {
+		StockistOrder stockistOrder = (StockistOrder) event.getData();
+		log.debug("order expansion" + stockistOrder.getIdStockistOrder());
+		listDetail = new ArrayList<StockistOrderProductGroup>();
+		StockistOrderProductGroup group;
+
+		boolean foundDuplicate = false;
+
+		for (StockistOrderProduct sop : stockistOrder.getStockistOrderProduct()) {
+
+			for (StockistOrderProductGroup s : listDetail) {
+				if (isEqualsStockistOrderProduct(sop, s)) {
+					s.setAmount(s.getAmount() + 1);
+					foundDuplicate = true;
+					continue;
+				}
+
+			}
+
+			if (!foundDuplicate) {
+				group = new StockistOrderProductGroup();
+				group.setStockistOrderProduct(sop);
+				group.setAmount(1);
+
+				listDetail.add(group);
+			}
+		}
+	}
+
+	private boolean isEqualsStockistOrderProduct(StockistOrderProduct sop, StockistOrderProductGroup s) {
+		if (sop.getPrice().compareTo(s.getStockistOrderProduct().getPrice()) == 0 && sop.getProduct().getCodProduct().equals(s.getStockistOrderProduct().getProduct().getCodProduct())
+				&& sop.getProduct().getRange().equals(s.getStockistOrderProduct().getProduct().getRange()) && sop.getProduct().getDescr().equals(s.getStockistOrderProduct().getProduct().getDescr())) {
+			return true;
+		}
+		return false;
 	}
 
 	public StockistOrderLazyListDataModel getStockistOrderDataModel() {
@@ -64,6 +103,14 @@ public class StockistOrderControllerBean implements Serializable {
 
 	public void setSelectedStockistOrder(StockistOrder selectedStockistOrder) {
 		this.selectedStockistOrder = selectedStockistOrder;
+	}
+
+	public List<StockistOrderProductGroup> getListDetail() {
+		return listDetail;
+	}
+
+	public void setListDetail(List<StockistOrderProductGroup> listDetail) {
+		this.listDetail = listDetail;
 	}
 
 }

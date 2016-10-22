@@ -61,8 +61,9 @@ public class StorehouseLazyListDataModel extends LazyDataModel<Storehouse> {
 		if (filters == null) {
 			filters = new HashMap<String, Object>();
 		}
-
-		filters.put("stockist", stockistFilter);
+		if (stockistFilter != null) {
+			filters.put("stockist", stockistFilter);
+		}
 		storehouseFilter.setFilters(filters);
 		return storehouseFilter;
 	}

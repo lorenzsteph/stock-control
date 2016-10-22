@@ -7,17 +7,19 @@
 			<p:growl id="growl" showDetail="true" />
 			<p:panelGrid columns="1" styleClass="panel-top-stockist">
 				<p:panel>
-					<p:dataTable var="row" id="stockistOrderTable" widgetVar="stockistOrderTable" value="#{stockistOrderCtrl.stockistOrderDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true"
+					<p:dataTable var="row" id="stockistOrderTable" widgetVar="stockistOrderTable" value="#{stockistOrderCtrl.stockistOrderDataModel}" paginator="true" rows="15" paginatorPosition="bottom" lazy="true" styleClass="header-datatable"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="15,50,100" selectionMode="single" selection="#{stockistOrderCtrl.selectedStockistOrder}">
 
 						<p:ajax event="rowSelect" listener="#{stockistOrderCtrl.onRowSelect}" update=":form:growl detail" />
+						<p:ajax event="rowToggle" listener="#{stockistOrderCtrl.onRowToggle}" update=":form:growl detail" />
+						
 						<f:facet name="header">
 				            Stockist Order
 				        </f:facet>
 						<p:column style="width:6px">
 							<p:rowToggler />
 						</p:column>
-						<p:column headerText="date" style="width:7%" filterBy="#{row.dateOrder}">
+						<p:column headerText="date" style="width:7%" filterBy="#{row.dateOrder}" sortBy="#{dateOrder}">
 							<f:facet name="filter">
 								<p:calendar id="inline" pattern="dd-MM-yyyy" styleClass="calendarFilter" onkeyup="PF('stockistOrderTable').filter()">
 									<p:ajax event="dateSelect" oncomplete="PF('stockistOrderTable').filter()" update=":form:stockistOrderTable" />
@@ -27,54 +29,56 @@
 								<f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="stockist" style="width:25%" filterBy="#{row.stockist.descr}">
+						<p:column headerText="stockist" style="width:25%" filterBy="#{row.stockist.descr}"  sortBy="#{stockist}">
 							<h:outputText value="#{row.stockist.descr}" />
 						</p:column>
-						<p:column headerText="note" style="width:25%">
+						<p:column headerText="note" style="width:25%"  sortBy="#{note}">
 							<h:outputText value="#{row.note}" />
 						</p:column>
 
-						<p:column headerText="price order" style="width:5%">
+						<p:column headerText="price order" style="width:5%"  sortBy="#{priceOrder}">
 							<h:outputText value="#{row.priceOrder}" />
 						</p:column>
-						<p:column headerText="shipping charges" style="width:5%">
+						<p:column headerText="spedizioni" style="width:5%"  sortBy="#{shippingCharges}">
 							<h:outputText value="#{row.shippingCharges}" />
 						</p:column>
-						<p:column headerText="other" style="width:5%">
+						<p:column headerText="other" style="width:5%" sortBy="#{otherShopping}">
 							<h:outputText value="#{row.otherShopping}" />
 						</p:column>
 						<p:rowExpansion>
-							<p:panelGrid columns="1" columnClasses="label,value" id="detail">
+							
+							<p:panelGrid columns="1" columnClasses="label,value" id="detail" >
+							
+								<p:dataTable var="group" value="#{stockistOrderCtrl.listDetail}">
 
-								<p:dataTable var="link" value="#{row.stockistOrderProduct}">
-									
-									<p:column headerText="product" width="25%">
-										<h:outputText value="#{link.product.descr}" />
+									<p:column headerText="product #{stockistOrderCtrl.listDetail.size()}" width="25%">
+										<h:outputText value="#{group.stockistOrderProduct.product.descr}" />
 									</p:column>
 									<p:column headerText="code product" width="10%">
-										<h:outputText value="#{link.product.codProduct}" />
+										<h:outputText value="#{group.stockistOrderProduct.product.codProduct}" />
 									</p:column>
 									<p:column headerText="range" width="25%">
-										<h:outputText value="#{link.product.range}" />
+										<h:outputText value="#{group.stockistOrderProduct.product.range}" />
 									</p:column>
 									<p:column headerText="brand" width="15%">
-										<h:outputText value="#{link.product.brand.descr}" />
+										<h:outputText value="#{group.stockistOrderProduct.product.brand.descr}" />
 									</p:column>
 									<p:column headerText="stockist" width="15%">
-										<h:outputText value="#{link.product.brand.stockist.descr}" />
+										<h:outputText value="#{group.stockistOrderProduct.product.brand.stockist.descr}" />
 									</p:column>
 									<p:column headerText="price" width="7%">
-										<h:outputText value="#{link.price}" />
+										<h:outputText value="#{group.stockistOrderProduct.price}" />
 									</p:column>
-
+									<p:column headerText="amount" width="7%">
+										<h:outputText value="#{group.amount}" />
+									</p:column>
 								</p:dataTable>
 
 							</p:panelGrid>
 						</p:rowExpansion>
 					</p:dataTable>
 					<p:contextMenu for="stockistOrderTable">
-						<!-- <p:menuitem value="Edit" icon="ui-icon-pencil" actionListener="#{stockistOrderNewCtrl.editCustomerOrder(stockistOrderCtrl.selectedStockistOrder)}" /> -->
-						<p:menuitem value="Delete" icon="ui-icon-close" update=":form:growl :form:stockistOrderTable" actionListener="#{stockistOrderCtrl.deleteCustomerOrder}" />
+						<p:menuitem value="Edit" icon="ui-icon-pencil" actionListener="#{stockistOrderNewCtrl.editStockistOrder(stockistOrderCtrl.selectedStockistOrder)}" />
 					</p:contextMenu>
 				</p:panel>
 				<p:spacer />
