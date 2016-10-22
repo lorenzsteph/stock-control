@@ -13,7 +13,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DashboardColumn; 
+import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
@@ -29,7 +29,6 @@ import com.stock.control.controller.pf.helper.StockistNewOrderHelperBean;
 import com.stock.control.model.ProductOrder;
 import com.stock.control.model.Stockist;
 import com.stock.control.model.StockistOrder;
-import com.stock.control.model.StockistOrderProduct;
 import com.stock.control.model.StockistOrderProductNew;
 import com.stock.control.model.Storehouse;
 import com.stock.control.service.ProductService;
@@ -81,6 +80,14 @@ public class StockistOrderNewControllerBean implements Serializable {
 	public void initBean() {
 		initOrder();
 		initDashboard();
+	}
+
+	public void newStockistOrder() {
+		log.debug("call go to new stockist order!");
+		selectedRecordBean.reset();
+		initOrder();
+		navigationBean.goToPageSelected(ConstantStock.URL_NEW_STOKIST_ORDER);
+
 	}
 
 	private void initDashboard() {
@@ -215,57 +222,9 @@ public class StockistOrderNewControllerBean implements Serializable {
 		cart.add(productOrder);
 	}
 
-	public void editStockistOrder(StockistOrder selectedStockistOrder) {
-		log.debug("edit stockist order: " + selectedStockistOrder.getIdStockistOrder());
-
-		selectedStockist = selectedStockistOrder.getStockist();
-		stockistOrder = selectedStockistOrder;
-		cart = createCartFromStockistOrder(selectedStockistOrder);
-
-		navigationBean.goToPageSelected(ConstantStock.URL_NEW_STOKIST_ORDER);
-	}
-
-	public void newStockistOrder() {
-		log.debug("call go to new stockist order!");
-		selectedRecordBean.reset();
-		initOrder();
-		navigationBean.goToPageSelected(ConstantStock.URL_NEW_STOKIST_ORDER);
-
-	}
-
-	private List<ProductOrder> createCartFromStockistOrder(StockistOrder selectedStockistOrder) {
-		List<ProductOrder> result = new ArrayList<ProductOrder>();
-
-		for (StockistOrderProduct lo : selectedStockistOrder.getStockistOrderProduct()) {
-
-			boolean productFound = false;
-			for (ProductOrder productOrder : result) {
-				if (productOrder.getProduct().getIdProduct() == lo.getProduct().getIdProduct()) {
-					productOrder.setAmount(productOrder.getAmount() + 1);
-					productFound = true;
-					log.debug("product found in cart, add - " + productOrder.getProduct().getIdProduct() + " - " + productOrder.getAmount());
-					break;
-				}
-			}
-
-			if (!productFound) {
-				ProductOrder e = new ProductOrder();
-				e.setAmount(1);
-				e.setProduct(lo.getProduct());
-				result.add(e);
-			}
-
-		}
-
-		return result;
-	}
-
 	public void reloadPriceIva(AjaxBehaviorEvent event) {
 		log.info("call to calculate price for order!");
 		stockistNewOrderHelper.calculatePrice(modelStockistOrderProductNew);
-	}
-
-	public void onRowCancel(RowEditEvent event) {
 	}
 
 	public SelectedRecordBean getSelectedRecordBean() {

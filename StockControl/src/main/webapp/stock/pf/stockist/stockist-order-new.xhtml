@@ -69,7 +69,7 @@
 											</p:row>
 											<p:row>
 												<p:column colspan="2" styleClass="align-right">
-													<p:commandButton process="@form" update=":form" styleClass="button-orange" icon="ui-icon-triangle-1-e" title="Save Cart" actionListener="#{stockistOrderNewCtrl.saveCart}" />
+													<p:commandButton process="@form" update=":form growl" styleClass="button-orange" icon="ui-icon-triangle-1-e" title="Save Cart" actionListener="#{stockistOrderNewCtrl.saveCart}" />
 												</p:column>
 											</p:row>
 										</p:panelGrid>
@@ -84,32 +84,32 @@
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" id="cartDatatable" widgetVar="cart">
 
 						<p:ajax event="rowEdit" listener="#{stockistOrderNewCtrl.onRowEdit}" update="growl" />
-						<p:ajax event="rowEditCancel" listener="#{stockistOrderNewCtrl.onRowCancel}" update="growl" />
+						<p:ajax event="rowEditCancel" update="growl" />
 
 						<p:column headerText="code | description | range" width="50%">
 							<h:outputText value="#{cart.product.codProduct} | #{cart.product.descr} | #{cart.product.range}" />
 						</p:column>
-						<p:column headerText="unit price" width="8%">
+						<p:column headerText="unit price" width="8%" styleClass="align-right">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{cart.price}" style="float:right">
+									<h:outputText value="#{cart.price}" styleClass="align-right">
 										<f:convertNumber pattern="#0.00" locale="pt_BR" />
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText id="price" value="#{cart.price}" style="width:100%" />
+									<p:inputText id="price" value="#{cart.price}"  style="width:100%" styleClass="align-right" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="amount" width="8%">
+						<p:column headerText="amount" width="8%" styleClass="align-right">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{cart.amount}" style="float:right">
-										<f:convertNumber pattern="#0.00" locale="pt_BR" />
+									<h:outputText value="#{cart.amount}" styleClass="align-right">
+										<f:convertNumber pattern="#0" locale="pt_BR" />
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText id="amount" value="#{cart.amount}" style="width:100%" />
+									<p:inputText id="amount" value="#{cart.amount}" style="width:100%" styleClass="align-right" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
@@ -187,7 +187,8 @@
 												<p:outputLabel for="amount" value="amount:" tyleClass="label-important-input" />
 												<p:spacer />
 												<p:spacer />
-												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.modelStockistOrderProductNew.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="." styleClass="align-right vale-important-input"  />
+												<p:inputNumber required="true" id="amount" value="#{stockistOrderNewCtrl.modelStockistOrderProductNew.amount}" placeholder="amount" symbolPosition="s" decimalSeparator="," thousandSeparator="."
+													styleClass="align-right vale-important-input" />
 												<p:spacer />
 
 												<p:outputLabel for="price" value="unit price:" />

@@ -82,7 +82,7 @@ public class StockistOrderControllerBean implements Serializable {
 	}
 
 	private boolean isEqualsStockistOrderProduct(StockistOrderProduct sop, StockistOrderProductGroup s) {
-		if (sop.getPrice().compareTo(s.getStockistOrderProduct().getPrice()) == 0 && sop.getProduct().getCodProduct().equals(s.getStockistOrderProduct().getProduct().getCodProduct())
+		if (sop.getPrice() != null && s.getStockistOrderProduct().getPrice()!=null && sop.getPrice().compareTo(s.getStockistOrderProduct().getPrice()) == 0 && sop.getProduct().getCodProduct().equals(s.getStockistOrderProduct().getProduct().getCodProduct())
 				&& sop.getProduct().getRange().equals(s.getStockistOrderProduct().getProduct().getRange()) && sop.getProduct().getDescr().equals(s.getStockistOrderProduct().getProduct().getDescr())) {
 			return true;
 		}

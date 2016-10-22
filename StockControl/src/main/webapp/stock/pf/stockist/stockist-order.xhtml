@@ -12,7 +12,7 @@
 
 						<p:ajax event="rowSelect" listener="#{stockistOrderCtrl.onRowSelect}" update=":form:growl detail" />
 						<p:ajax event="rowToggle" listener="#{stockistOrderCtrl.onRowToggle}" update=":form:growl detail" />
-						
+
 						<f:facet name="header">
 				            Stockist Order
 				        </f:facet>
@@ -29,29 +29,35 @@
 								<f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="stockist" style="width:25%" filterBy="#{row.stockist.descr}"  sortBy="#{stockist}">
+						<p:column headerText="stockist" style="width:25%" filterBy="#{row.stockist.descr}" sortBy="#{stockist}">
 							<h:outputText value="#{row.stockist.descr}" />
 						</p:column>
-						<p:column headerText="note" style="width:25%"  sortBy="#{note}">
+						<p:column headerText="note" style="width:25%" sortBy="#{note}">
 							<h:outputText value="#{row.note}" />
 						</p:column>
 
-						<p:column headerText="price order" style="width:5%"  sortBy="#{priceOrder}">
-							<h:outputText value="#{row.priceOrder}" />
+						<p:column headerText="price order" style="width:5%" sortBy="#{priceOrder}" styleClass="align-right">
+							<h:outputText value="#{row.priceOrder}">
+								<f:convertNumber pattern="#0.00" locale="pt_BR" />
+							</h:outputText>
 						</p:column>
-						<p:column headerText="spedizioni" style="width:5%"  sortBy="#{shippingCharges}">
-							<h:outputText value="#{row.shippingCharges}" />
+						<p:column headerText="spedizioni" style="width:5%" sortBy="#{shippingCharges}" styleClass="align-right">
+							<h:outputText value="#{row.shippingCharges}">
+								<f:convertNumber pattern="#0.00" locale="pt_BR" />
+							</h:outputText>
 						</p:column>
-						<p:column headerText="other" style="width:5%" sortBy="#{otherShopping}">
-							<h:outputText value="#{row.otherShopping}" />
+						<p:column headerText="other" style="width:5%" sortBy="#{otherShopping}" styleClass="align-right">
+							<h:outputText value="#{row.otherShopping}">
+								<f:convertNumber pattern="#0.00" locale="pt_BR" />
+							</h:outputText>
 						</p:column>
 						<p:rowExpansion>
-							
-							<p:panelGrid columns="1" columnClasses="label,value" id="detail" >
-							
+
+							<p:panelGrid columns="1" columnClasses="label,value" id="detail">
+
 								<p:dataTable var="group" value="#{stockistOrderCtrl.listDetail}">
 
-									<p:column headerText="product #{stockistOrderCtrl.listDetail.size()}" width="25%">
+									<p:column headerText="product" width="25%">
 										<h:outputText value="#{group.stockistOrderProduct.product.descr}" />
 									</p:column>
 									<p:column headerText="code product" width="10%">
@@ -66,20 +72,21 @@
 									<p:column headerText="stockist" width="15%">
 										<h:outputText value="#{group.stockistOrderProduct.product.brand.stockist.descr}" />
 									</p:column>
-									<p:column headerText="price" width="7%">
-										<h:outputText value="#{group.stockistOrderProduct.price}" />
+									<p:column headerText="price" width="7%" styleClass="align-right">
+										<h:outputText value="#{group.stockistOrderProduct.price}">
+											<f:convertNumber pattern="#0.00" locale="pt_BR" />
+										</h:outputText>
 									</p:column>
-									<p:column headerText="amount" width="7%">
-										<h:outputText value="#{group.amount}" />
+									<p:column headerText="amount" width="7%" styleClass="align-right">
+										<h:outputText value="#{group.amount}">
+											<f:convertNumber pattern="#0.00" locale="pt_BR" />
+										</h:outputText>
 									</p:column>
 								</p:dataTable>
 
 							</p:panelGrid>
 						</p:rowExpansion>
 					</p:dataTable>
-					<p:contextMenu for="stockistOrderTable">
-						<p:menuitem value="Edit" icon="ui-icon-pencil" actionListener="#{stockistOrderNewCtrl.editStockistOrder(stockistOrderCtrl.selectedStockistOrder)}" />
-					</p:contextMenu>
 				</p:panel>
 				<p:spacer />
 			</p:panelGrid>
